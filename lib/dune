@@ -1,0 +1,14 @@
+(library
+ (name dashboard)
+ (wrapped true)
+ (preprocess
+  (pps
+    ppx_deriving.std
+    ppx_deriving_hash
+    ppx_yojson_conv))
+ (libraries
+  ppx_deriving
+  ppx_deriving_hash
+  ppx_yojson_conv
+  yojson
+  fileutils))

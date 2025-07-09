@@ -168,6 +168,7 @@ end
 module ProofObligation = struct
   type t = {
     time: float;
+    files: string list;
     checks: Check.t list;
   } [@@deriving yojson ] [@@yojson.allow_extra_fields]
 end
@@ -200,13 +201,16 @@ let convert_paths proofObligation project_path =
     proofObligation
   else
     let project_path = FilePath.make_absolute (FileUtil.pwd ()) project_path in
+    let path_to_absolute file_path =
+      FilePath.reduce ~no_symlink:true @@ FilePath.make_absolute project_path file_path in
     let convert_file_range_path (file_range: Range.file_range) =
       { file_range with
-        file = FilePath.reduce ~no_symlink:true @@ FilePath.make_absolute project_path file_range.file
+        file = path_to_absolute file_range.file
       }
     in
     ProofObligation.{
       proofObligation with
+      files = List.map path_to_absolute proofObligation.files;
       checks = List.map (fun check ->
         Check.{ check with
           range = {

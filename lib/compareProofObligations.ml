@@ -30,8 +30,8 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
         RangeHash.add key Conflict.{
           kind = Unchecked;
           range = check.range;
-          from_w1 = if proofObligation_id = 1 then [check] else [];
-          from_w2 = if proofObligation_id = 2 then [check] else [];
+          from_po1 = if proofObligation_id = 1 then [check] else [];
+          from_po2 = if proofObligation_id = 2 then [check] else [];
         } acc
       | Some conflict ->
         let new_range = Range.union conflict.range check.range in
@@ -39,8 +39,8 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
         let new_conflict = Conflict.{
           conflict with
             range = new_range;
-            from_w1 = if proofObligation_id = 1 then check :: conflict.from_w1 else conflict.from_w1;
-            from_w2 = if proofObligation_id = 2 then check :: conflict.from_w2 else conflict.from_w2;
+            from_po1 = if proofObligation_id = 1 then check :: conflict.from_po1 else conflict.from_po1;
+            from_po2 = if proofObligation_id = 2 then check :: conflict.from_po2 else conflict.from_po2;
         } in
         RangeHash.add new_key new_conflict acc 
     ) map checks
@@ -48,7 +48,7 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
   let map1 = insert_proofObligations 1 RangeHash.empty w1.checks in
   let map2 = insert_proofObligations 2 map1 w2.checks in
   let conflicts = RangeHash.fold (fun _ (proofObligation : Conflict.t) acc ->
-    match (proofObligation.from_w1, proofObligation.from_w2) with
+    match (proofObligation.from_po1, proofObligation.from_po2) with
     | ([], []) -> acc
     | ([], (_::_)) ->
       {proofObligation with kind = Conflict.OnlyOneProofObligation} :: acc
@@ -61,13 +61,13 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
       if c1_safety.safe && c2_safety.safe then
         {proofObligation with kind = Conflict.NoConflictSafe} :: acc
       else if c1_safety.safe && not c2_safety.safe then
-        {proofObligation with kind = Conflict.SafetyW1; from_w2 = checks2} :: acc
+        {proofObligation with kind = Conflict.SafetyW1; from_po2 = checks2} :: acc
       else if not c1_safety.safe && c2_safety.safe then
-        {proofObligation with kind = Conflict.SafetyW2; from_w1 = checks1} :: acc
+        {proofObligation with kind = Conflict.SafetyW2; from_po1 = checks1} :: acc
       else if c1_safety.has_safe && not c2_safety.has_safe then
-        {proofObligation with kind = Conflict.PrecisionW1; from_w2 = checks2} :: acc
+        {proofObligation with kind = Conflict.PrecisionW1; from_po2 = checks2} :: acc
       else if not c1_safety.has_safe && c2_safety.has_safe then
-        {proofObligation with kind = Conflict.PrecisionW2; from_w1 = checks1} :: acc
+        {proofObligation with kind = Conflict.PrecisionW2; from_po1 = checks1} :: acc
       else if c1_safety.highest_error_level <> c2_safety.highest_error_level then
         {proofObligation with kind = Conflict.ErrorLevel} :: acc
       else if c1_safety.highest_error_level = Kind.Warning && c2_safety.highest_error_level = Kind.Warning then

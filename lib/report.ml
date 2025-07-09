@@ -6,12 +6,16 @@ let sources_of_yojson = hashtbl_of_yojson string_of_yojson string_of_yojson
 
 type t = {
   mutable conflicts: Conflict.t list;
+  mutable po1_name: string;
+  mutable po2_name: string;
   sources: sources;
 }
 [@@deriving yojson]
 
-let create () = {
+let create po1_name po2_name = {
   conflicts = [];
+  po1_name;
+  po2_name;
   sources = Hashtbl.create 16;
 }
 

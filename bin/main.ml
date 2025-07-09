@@ -76,13 +76,14 @@ let () =
   if args.output <> None then (
     let analysed_files = Hashtbl.create 16 in
     List.iter (fun (conflict : Conflict.t) ->
-      Hashtbl.add analysed_files conflict.range.start.file ();
-      Hashtbl.add analysed_files conflict.range.end_.file ();
+      Hashtbl.replace analysed_files conflict.range.start.file ();
+      Hashtbl.replace analysed_files conflict.range.end_.file ();
     ) disagreement;
 
-    let report = Report.create () in
+    let report = Report.create po1.name po2.name in
     Report.add_conflict report (Hashtbl.to_seq_keys analysed_files |> List.of_seq) disagreement;
-    Report.yojson_of_t report |> Yojson.Safe.to_file (Option.get args.output)
+    Report.yojson_of_t report |> Yojson.Safe.to_file (Option.get args.output);
+    Format.printf "Report written to %s@." (Option.get args.output);
   ) else (
     List.iter (fun conflict ->
       Format.printf "%a@." Conflict.pp conflict

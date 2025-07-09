@@ -9,12 +9,16 @@ end)
 module Conflict = struct
   open ProofObligation
   type kind =
+    | NoConflictSafe
+    | NoConflictWarning
+    | NoConflictError
     | Unchecked
-    | Quantity
     | OnlyOneProofObligation
-    | Safety
+    | SafetyW1
+    | SafetyW2
     | PrecisionW1
     | PrecisionW2
+    | ErrorLevel
   [@@deriving show { with_path = false }]
   
   type t = {
@@ -42,10 +46,6 @@ module Conflict = struct
     in
 
     match conflict.kind with
-    | Quantity ->
-      Format.fprintf fmt "ProofObligation 1 checked %d items, ProofObligation 2 checked %d items@;<0 -2>"
-        (List.length conflict.from_w1) (List.length conflict.from_w2);
-      pp_two_checks fmt conflict;
     | OnlyOneProofObligation ->
       if List.length conflict.from_w1 > 0 then
         Format.fprintf fmt "@{<#fff>Only ProofObligation 1 checked:@}@, @[<hov 4>%a@]"
@@ -59,16 +59,41 @@ module Conflict = struct
     | PrecisionW2 ->
       Format.fprintf fmt "@{<#fff>ProofObligation 2 detects safe sub ranges that ProofObligation 1 does not detect.@}@;<0 -2>";
       pp_two_checks fmt conflict;
-    | Safety ->
-      Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the safety of the range.@}@;<0 -2>";
+    | SafetyW1 ->
+      Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the safety of the range. Proof Obligation 1 state that it is safe wile Proof Obligation 2 does not.@}@;<0 -2>";
+      pp_two_checks fmt conflict;
+    | SafetyW2 ->
+      Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the safety of the range. Proof Obligation 2 state that it is safe wile Proof Obligation 1 does not.@}@;<0 -2>";
+      pp_two_checks fmt conflict;
+    | ErrorLevel ->
+      Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the error level of the range.@}@;<0 -2>";
       pp_two_checks fmt conflict;
     | Unchecked ->
       Format.fprintf fmt "@{<#fff>This has not been checked for conflicts yet.@}";
-
+    | NoConflictSafe ->
+      Format.fprintf fmt "@{<#0f0>Safe: No conflict found.@}";
+    | NoConflictWarning ->
+      Format.fprintf fmt "@{<#ff0>Warning: No conflict found, but they agree it's a warning.@}";
+    | NoConflictError ->
+      Format.fprintf fmt "@{<#f00>Error: No conflict found, but they agree it's an error.@}";
 
     Format.fprintf fmt "@]";
     Format.pp_print_newline fmt ()
 end
+
+type po_safety = {
+  safe: bool;
+  has_safe: bool;
+  highest_error_level: ProofObligation.Kind.t;
+}
+
+let safety_of_checks (checks: ProofObligation.Check.t list) : po_safety =
+  List.fold_left (fun (acc : po_safety) (check : ProofObligation.Check.t) ->
+    let is_safe = ProofObligation.Kind.is_safe check.kind in
+    let has_safe = acc.has_safe || is_safe in
+    let highest_error_level = ProofObligation.Kind.max acc.highest_error_level check.kind in
+    { safe = acc.safe && is_safe; has_safe; highest_error_level }
+  ) { safe = true; has_safe = false; highest_error_level = ProofObligation.Kind.Safe } checks
 
 let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObligation.t) =
   let open ProofObligation in
@@ -105,23 +130,26 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
     | (_::_, []) ->
       {proofObligation with kind = Conflict.OnlyOneProofObligation} :: acc
     | (_::_ as checks1, (_::_ as checks2)) ->
-      let c1_safe = List.exists (fun (c : Check.t) -> Kind.is_safe c.kind) checks1 in
-      let c2_safe = List.exists (fun (c : Check.t) -> Kind.is_safe c.kind) checks2 in
-      if c1_safe && c2_safe then
-        acc
-      else if c1_safe != c2_safe then
-        if List.for_all (fun (c : Check.t) -> Kind.is_safe c.kind && not @@ Range.equal c.range proofObligation.range) checks1 || 
-           List.for_all (fun (c : Check.t) -> Kind.is_safe c.kind && not @@ Range.equal c.range proofObligation.range) checks2 then
-          {proofObligation with kind = Conflict.Safety} :: acc
-        else if c1_safe then
-          {proofObligation with kind = Conflict.PrecisionW1} :: acc
-        else if c2_safe then
-          {proofObligation with kind = Conflict.PrecisionW2} :: acc
-        else
-          assert false
-      else if List.length checks1 <> List.length checks2 then
-        {proofObligation with kind = Conflict.Quantity} :: acc
+      let c1_safety = safety_of_checks checks1 in
+      let c2_safety = safety_of_checks checks2 in
+      (* Order of conditions matter because there is an overlap between them *)
+      if c1_safety.safe && c2_safety.safe then
+        {proofObligation with kind = Conflict.NoConflictSafe} :: acc
+      else if c1_safety.safe && not c2_safety.safe then
+        {proofObligation with kind = Conflict.SafetyW1; from_w2 = checks2} :: acc
+      else if not c1_safety.safe && c2_safety.safe then
+        {proofObligation with kind = Conflict.SafetyW2; from_w1 = checks1} :: acc
+      else if c1_safety.has_safe && not c2_safety.has_safe then
+        {proofObligation with kind = Conflict.PrecisionW1; from_w2 = checks2} :: acc
+      else if not c1_safety.has_safe && c2_safety.has_safe then
+        {proofObligation with kind = Conflict.PrecisionW2; from_w1 = checks1} :: acc
+      else if c1_safety.highest_error_level <> c2_safety.highest_error_level then
+        {proofObligation with kind = Conflict.ErrorLevel} :: acc
+      else if c1_safety.highest_error_level = Kind.Warning && c2_safety.highest_error_level = Kind.Warning then
+        {proofObligation with kind = Conflict.NoConflictWarning} :: acc
+      else if c1_safety.highest_error_level = Kind.Error && c2_safety.highest_error_level = Kind.Error then
+        {proofObligation with kind = Conflict.NoConflictError} :: acc
       else
-        acc
+        assert false
   ) map2 [] in
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts

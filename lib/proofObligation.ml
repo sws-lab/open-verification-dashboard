@@ -96,6 +96,13 @@ module Kind = struct
     | Error [@name "error"]
   [@@deriving yojson, show { with_path = false }, eq]
 
+  (* Safe < Warning < Error *)
+  let max a b =
+    match a, b with
+    | _, Error | Error, _ -> Error
+    | Safe, n | n, Safe -> n
+    | Warning, Warning -> Warning
+
   let is_safe = function
     | Safe -> true
     | _ -> false

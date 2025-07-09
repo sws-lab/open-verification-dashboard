@@ -46,12 +46,14 @@ let () =
     Printf.eprintf "More than two proofObligation files are not supported for comparison (TODO).\n";
     exit 1);
   
-  let proofObligations = List.map (fun proofObligation -> ProofObligation.convert_paths proofObligation args.project_path) args.proofObligations in
+  let proofObligations = List.map (fun proofObligation -> 
+    ProofObligation.convert_paths proofObligation args.project_path
+  ) args.proofObligations in
   let proofObligations = match args.only with
   | Some file ->
     let file = FilePath.reduce ~no_symlink:true @@ FilePath.make_absolute (FileUtil.pwd ()) file in
     List.map (fun (proofObligation : ProofObligation.t) ->
-      { proofObligation with
+      let filtered_po = { proofObligation with
         files = List.filter (fun filePath ->
           FilePath.compare filePath file == 0
         ) proofObligation.files;
@@ -60,7 +62,12 @@ let () =
             FilePath.compare check.range.start.file file == 0 &&
             FilePath.compare check.range.end_.file file == 0
           ) proofObligation.checks
-      }
+      } in
+      if List.length filtered_po.files = 0 then (
+        Printf.eprintf "Warning: No checks found for file %s in one of the proofObligations.\n" file;
+        exit 1
+      );
+      filtered_po
     ) proofObligations
   | None ->
     proofObligations

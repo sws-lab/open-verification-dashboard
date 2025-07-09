@@ -12,4 +12,5 @@
   ppx_deriving_hash
   ppx_yojson_conv
   yojson
+  sha
   fileutils))

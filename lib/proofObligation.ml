@@ -72,13 +72,8 @@ module Range = struct
     
 
   let pp fmt range =
-    let relative_path = FilePath.make_relative (FileUtil.pwd ()) range.start.file in
-    let display_path = if String.length relative_path < String.length range.start.file then
-      relative_path
-    else
-      range.start.file in
     Format.fprintf fmt "%s:%d.%d-%d.%d"
-      display_path
+      range.start.file
       range.start.line
       (range.start.column + 1)
       range.end_.line
@@ -207,12 +202,10 @@ let convert_paths proofObligation project_path =
   if project_path = "" then
     proofObligation
   else
-    let project_path = FilePath.make_absolute (FileUtil.pwd ()) project_path in
-    let path_to_absolute file_path =
-      FilePath.reduce ~no_symlink:true @@ FilePath.make_absolute project_path file_path in
+    let path_to_project_relative = Project.path_to_project_relative project_path in
     let convert_file_range_path (file_range: Range.file_range) =
       { file_range with
-        file = path_to_absolute file_range.file
+        file = path_to_project_relative file_range.file
       }
     in
     ProofObligation.{

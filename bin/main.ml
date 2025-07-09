@@ -51,7 +51,7 @@ let () =
   ) args.proofObligations in
   let proofObligations = match args.only with
   | Some file ->
-    let file = FilePath.reduce ~no_symlink:true @@ FilePath.make_absolute (FileUtil.pwd ()) file in
+    let file = Project.path_to_project_relative ~warn:false args.project_path file in
     Format.printf "Filtering proof obligations for file %s@." file;
     List.map (fun (proofObligation : ProofObligation.t) ->
       let filtered_po = { proofObligation with

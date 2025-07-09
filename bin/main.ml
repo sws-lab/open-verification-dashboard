@@ -52,19 +52,17 @@ let () =
   let proofObligations = match args.only with
   | Some file ->
     let file = FilePath.reduce ~no_symlink:true @@ FilePath.make_absolute (FileUtil.pwd ()) file in
+    Format.printf "Filtering proof obligations for file %s@." file;
     List.map (fun (proofObligation : ProofObligation.t) ->
       let filtered_po = { proofObligation with
-        files = List.filter (fun filePath ->
-          FilePath.compare filePath file == 0
-        ) proofObligation.files;
         checks = 
           List.filter (fun (check : ProofObligation.Check.t) -> 
             FilePath.compare check.range.start.file file == 0 &&
             FilePath.compare check.range.end_.file file == 0
           ) proofObligation.checks
       } in
-      if List.length filtered_po.files = 0 then (
-        Printf.eprintf "Warning: No checks found for file %s in one of the proofObligations.\n" file;
+      if List.length filtered_po.checks = 0 then (
+        Printf.eprintf "No checks found in proof obligations %s.\n" filtered_po.name;
         exit 1
       );
       filtered_po
@@ -76,8 +74,14 @@ let () =
   let po2 = List.hd (List.tl proofObligations) in
   let disagreement = CompareProofObligations.search_proofObligations_disagreements po1 po2 in
   if args.output <> None then (
+    let analysed_files = Hashtbl.create 16 in
+    List.iter (fun (conflict : Conflict.t) ->
+      Hashtbl.add analysed_files conflict.range.start.file ();
+      Hashtbl.add analysed_files conflict.range.end_.file ();
+    ) disagreement;
+
     let report = Report.create () in
-    Report.add_conflict report (po1.files @ po2.files) disagreement;
+    Report.add_conflict report (Hashtbl.to_seq_keys analysed_files |> List.of_seq) disagreement;
     Report.yojson_of_t report |> Yojson.Safe.to_file (Option.get args.output)
   ) else (
     List.iter (fun conflict ->

@@ -167,8 +167,8 @@ end
 
 module ProofObligation = struct
   type t = {
+    name: string; [@default ""]
     time: float;
-    files: string list;
     checks: Check.t list;
   } [@@deriving yojson ] [@@yojson.allow_extra_fields]
 end
@@ -178,10 +178,14 @@ type t = ProofObligation.t
 let of_file (file: string) =
   try
     let json = Yojson.Safe.from_file file in
-    Some (ProofObligation.t_of_yojson json)
+    let po = ProofObligation.t_of_yojson json in
+    Some({
+      po with
+      name = FilePath.basename @@ FilePath.chop_extension file;
+    })
   with
   | Yojson.Json_error msg ->
-      Printf.eprintf "Error parsing JSON from file %s: %s\n" file msg;
+      Format.eprintf "Error parsing JSON from file %s: %s\n" file msg;
       None
   | Ppx_yojson_conv_lib__Yojson_conv.Of_yojson_error(exn, json) -> (
     match exn with
@@ -190,8 +194,11 @@ let of_file (file: string) =
         None
     | _ ->
         raise exn)
+  | Sys_error msg ->
+      Format.eprintf "Error reading file %s: %s\n" file msg;
+      None
   | Failure msg ->
-      Printf.eprintf "Error extracting proofObligation from file %s: %s\n" file msg;
+      Format.eprintf "Error extracting proofObligation from file %s: %s\n" file msg;
       None
 
 
@@ -210,7 +217,6 @@ let convert_paths proofObligation project_path =
     in
     ProofObligation.{
       proofObligation with
-      files = List.map path_to_absolute proofObligation.files;
       checks = List.map (fun check ->
         Check.{ check with
           range = {

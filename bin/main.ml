@@ -63,7 +63,7 @@ let () =
   else (
     Printf.printf "Disagreements found:\n";
     List.iter (fun conflict ->
-      Format.printf "%a@." CompareProofObligations.Conflict.pp conflict
+      Format.printf "%a@." Conflict.pp conflict
     ) disagreement
   );
   reset_ppf ()

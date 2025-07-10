@@ -1,9 +1,21 @@
 :root {
 	--accent-color: #ff9101;
 	--main-font-color: #333;
+	--main-background-color: #f5f5f5;
+}
+
+section, article, main, aside, header, footer, body {
+	background-color: var(--main-background-color);
 }
 
 body {
 	font-family: "Manrope Variable", sans-serif;
 	color: var(--main-font-color);
+}
+
+@mixin icon-content($icon-name, $color: var(--main-font-color), $weight: 400) {
+	content: $icon-name;
+	font-family: "Material Symbols Rounded Variable";
+	color: $color;
+	font-weight: $weight;
 }

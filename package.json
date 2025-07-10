@@ -38,6 +38,7 @@
 	},
 	"dependencies": {
 		"@fontsource-variable/manrope": "^5.2.6",
+		"@fontsource-variable/material-symbols-rounded": "^5.2.16",
 		"drizzle-orm": "^0.40.0",
 		"postgres": "^3.4.5",
 		"sass": "^1.89.2"

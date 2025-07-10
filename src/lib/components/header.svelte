@@ -1,5 +1,5 @@
 <header>
-	<h1>Dashboard</h1>
+	<h1><a href="/">Dashboard</a></h1>
 </header>
 
 <style lang="scss">
@@ -13,7 +13,16 @@
 
 		h1 {
 			width: fit-content;
-			color: white;
+			a {
+				color: white;
+				text-decoration: none;
+				transition: color 0.3s ease;
+
+				&:hover {
+					color: var(--accent-color);
+					transform: scale(10);
+				}
+			}
 		}
 	}
 </style>

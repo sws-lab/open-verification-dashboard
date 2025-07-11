@@ -11,7 +11,7 @@
 		<input type="text" placeholder="Filter" />
 	</nav>
 
-	<Button type="main">
+	<Button type="main" href="/projects/new">
 		New Project
 	</Button>
 </section>

@@ -40,7 +40,12 @@
 		"@fontsource-variable/manrope": "^5.2.6",
 		"@fontsource-variable/material-symbols-rounded": "^5.2.16",
 		"drizzle-orm": "^0.40.0",
+		"formsnap": "^2.0.1",
 		"postgres": "^3.4.5",
-		"sass": "^1.89.2"
+		"sanitize-filename": "^1.6.3",
+		"sass": "^1.89.2",
+		"sveltekit-superforms": "^2.27.1",
+		"tar": "^7.4.3",
+		"zod": "^3.25.76"
 	}
 }

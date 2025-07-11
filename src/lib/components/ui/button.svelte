@@ -1,20 +1,23 @@
 <script lang="ts">
-	type ButtonType = 'main' | 'secondary';
+	import type { Snippet } from "svelte";
+
+	type ButtonType = 'main' | 'secondary' | 'submit';
 	interface ButtonProps {
-		children: any;
+		children: Snippet<[]>;
+		onclick?: (event?: MouseEvent) => void;
 		type?: ButtonType;
 		href?: string;
 	}
 
-	let { children, type = 'main', href = ''}: ButtonProps = $props();
+	let { children, onclick, type = 'main', href = ''}: ButtonProps = $props();
 </script>
 
 {#if href == ''}
-	<button class="button-{type}">
+	<button type={type === 'submit' ? 'submit' : 'button'} class="button-{type}" {onclick}>
 		{@render children()}
 	</button>
 {:else}
-	<a class="button-{type}" href={href}>
+	<a class="button-{type}" href={href} {onclick}>
 		{@render children()}
 	</a>
 {/if}
@@ -28,9 +31,10 @@
 		display: inline-block;
 		cursor: pointer;
 		transition: background-color 0.2s ease-in-out;
+		font-size: 1rem;
 	}
 
-	.button-main {
+	.button-main, .button-submit {
 		background-color: var(--accent-color);
 		color: white;
 		border: none;
@@ -39,6 +43,10 @@
 		&:hover {
 			background-color: var(--accent-color-hover);
 		}
+	}
+
+	.button-submit {
+		width: 100%;
 	}
 
 	.button-secondary {

@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 
 # File uploads
 projects/
+!src/**/projects/

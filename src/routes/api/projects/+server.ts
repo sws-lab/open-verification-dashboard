@@ -1,7 +1,7 @@
 import type { RequestHandler } from "./$types";
 import { db } from "$lib/server/db";
 import { json } from "@sveltejs/kit";
-import { ilike } from "drizzle-orm";
+import { like } from "drizzle-orm";
 import { projects } from "$lib/server/db/schema";
 
 export const GET: RequestHandler = async ({ url }) => {
@@ -10,7 +10,7 @@ export const GET: RequestHandler = async ({ url }) => {
 		let whereClause = {};
 		if (filter) {
 			whereClause = {
-				where: ilike(projects.name, filter)
+				where: like(projects.name, `%${filter}%`)
 			}
 		}
 		return json({

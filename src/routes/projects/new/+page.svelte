@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { superForm } from "sveltekit-superforms";
-	import { Control, Description, Field, FieldErrors, Label } from "formsnap";
-	import SuperDebug from "sveltekit-superforms";
+	import { Control, Field, FieldErrors, Label } from "formsnap";
 	import { Button } from "$ui";
+	import { goto } from "$app/navigation";
 
 
  
@@ -18,6 +18,18 @@
 				} else {
 					errorMessage = ''
 				}				
+			} else if (form.result.type == 'success') {
+				const id = form.result.data?.form.message.id;
+				if (!id) {
+					goto('/projects');
+					return;
+				}
+				const new_url = `/projects/${id}/0`;
+				console.log("Redirecting to:", new_url);
+				goto(new_url, {
+					replaceState: true,
+					noScroll: true
+				});
 			}
 		},
 		onError: (error) => {
@@ -27,7 +39,7 @@
 	});
 	const { form: formData, enhance, message } = form;
 </script>
- 
+
 <form method="POST" enctype="multipart/form-data" use:enhance>
 	<h2>
 		New Project
@@ -70,8 +82,11 @@
 		</Control>
 		<FieldErrors />
 	</Field>
-	<Button type="submit">
+	<Button type="submit" center>
 		Create Project
+	</Button>
+	<Button type="secondary" href="/projects" center>
+		Cancel
 	</Button>
 </form>
 
@@ -137,6 +152,7 @@
 
 		:global(button) {
 			margin-top: 1rem;
+			margin-bottom: .7rem;
 		}
 
 		textarea {

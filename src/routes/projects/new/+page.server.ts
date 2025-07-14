@@ -74,12 +74,14 @@ export const actions = {
 		}
 
 		let errorMessage = null;
+		let id = null;
 		try {
 			await db.transaction(async (tx) => {
 				const result = await tx.insert(projects).values({
 					name: data.name,
 					description: data.description,
 				}).returning();
+				id = result[0].id;
 				const destination = `projects/${result[0].id}/${result[0].revision}`;
 				if (!fs.existsSync(destination)) {
 					fs.mkdirSync(destination, { recursive: true });
@@ -98,6 +100,10 @@ export const actions = {
 
 			return fail(500, { form, error: errorMessage });
 		}
-		return message(form, "Project created successfully!");
+		console.log("Project created successfully with ID:", id);
+		return message(form, {
+			text: "Project created successfully!",
+			id
+		});
 	}
 }

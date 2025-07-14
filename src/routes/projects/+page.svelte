@@ -1,5 +1,5 @@
 <script>
-	import { Button } from "$ui";
+	import { Button, Project } from "$ui";
 	let { data } = $props();
 </script>
 <section class="head">
@@ -20,13 +20,11 @@
 	{#if data.errored}
 		<p class="no-elements error">Error loading projects: {data.message}</p>
 	{:else if data.projects.length > 0}
-		{#each data.projects as project (project.id)}
-			<div class="project">
-				<h3>{project.name}</h3>
-				<p>{project.description}</p>
-				<span class="revision">Revision: {project.revision}</span>
-			</div>
-		{/each}
+		<div class="projects__list">
+			{#each data.projects as project (project.id)}
+				<Project {project} />
+			{/each}
+		</div>
 	{:else}
 		<p class="no-elements">No projects found.</p>
 	{/if}
@@ -49,7 +47,6 @@ section {
 	position: relative;
 	z-index: 101;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
 
 	h2 {
 		font-size: 1.5rem;
@@ -76,6 +73,14 @@ section {
 }
 
 .projects {
+
+	&__list {
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		gap: 1rem;
+	}
+
 	.no-elements {
 		text-align: center;
 		margin-top: 2rem;

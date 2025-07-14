@@ -7,17 +7,18 @@
 		onclick?: (event?: MouseEvent) => void;
 		type?: ButtonType;
 		href?: string;
+		center?: boolean;
 	}
 
-	let { children, onclick, type = 'main', href = ''}: ButtonProps = $props();
+	let { children, onclick, type = 'main', href = '', center = false }: ButtonProps = $props();
 </script>
 
 {#if href == ''}
-	<button type={type === 'submit' ? 'submit' : 'button'} class="button-{type}" {onclick}>
+	<button type={type === 'submit' ? 'submit' : 'button'} class="button-{type}" class:center {onclick}>
 		{@render children()}
 	</button>
 {:else}
-	<a class="button-{type}" href={href} {onclick}>
+	<a class="button-{type}" href={href} {onclick} class:center>
 		{@render children()}
 	</a>
 {/if}
@@ -32,6 +33,10 @@
 		cursor: pointer;
 		transition: background-color 0.2s ease-in-out;
 		font-size: 1rem;
+	}
+
+	.center {
+		text-align: center;
 	}
 
 	.button-main, .button-submit {

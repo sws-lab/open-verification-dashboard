@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
+	import { Icon } from ".";
 	interface PageSelectorProps {
 		currentPage: number;
 		totalPages: number;
@@ -23,7 +24,12 @@
 <nav class="page-selector" aria-label="Page navigation">
 	<ul>
 		{#if currentPage > 1}
-			<li><a href="{buildUrl(currentPage - 1)}" aria-label="Previous page">«</a></li>
+			<li>
+				<a href="{buildUrl(currentPage - 1)}" aria-label="Previous page">
+					<Icon icon="navigate_before"/>
+				</a>
+			</li>
+
 		{/if}
 
 		{#each {length: Math.min(totalPages, maxVisiblePages)}, index}
@@ -36,7 +42,11 @@
 			
 
 		{#if currentPage < totalPages}
-			<li><a href="{buildUrl(currentPage + 1)}" aria-label="Next page">»</a></li>
+			<li>
+				<a href="{buildUrl(currentPage + 1)}" aria-label="Next page">
+					<Icon icon="navigate_next"/>
+				</a>
+			</li>
 		{/if}
 	</ul>
 </nav>

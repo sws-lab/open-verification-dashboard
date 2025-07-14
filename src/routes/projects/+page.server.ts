@@ -1,12 +1,25 @@
 import type { PageServerLoad } from "./$types";
-import { db } from "$lib/server/db";
+import { getProjects } from "$lib/server/db/projectPages";
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ url }) => {
 	try {
-		const projects = await db.query.projects.findMany()
-		return { errored: false, message: '', projects };
+		let page = parseInt(url.searchParams.get("page") || "1", 10);
+		if (isNaN(page) || page < 1) {
+			page = 1;
+		}
+		const filter = url.searchParams.get("filter") || "";
+
+		let {pages, projects} = await getProjects(page, filter);
+		return {
+			errored: false,
+			message: '', 
+			projects,
+			page,
+			totalPages: pages,
+			filter
+		};
 	} catch (error: any) {
 		console.error(error);
-		return { errored: true, message: error.message, projects: [] };
+		return { errored: true, message: error.message, projects: [], page: 1, totalPages: 0, filter: "" };
 	}
 }

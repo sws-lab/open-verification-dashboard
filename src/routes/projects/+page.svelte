@@ -1,6 +1,26 @@
-<script>
+<script lang="ts">
+	import { goto } from "$app/navigation";
+	import PageSelector from "$components/ui/pageSelector.svelte";
 	import { Button, Project } from "$ui";
 	let { data } = $props();
+
+	let searchQuery = $state(data.filter);
+	let searchTimeout: NodeJS.Timeout | null = null;
+
+	function search() {
+		if (searchTimeout) {
+			clearTimeout(searchTimeout);
+		}
+		searchTimeout = setTimeout(() => {
+			goto(
+				`/projects/?page=${data.page}&filter=${encodeURIComponent(searchQuery)}`,
+				{
+					keepFocus: true,
+					replaceState: true
+				}
+			);
+		}, 300);
+	}
 </script>
 <section class="head">
 	<h2>
@@ -8,7 +28,11 @@
 	</h2>
 
 	<nav class="search">
-		<input type="text" placeholder="Filter" />
+		<input 
+			type="text"
+			placeholder="Filter" 
+			bind:value={searchQuery} 
+			oninput={search}/>
 	</nav>
 
 	<Button type="main" href="/projects/new">
@@ -25,6 +49,12 @@
 				<Project {project} />
 			{/each}
 		</div>
+		<PageSelector
+			href="/projects"
+			currentPage={data.page}
+			totalPages={data.totalPages}
+			params={{ filter: searchQuery }}
+		/>
 	{:else}
 		<p class="no-elements">No projects found.</p>
 	{/if}

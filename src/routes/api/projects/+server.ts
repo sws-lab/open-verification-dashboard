@@ -1,23 +1,19 @@
 import type { RequestHandler } from "./$types";
-import { db } from "$lib/server/db";
 import { json } from "@sveltejs/kit";
-import { like } from "drizzle-orm";
-import { projects } from "$lib/server/db/schema";
+import { getProjects } from "$lib/server/db/projectPages";
 
 export const GET: RequestHandler = async ({ url }) => {
 	try {
 		const filter = url.searchParams.get("filter") || "";
-		let whereClause = {};
-		if (filter) {
-			whereClause = {
-				where: like(projects.name, `%${filter}%`)
-			}
+		const page = parseInt(url.searchParams.get("page") || "1", 10);
+		if (isNaN(page) || page < 1) {
+			return json({ error: "Invalid page number" }, { status: 400 });
 		}
+		return json(await getProjects(page, filter));
+	} catch (err: any) {
+		console.error(err);
 		return json({
-			projects: await db.query.projects.findMany(whereClause)
-		});
-	} catch (error: any) {
-		console.error(error);
-		return error(500, { message: error.message });
+			error: err.message || "An error occurred while fetching projects"
+		}, { status: 500 });
 	}
 }

@@ -137,13 +137,13 @@
 		}
 
 		:global([data-fs-error]) {
-			color: red;
+			color: var(--error-color);
 		}
 
 		:global(input[type="text"][data-fs-error]) {
 			color: inherit;
-			border-color: red;
-			box-shadow: 0 0 2px 1px red;
+			border-color: var(--error-color);
+			box-shadow: 0 0 2px 1px var(--error-color);
 		}
 
 		:global([data-fs-label][data-fs-error]) {

@@ -5,7 +5,9 @@ import type { PageServerLoad } from "../$types";
 import { db } from "$lib/server/db";
 import { projects } from "$lib/server/db/schema";
 import sanitize from "sanitize-filename";
-import * as tar from "tar";
+import fs from 'fs';
+import { zipManager } from "$lib/server/archivesManager/zipManager";
+import { tarManager } from "$lib/server/archivesManager/tarManager";
 
 
 export const load: PageServerLoad = async () => {
@@ -15,7 +17,7 @@ export const load: PageServerLoad = async () => {
 }
 
 export const actions = {
-	default: async ({request}) => {
+	default: async ({ request }) => {
 		const form = await superValidate(request, zod4(newProjectSchema), {
 			strict: true,
 		});
@@ -38,23 +40,27 @@ export const actions = {
 		if (sources.size > 1024 * 1024 * 1024) {
 			return fail(400, { form, error: "Project size exceeds 1GB limit." });
 		}
+
+		let manager: ArchiveManager;
+		if (sources.type === "application/zip") {
+			manager = zipManager;
+		} else if (sources.type === "application/x-tar" || sources.type === "application/gzip") {
+			manager = tarManager;
+		} else {
+			return fail(400, { form, error: "Unsupported project file format." });
+		}
+
 		// Check that the unzipped size is less than 1Gb
 		let unzippedSize = 0;
 		try {
-			tar.t().on('entry', (entry: File) => {
-				console.log(`Entry: ${entry.name} (${entry.size} bytes)`);
-				unzippedSize += entry.size;
-			})
-			.on('error', (err: Error) => {
-				console.error("Error reading tar file:", err);
-				throw new Error("Failed to read project file.");
-			}).on('end', () => {
-				console.log(`Total unzipped size: ${unzippedSize} bytes`);
-			})
-			.write(await sources.bytes())
+			unzippedSize = await manager.getUnzippedSize(sources);
 		} catch (error) {
-			console.error("Error reading tar file:", error);
+			console.error("Error reading file:", error);
 			return fail(400, { form, error: "Invalid project file format." });
+		}
+
+		if (unzippedSize === 0) {
+			return fail(400, { form, error: "Project file is empty." });
 		}
 
 		if (unzippedSize > 1024 * 1024 * 1024) {
@@ -66,26 +72,32 @@ export const actions = {
 			console.log(`Project file size: ${sources.size} bytes`);
 			console.log(`Unzipped project size: ${unzippedSize} bytes`);
 		}
-		
+
+		let errorMessage = null;
 		try {
 			await db.transaction(async (tx) => {
-				const result = await db.insert(projects).values({
+				const result = await tx.insert(projects).values({
 					name: data.name,
 					description: data.description,
 				}).returning();
-				let path = `projects/${result[0].id}/${result[0].revision}`;
-				tar.x({ C: path }).on('finish', () => {
-					console.log(`Project ${result[0].name} created successfully.`);
-				}).on('error', (err) => {
-					console.error("Error extracting project files:", err);
-					throw new Error("Failed to extract project files.");
-				}).write(await sources.bytes());
+				const destination = `projects/${result[0].id}/${result[0].revision}`;
+				if (!fs.existsSync(destination)) {
+					fs.mkdirSync(destination, { recursive: true });
+				}
+				await manager.extractFile(sources, destination);
+				console.log(`Project files extracted to: ${destination}`);
 			})
-		} catch (error) {
-			console.error("Error creating project:", error);
-			return fail(500, { form, error: "Failed to create project." });
-		}
+		} catch (error: any) {
+			if (error.code === '23505') {
+				console.error("Project creation failed: Duplicate project name");
+				errorMessage = "Project with this name already exists.";
+			} else {
+				console.error("Error creating project:", error);
+				errorMessage = "Failed to create project.";
+			}
 
+			return fail(500, { form, error: errorMessage });
+		}
 		return message(form, "Project created successfully!");
 	}
 }

@@ -20,6 +20,10 @@
 				}				
 			}
 		},
+		onError: (error) => {
+			console.error("Form error:", error);
+			errorMessage = "An unexpected error occurred. Please try again.";
+		}
 	});
 	const { form: formData, enhance, message } = form;
 </script>

@@ -67,12 +67,12 @@
 </script>
 
 {#snippet file_element(file: file, path: string)}
-	<li class={file.type}>
+	<li class={file.type} class:opened={file.type === "directory" && file.opened}>
 		{#if file.type === 'directory'}
 			<button onclick={() => loadFolderContent(file)}>
 				{file.name}
 			</button>
-			<ul class={file.type} class:opened={file.opened}>
+			<ul class={file.type}>
 				{#if file.opened}
 					{#each file.files as childFile}
 						{@render file_element(childFile, `${path}/${childFile.name}`)}
@@ -110,7 +110,8 @@
 		ul {
 			padding-left: 1rem;
 			&.directory {
-				border-left: 1px solid gray;
+				$color: #b3b3b3d7;
+				background: linear-gradient($color, $color) no-repeat .65rem/1px 100%;
 			}
 		}
 
@@ -118,14 +119,19 @@
 			button {
 				display: flex;
 				align-items: center;
-				gap: 0.5rem;
+				gap: 0.1rem;
 				margin: 0;
 				padding: 0;
 				font-size: 1rem;
 			}
 			&.directory button {
 				&::before {
-					@include icon-content('folder');
+					@include icon-content('chevron_right', $size: 1.7rem);
+				}
+			}
+			&.directory.opened > button {
+				&::before {
+					@include icon-content('expand_more', $size: 1.7rem);
 				}
 			}
 			&.file button {

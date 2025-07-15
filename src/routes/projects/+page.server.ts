@@ -12,17 +12,26 @@ export const load: PageServerLoad = async ({ url }) => {
 			filter = "";
 		}
 
-		let {pages, projects} = await getProjects(page, filter);
+		let { pages, projects, lastPageCount } = await getProjects(page, filter);
 		return {
 			errored: false,
-			message: '', 
+			message: '',
 			projects,
 			page,
 			totalPages: pages,
+			lastPageCount,
 			filter
 		};
 	} catch (error: any) {
 		console.error(error);
-		return { errored: true, message: error.message, projects: [], page: 1, totalPages: 0, filter: "" };
+		return {
+			errored: true,
+			message: error.message,
+			projects: [],
+			page: 1,
+			totalPages: 0,
+			lastPageCount: 0,
+			filter: ""
+		};
 	}
 }

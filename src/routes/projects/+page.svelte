@@ -1,11 +1,17 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import PageSelector from "$components/ui/pageSelector.svelte";
-	import { Button, Project } from "$ui";
+	import { Button, Modal, Project } from "$ui";
 	let { data } = $props();
+	let projects = $state(data.projects);
 
 	let searchQuery = $state(data.filter);
 	let searchTimeout: NodeJS.Timeout | null = null;
+	let errorConfirmModal: Modal.ErrorConfirm | null = $state(null);
+	let statusModal: Modal.StatusModal | null = $state(null);
+
+	let selectedProjectId: number | null = $state(null);
+
 
 	function search() {
 		if (searchQuery.length > 100) {
@@ -23,6 +29,43 @@
 				}
 			);
 		}, 300);
+	}
+
+	function onaction(action: string, projectId: number) {
+		selectedProjectId = projectId;
+		if (action === "delete") {
+			errorConfirmModal?.open();
+			return;
+		} else {
+			statusModal?.info("This action is not implemented yet.");
+		}
+	}
+
+	async function oncloseConfirmModal(shoudlDelete: boolean) {
+		if (selectedProjectId == null || !shoudlDelete) return;
+
+		let savedProjectId = selectedProjectId;
+		selectedProjectId = null;
+		const result = await fetch('/api/projects', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ projectId: savedProjectId })
+		})
+		if (result.status === 204) {
+			statusModal?.info("Project deleted successfully.");
+			data.lastPageCount--;
+			if (data.lastPageCount === 0) {
+				data.totalPages--;
+				data.lastPageCount = 30;
+			}
+			projects = projects.filter(p => p.id !== savedProjectId);
+		} else {
+			const error = await result.json();
+			console.error("Failed to delete project:", error);
+			statusModal?.error(`Failed to delete project: ${error.error}`);
+		}
 	}
 </script>
 <section class="head">
@@ -46,10 +89,10 @@
 <section class="projects">
 	{#if data.errored}
 		<p class="no-elements error">Error loading projects: {data.message}</p>
-	{:else if data.projects.length > 0}
+	{:else if projects.length > 0}
 		<div class="projects__list">
-			{#each data.projects as project (project.id)}
-				<Project {project} />
+			{#each projects as project (project.id)}
+				<Project {project} onaction={onaction} />
 			{/each}
 		</div>
 		<PageSelector
@@ -62,6 +105,15 @@
 		<p class="no-elements">No projects found.</p>
 	{/if}
 </section>
+
+<Modal.ErrorConfirm
+	title="Are you sure?"
+	onclose={oncloseConfirmModal}
+	bind:this={errorConfirmModal}
+>
+	Deleting a project is irreversible. This action will remove all associated data.
+</Modal.ErrorConfirm>
+<Modal.StatusModal bind:this={statusModal} />
 
 <style lang="scss">
 @use "$styles/mixins.scss" as *;

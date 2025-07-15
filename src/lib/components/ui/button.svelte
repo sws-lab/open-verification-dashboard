@@ -1,20 +1,21 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
 
-	type ButtonType = 'main' | 'secondary' | 'submit';
+	type ButtonType = 'main' | 'secondary' | 'submit' | 'error';
 	interface ButtonProps {
 		children: Snippet<[]>;
 		onclick?: (event?: MouseEvent) => void;
 		type?: ButtonType;
 		href?: string;
 		center?: boolean;
+		autofocus?: boolean;
 	}
 
-	let { children, onclick, type = 'main', href = '', center = false }: ButtonProps = $props();
+	let { children, onclick, type = 'main', href = '', center = false, autofocus = false }: ButtonProps = $props();
 </script>
 
 {#if href == ''}
-	<button type={type === 'submit' ? 'submit' : 'button'} class="button-{type}" class:center {onclick}>
+	<button type={type === 'submit' ? 'submit' : 'button'} class="button-{type}" class:center {onclick} autofocus={autofocus}>
 		{@render children()}
 	</button>
 {:else}
@@ -62,6 +63,18 @@
 
 		&:hover {
 			background-color: var(--accent-color-hover);
+			color: white;
+		}
+	}
+
+	.button-error {
+		color: var(--error-color);
+		background-color: white;
+		border: 1px solid var(--error-color);
+		@include base-button;
+
+		&:hover {
+			background-color: var(--error-color-hover);
 			color: white;
 		}
 	}

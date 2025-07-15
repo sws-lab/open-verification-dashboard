@@ -11,14 +11,16 @@
 
 	interface ProjectProps {
 		project: project;
+		onaction?: (action: string, id: number) => void;
 	}
 
-	let { project }: ProjectProps = $props();
+	let { project, onaction }: ProjectProps = $props();
 
 	let menu: typeof Dropdown | undefined = $state();
 
 	function elementClicked(event: ElementClicked) {
-
+		if (event.elementName == null) return;
+		onaction?.(event.elementName, project.id);
 	}
 
 </script>
@@ -48,7 +50,7 @@
 			<DropdownItem name="rename">
 				<Icon icon="drive_file_rename_outline"/> Rename
 			</DropdownItem>
-			<DropdownItem name="delete"type="risky">
+			<DropdownItem name="delete" type="risky">
 				<Icon icon="delete"/>
 				Delete
 			</DropdownItem>

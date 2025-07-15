@@ -15,15 +15,15 @@ export async function getProjects(page: number, filter: string = "") {
 		.orderBy(projects.id)
 		.limit(page_size)
 		.offset((page - 1) * page_size);
-	let totalPages = await db.select({ count: sql<number>`COUNT(*)` })
+	let totalProjects = await db.select({ count: sql<number>`COUNT(*)` })
 		.from(projects)
-		.where(whereClause)
-		.then(result =>
-			Math.ceil(result[0].count / page_size)
-		);
+		.where(whereClause);
+	let totalPages = Math.ceil(totalProjects[0].count / page_size);
+	let lastPageCount = totalProjects[0].count % page_size;
 
 	return {
 		pages: totalPages,
+		lastPageCount: lastPageCount,
 		projects: data
 	};
 }

@@ -24,3 +24,9 @@ body {
 *:focus {
 	outline: 2px solid var(--accent-color);
 }
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box; // this should be default. grrr
+}

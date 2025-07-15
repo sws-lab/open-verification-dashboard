@@ -38,13 +38,16 @@
 		"vite": "^6.2.6"
 	},
 	"dependencies": {
+		"@codemirror/lang-cpp": "^6.0.3",
 		"@fontsource-variable/manrope": "^5.2.6",
 		"@fontsource-variable/material-symbols-rounded": "^5.2.16",
+		"codemirror": "^6.0.2",
 		"drizzle-orm": "^0.40.0",
 		"formsnap": "^2.0.1",
 		"postgres": "^3.4.5",
 		"sanitize-filename": "^1.6.3",
 		"sass": "^1.89.2",
+		"svelte-codemirror-editor": "^1.4.1",
 		"svelte-outside": "^0.0.3",
 		"sveltekit-superforms": "^2.27.1",
 		"tar": "^7.4.3",

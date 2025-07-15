@@ -8,6 +8,9 @@
 	let searchTimeout: NodeJS.Timeout | null = null;
 
 	function search() {
+		if (searchQuery.length > 100) {
+			searchQuery = searchQuery.slice(0, 100);
+		}
 		if (searchTimeout) {
 			clearTimeout(searchTimeout);
 		}

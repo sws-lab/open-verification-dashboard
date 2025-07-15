@@ -7,7 +7,10 @@ export const load: PageServerLoad = async ({ url }) => {
 		if (isNaN(page) || page < 1) {
 			page = 1;
 		}
-		const filter = url.searchParams.get("filter") || "";
+		let filter = url.searchParams.get("filter") || "";
+		if (filter.length > 100) {
+			filter = "";
+		}
 
 		let {pages, projects} = await getProjects(page, filter);
 		return {

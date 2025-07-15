@@ -1,4 +1,4 @@
-import { newProjectSchema } from "$lib/formSchema/newProject";
+import { newProjectSchema } from "$lib/schemas/newProject";
 import { fail, message, superValidate } from "sveltekit-superforms";
 import { zod4 } from "sveltekit-superforms/adapters";
 import type { PageServerLoad } from "../$types";

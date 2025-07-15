@@ -12,6 +12,7 @@
 		box-shadow: 0 3px 5px rgb(0, 0, 0, 0.3);
 		position: relative;
 		z-index: 100;
+		height: var(--header-height);
 
 		h1 {
 			width: fit-content;

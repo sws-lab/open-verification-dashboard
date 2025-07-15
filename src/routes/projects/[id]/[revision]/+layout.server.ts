@@ -1,8 +1,8 @@
 import { db } from '$lib/server/db';
 import { projects } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
-import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from '../../$types';
 
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -19,6 +19,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	if (project.length === 0) {
 		error(404, { message: 'Project not found' });
 	}
+
 	const projectData = project[0];
 	return {
 		project: projectData,

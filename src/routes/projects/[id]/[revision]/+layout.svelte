@@ -1,29 +1,30 @@
 <script lang="ts">
 	let { children, data } = $props();
-	import { page } from "$app/state";
+	import { page } from '$app/state';
 
 	const tabs = [
-		{ name: "code", label: "Code" },
-		{ name: "proofObligations", label: "Proof Obligations" },
-		{ name: "settings", label: "Settings" }
+		{ name: 'code', label: 'Code' },
+		{ name: 'proofObligations', label: 'Proof Obligations' },
+		{ name: 'settings', label: 'Settings' }
 	];
 
 	let currentTab = $derived.by(() => {
-		const path = page.url.pathname.split("/");
+		const path = page.url.pathname.split('/');
 		return path[path.length - 1];
-	})	
+	});
 </script>
 
 {#snippet tabLink(page: string, label: string = page)}
-	<a 
-		href={`/projects/${data.project.id}/${data.revision}/${page}`} 
-		class:active={currentTab === page}
-		aria-current={currentTab === page ? "page" : undefined}
-		aria-label={label}
-		data-sveltekit-keepfocus
-	>
-		{label}
-	</a>
+	<li class:active={currentTab === page}>
+		<a
+			href={`/projects/${data.project.id}/${data.revision}/${page}`}
+			aria-current={currentTab === page ? 'page' : undefined}
+			aria-label={label}
+			data-sveltekit-keepfocus
+		>
+			{label}
+		</a>
+	</li>
 {/snippet}
 
 <div>
@@ -32,9 +33,7 @@
 	<nav>
 		<ul>
 			{#each tabs as tab}
-				<li>
-					{@render tabLink(tab.name, tab.label)}
-				</li>
+				{@render tabLink(tab.name, tab.label)}
 			{/each}
 		</ul>
 	</nav>
@@ -51,6 +50,7 @@
 
 	div {
 		background-color: white;
+		padding: 0 1rem;
 		font-size: 1.5rem;
 		z-index: 101;
 		position: relative;
@@ -68,19 +68,34 @@
 			}
 		}
 
-
 		nav {
 			align-self: end;
 			margin-right: 1rem;
-			ul, li {
+			ul,
+			li {
 				list-style: none;
 				margin: 0;
 				padding: 0;
-				background: red;
 			}
 			ul {
 				display: flex;
 				gap: 1rem;
+			}
+
+			li {
+				padding: 0.5rem 1rem;
+				border-radius: 0.25rem 0.25rem 0 0;
+
+				&.active {
+					border: 1px solid rgba(0, 0, 0, 0.1);
+					border-bottom: none;
+					background-color: rgba(0, 0, 0, 0.1);
+				}
+
+				a {
+					text-decoration: none;
+					color: inherit;
+				}
 			}
 		}
 	}

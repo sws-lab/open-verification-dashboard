@@ -2,7 +2,7 @@ import { pgTable, serial, varchar, text, integer, json, date } from 'drizzle-orm
 
 export const projects = pgTable('projects', {
 	id: serial('id').primaryKey(),
-	name: varchar('name', { length: 255 }).notNull().unique(),
+	name: varchar('name', { length: 100 }).notNull().unique(),
 	description: text('description').default(''),
 	revision: integer('revision').notNull().default(0)
 });
@@ -11,7 +11,7 @@ export const proofObligation = pgTable('proof_obligation', {
 	id: serial('id').primaryKey(),
 	projectId: integer('project_id').references(() => projects.id).notNull(),
 	revision: integer('revision').notNull().default(0),
-	name: varchar('name', { length: 255 }).notNull(),
+	name: varchar('name', { length: 100 }).notNull(),
 	lastUpdated: date('last_updated').notNull().defaultNow(),
 	proofObligation: json('proof_obligation').notNull(),
 });

@@ -27,7 +27,7 @@
 
 <div class="project">
 	<h3 class="project__header">
-		<a href={`/projects/${project.id}/${project.revision}`}>
+		<a href={`/projects/${project.id}/${project.revision}/code`}>
 			{project.name} <span class="project__header__id">#{project.id}</span>
 		</a>
 	</h3>
@@ -44,11 +44,11 @@
 			<Icon icon="more_vert" size="1.5rem" />
 		</button>
 		<Dropdown bind:this={menu} elementClicked={elementClicked}>
-			<DropdownItem name="edit" href={`/projects/${project.id}/${project.revision}`}>
+			<DropdownItem name="edit" href={`/projects/${project.id}/${project.revision}/code`}>
 				<Icon icon="edit_document"/> Edit
 			</DropdownItem>
-			<DropdownItem name="rename">
-				<Icon icon="drive_file_rename_outline"/> Rename
+			<DropdownItem name="settings" href={`/projects/${project.id}/${project.revision}/settings`}>
+				<Icon icon="settings"/> Settings
 			</DropdownItem>
 			<DropdownItem name="delete" type="risky">
 				<Icon icon="delete"/>

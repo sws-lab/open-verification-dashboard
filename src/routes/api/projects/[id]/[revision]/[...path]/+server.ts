@@ -6,13 +6,21 @@ import fs from "fs";
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { id, revision, path } = params;
+	if (!id || !revision) {
+		return json({ error: "Missing parameters" }, { status: 400 });
+	}
+	if (isNaN(Number(id)) || isNaN(Number(revision))) {
+		return json({ error: "Invalid project ID or revision" }, { status: 400 });
+	}
+	const projectId = Number(id);
+	const projectRevision = Number(revision);
 
 	try {
 		const project = await db.select()
 			.from(projects)
 			.where(and(
-				eq(projects.id, Number(id)),
-				gte(projects.revision, Number(revision))
+				eq(projects.id, projectId),
+				gte(projects.revision, projectRevision)
 			))
 			.limit(1)
 		if (project.length === 0) {

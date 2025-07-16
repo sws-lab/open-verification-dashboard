@@ -17,7 +17,12 @@
 		| {
 				name: string;
 				type: 'file';
-		  };
+		  }
+		| {
+			name: string;
+			type: 'error';
+			error: string;
+		};
 
 	let { baseUrl, onFileClick }: FileTreeProps = $props();
 
@@ -25,7 +30,12 @@
 
 	function load(filePath: string): Promise<file> {
 		return fetch(`${baseUrl}/${filePath}`)
-			.then((response) => response.json())
+			.then((response) => {
+				if (response.status !== 200) {
+					throw new Error(`Failed to load file: ${response.statusText}`);
+				}
+				return response.json()
+			})
 			.then((data) => {
 				if (data.type === 'directory') {
 					data.files = data.files.map((child: any) => ({
@@ -37,7 +47,13 @@
 					data.opened = true;
 				}
 				return data;
-			});
+			}).catch((error) => {
+				return {
+					name: filePath,
+					type: 'error',
+					error: error.message
+				}
+			})
 	}
 
 	function loadFolderContent(file: file) {
@@ -81,6 +97,10 @@
 					{/each}
 				{/if}
 			</ul>
+		{:else if file.type === 'error'}
+			<div class="error">
+				{file.error}
+			</div>
 		{:else}
 			<button onclick={() => onFileClick && onFileClick(path)}>
 				{file.name}
@@ -138,6 +158,12 @@
 				&::before {
 					@include icon-content('description');
 				}
+			}
+
+			&.error {
+				color: var(--error-color);
+				font-weight: bold;
+				margin: 0.5rem 0;
 			}
 		}
 	}

@@ -23,6 +23,5 @@ export const load: PageServerLoad = async ({ params }) => {
 	const projectData = project[0];
 	return {
 		project: projectData,
-		revision: revision,
 	}
 }

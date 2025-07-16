@@ -24,7 +24,7 @@
 					goto('/projects');
 					return;
 				}
-				const new_url = `/projects/${id}/0`;
+				const new_url = `/projects/${id}/0/code`;
 				console.log("Redirecting to:", new_url);
 				goto(new_url, {
 					replaceState: true,

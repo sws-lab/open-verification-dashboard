@@ -15,7 +15,7 @@
 
 	async function onFileSelected(file: string) {
 		console.log("Selected file:", file);
-		await fetch(`/api/projects/${data.project.id}/${data.revision}/${file}`)
+		await fetch(`/api/projects/${data.project.id}/${data.project.revision}/${file}`)
 			.then(response => response.json())
 			.then(content => {
 				console.log("File content loaded", content);
@@ -40,7 +40,7 @@
 	<nav class="project-view__tree">
 		<h3>Project files</h3>
 		<FileTree
-			baseUrl={`/api/projects/${data.project.id}/${data.revision}`}
+			baseUrl={`/api/projects/${data.project.id}/${data.project.revision}`}
 			onFileClick={onFileSelected}
 			/>
 	</nav>

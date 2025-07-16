@@ -17,7 +17,7 @@
 {#snippet tabLink(page: string, label: string = page)}
 	<li class:active={currentTab === page}>
 		<a
-			href={`/projects/${data.project.id}/${data.revision}/${page}`}
+			href={`/projects/${data.project.id}/${data.project.revision}/${page}`}
 			aria-current={currentTab === page ? 'page' : undefined}
 			aria-label={label}
 			data-sveltekit-keepfocus

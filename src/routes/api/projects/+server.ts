@@ -15,9 +15,6 @@ export const GET: RequestHandler = async ({ request }) => {
 	}
 	const { filter, page } = result.data;
 	try {
-		if (isNaN(page) || page < 1) {
-			return json({ error: "Invalid page number" }, { status: 400 });
-		}
 		return json(await getProjects(page, filter));
 	} catch (err: any) {
 		console.error(err);

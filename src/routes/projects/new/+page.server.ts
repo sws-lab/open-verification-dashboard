@@ -25,13 +25,13 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		let data = form.data;
-		let sources = data.sources;
+		const data = form.data;
+		const sources = data.sources;
 		if (!(sources instanceof File)) {
 			return fail(400, { form, error: "Sources must be a file." });
 		}
 
-		let sanitized = sanitize(sources.name);
+		const sanitized = sanitize(sources.name);
 		if (sanitized !== sources.name) {
 			return fail(400, { form, error: "Invalid characters in project name." });
 		}

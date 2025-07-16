@@ -1,4 +1,5 @@
-import { pgTable, serial, varchar, text, integer, json, date } from 'drizzle-orm/pg-core';
+import { error } from 'console';
+import { pgTable, serial, varchar, text, integer, json, date, unique } from 'drizzle-orm/pg-core';
 
 export const projects = pgTable('projects', {
 	id: serial('id').primaryKey(),
@@ -7,20 +8,19 @@ export const projects = pgTable('projects', {
 	revision: integer('revision').notNull().default(0)
 });
 
-export const analyzer = pgTable('analyzer', {
-	id: serial('id').primaryKey(),
-	name: varchar('name', { length: 100 }).notNull().unique(),
-});
-
 export const proofObligation = pgTable('proof_obligation', {
 	id: serial('id').primaryKey(),
 	projectId: integer('project_id').references(() => projects.id).notNull(),
 	projectRevision: integer('project_revision').notNull().default(0),
-	analyzerId: integer('analyzer_id').references(() => analyzer.id).notNull(),
-	revision: integer('revision').notNull().default(0),
-	lastUpdated: date('last_updated').notNull().defaultNow(),
+	name: varchar('name', { length: 100 }).notNull(),
+	uploadDate: date('upload_date').notNull().defaultNow(),
 	proofObligation: json('proof_obligation').notNull(),
-});
+	safe: integer('safe').notNull(),
+	warning: integer('warning').notNull(),
+	error: integer('error').notNull(),
+}, (t) => [
+	unique().on(t.name, t.projectId, t.projectRevision)
+]);
 
 export const conflict = pgTable('conflict', {
 	id: serial('id').primaryKey(),

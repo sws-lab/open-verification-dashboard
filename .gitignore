@@ -25,3 +25,6 @@ vite.config.ts.timestamp-*
 # File uploads
 projects/
 !src/**/projects/
+
+# drizzle
+drizzle/

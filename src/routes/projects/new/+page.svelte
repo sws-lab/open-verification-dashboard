@@ -55,7 +55,7 @@
 				<Label>
 					Project Name
 				</Label>
-				<input type="text" placeholder="Project Name" {...props} />
+				<input type="text" placeholder="Project Name" {...props} bind:value={$formData.name} />
 			{/snippet}
 		</Control>
 		<FieldErrors />
@@ -66,7 +66,7 @@
 				<Label>
 					Project Description
 				</Label>
-				<textarea placeholder="Project Description" {...props}></textarea>
+				<textarea placeholder="Project Description" {...props} bind:value={$formData.description}></textarea>
 			{/snippet}
 		</Control>
 		<FieldErrors />
@@ -77,7 +77,7 @@
 				<Label class="a">
 					Sources
 				</Label>
-				<input type="file" accept=".zip,.tar,.tar.gz" {...props} />
+				<input type="file" accept=".zip,.tar,.tar.gz" {...props} bind:value={$formData.sources} />
 			{/snippet}
 		</Control>
 		<FieldErrors />
@@ -113,51 +113,6 @@
 			color: red;
 			margin: 0;
 			text-align: center;
-		}
-
-		:global([data-fs-field]) {
-			font-weight: bold;
-			width: 100%;
-		}
-		
-		:global([data-fs-control]) {
-			width: 100%;
-			padding: 0.3rem 0.6rem;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			box-sizing: border-box;
-		}
-
-		:global([data-fs-label]) {
-			display: block;
-			font-weight: bold;
-			margin-bottom: 0.1rem;
-			margin-top: 1rem;
-			font-size: 1.2rem;
-		}
-
-		:global([data-fs-error]) {
-			color: var(--error-color);
-		}
-
-		:global(input[type="text"][data-fs-error]) {
-			color: inherit;
-			border-color: var(--error-color);
-			box-shadow: 0 0 2px 1px var(--error-color);
-		}
-
-		:global([data-fs-label][data-fs-error]) {
-			color: inherit;
-		}
-
-		:global(button) {
-			margin-top: 1rem;
-			margin-bottom: .7rem;
-		}
-
-		textarea {
-			resize: vertical;
-			min-height: 100px;
 		}
 	}
 

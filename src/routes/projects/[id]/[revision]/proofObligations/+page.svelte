@@ -3,12 +3,15 @@
 	import { Control, Field, FieldErrors, Label } from 'formsnap';
 	import { Button, Icon, Modal } from '$ui';
 	import { goto, invalidate } from '$app/navigation';
+	import Search from '$components/ui/search.svelte';
 
 	let { data } = $props();
 	let errorMessage = $state('');
 	let statusModal: Modal.StatusModal | null = $state(null);
-	let selectedObligations: {id: number, index: number}[] = $state([]);
-	$inspect(selectedObligations)
+	let newProofObligationModal: Modal.Modal | null = $state(null);
+
+	let selectedObligations: { id: number; index: number }[] = $state([]);
+	$inspect(selectedObligations);
 
 	const form = superForm(data.form, {
 		onResult: (form) => {
@@ -51,7 +54,7 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({ proofObligationId1, proofObligationId2 })
-			})
+			});
 			if (!response.ok) {
 				if (response.body) {
 					const errorData = await response.json();
@@ -64,7 +67,7 @@
 				return;
 			}
 			const result = await response.json();
-			const url = `/projects/${data.project.id}/${data.project.revision}/code/${result.id}`
+			const url = `/projects/${data.project.id}/${data.project.revision}/code/${result.id}`;
 			goto(url);
 		} catch (error) {
 			console.error('Error comparing proof obligations:', error);
@@ -75,15 +78,58 @@
 </script>
 
 <Modal.StatusModal bind:this={statusModal} />
+
+<Modal.Modal title="New Proof Obligation" bind:this={newProofObligationModal}>
+	{#snippet content(close)}
+		<form method="POST" use:enhance enctype="multipart/form-data">
+			{#if errorMessage}
+				<p class="global-errors">
+					{errorMessage}
+				</p>
+			{/if}
+			<Field name="name" {form}>
+				<Control>
+					{#snippet children({ props })}
+						<Label>New Analysis Name</Label>
+						<input
+							type="text"
+							placeholder="New Analysis Name"
+							{...props}
+							bind:value={$formData.name}
+						/>
+					{/snippet}
+				</Control>
+				<FieldErrors />
+			</Field>
+
+			<Field name="proofObligation" {form}>
+				<Control>
+					{#snippet children({ props })}
+						<Label>Upload Proof Obligation File</Label>
+						<input type="file" accept=".json" {...props} bind:value={$formData.proofObligation} />
+					{/snippet}
+				</Control>
+				<FieldErrors />
+			</Field>
+
+			<Button type="submit" block>Upload Proof Obligation</Button>
+
+			<Button type="secondary" block onclick={close}>Cancel</Button>
+		</form>
+	{/snippet}
+</Modal.Modal>
+
 <div class="proofObligationsView">
 	<div class="proofObligationsView__list">
 		<h3>
 			Proof Obligations - Revision {data.project.revision}
 		</h3>
+		<div class="proofObligationsView__list__searchNew">
+			<Search onsearch={() => {}} />
+			<Button onclick={newProofObligationModal?.open}>New Proof Obligation</Button>
+		</div>
 		<div class="proofObligationsView__list__content">
-			<nav class="proofObligationsView__list__content__actions">
-				TODO
-			</nav>
+			<nav class="proofObligationsView__list__content__actions"></nav>
 			{#if data.proofObligations.proofObligation.length > 0}
 				<ul>
 					{#each data.proofObligations.proofObligation as obligation, index}
@@ -93,24 +139,26 @@
 								type="checkbox"
 								id="obligation-{obligation.id}"
 								name="obligation-{obligation.id}"
-								value={{id: obligation.id, index}}
+								value={{ id: obligation.id, index }}
 								bind:group={selectedObligations}
 							/>
-							<h4 class="proofObligationsView__list__content__item__header">{obligation.name}</h4>
-							<p class="proofObligationsView__list__content__item__date">
-								Uploaded on {new Date(obligation.uploadDate).toLocaleDateString()}
-							</p>
-							<div class="proofObligationsView__list__content__item__status">
-								<div class="proofObligationsView__list__content__item__status__icon safe">
-									<Icon icon="verified" /> <span>{obligation.safe}</span>
+							<label for="obligation-{obligation.id}">
+								<h4 class="proofObligationsView__list__content__item__header">{obligation.name}</h4>
+								<p class="proofObligationsView__list__content__item__date">
+									#{obligation.id} Uploaded on {new Date(obligation.uploadDate).toLocaleDateString()}
+								</p>
+								<div class="proofObligationsView__list__content__item__status">
+									<div class="proofObligationsView__list__content__item__status__icon safe">
+										<Icon icon="verified" /> <span>{obligation.safe}</span>
+									</div>
+									<div class="proofObligationsView__list__content__item__status__icon warning">
+										<Icon icon="warning" /> <span>{obligation.warning}</span>
+									</div>
+									<div class="proofObligationsView__list__content__item__status__icon error">
+										<Icon icon="error" /> <span>{obligation.error}</span>
+									</div>
 								</div>
-								<div class="proofObligationsView__list__content__item__status__icon warning">
-									<Icon icon="warning" /> <span>{obligation.warning}</span>
-								</div>
-								<div class="proofObligationsView__list__content__item__status__icon error">
-									<Icon icon="error" /> <span>{obligation.error}</span>
-								</div>
-							</div>
+							</label>
 						</li>
 					{/each}
 				</ul>
@@ -135,47 +183,9 @@
 					</li>
 				{/each}
 			</ul>
-			<Button onclick={compareObligations}>
-				Compare
-			</Button>
+			<Button onclick={compareObligations}>Compare</Button>
 		{/if}
-
 	</div>
-
-	<form method="POST" use:enhance enctype="multipart/form-data" class="proofObligationsView__form">
-		<h3>New Proof Obligation</h3>
-		{#if errorMessage}
-			<p class="global-errors">
-				{errorMessage}
-			</p>
-		{/if}
-		<Field name="name" {form}>
-			<Control>
-				{#snippet children({ props })}
-					<Label>New Analysis Name</Label>
-					<input
-						type="text"
-						placeholder="New Analysis Name"
-						{...props}
-						bind:value={$formData.name}
-					/>
-				{/snippet}
-			</Control>
-			<FieldErrors />
-		</Field>
-
-		<Field name="proofObligation" {form}>
-			<Control>
-				{#snippet children({ props })}
-					<Label>Upload Proof Obligation File</Label>
-					<input type="file" accept=".json" {...props} bind:value={$formData.proofObligation} />
-				{/snippet}
-			</Control>
-			<FieldErrors />
-		</Field>
-
-		<Button type="submit">Upload Proof Obligation</Button>
-	</form>
 </div>
 
 <style lang="scss">
@@ -188,17 +198,18 @@
 	.proofObligationsView {
 		padding: 1rem;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: space-around;
+		align-items: center;
 		flex-wrap: wrap;
 		gap: 1rem;
 
 		&__list,
-		&__form,
 		&__compare {
 			background: white;
 			border-radius: 0.5rem;
 			padding: 1rem;
+			width: 60vw;
 		}
 
 		&__list {
@@ -209,6 +220,14 @@
 				display: flex;
 				flex-direction: column;
 			}
+
+			&__searchNew {
+				display: grid;
+				grid-template-columns: 1fr auto;
+				gap: 1rem;
+				margin-bottom: 0.3rem;
+			}
+
 			&__content {
 				border: 1px solid $border-color;
 				border-radius: 0.5rem;
@@ -222,20 +241,28 @@
 					&:first-child {
 						border-top: none;
 					}
+					
+					display: flex;
 					padding: 0.5rem 1.2rem 0.5rem 0rem;
 					list-style: none;
-					display: grid;
-					grid-template-areas:
-						'check header status'
-						'check date status';
-					grid-template-columns: auto auto 1fr;
-					max-width: 400px;
-					width: 400px;
+					max-width: 100%;
+					cursor: pointer;
+
+					label {
+						display: grid;
+						grid-template-areas:
+						'header status'
+							'date status';
+						grid-template-columns: auto 1fr;
+						width: 100%;
+						cursor: pointer;
+					}
 
 					&__checkbox {
 						grid-area: check;
 						align-self: center;
-						margin: 0rem 1rem ;
+						margin: 0rem 1rem;
+						cursor: pointer;
 					}
 
 					&__header {
@@ -272,6 +299,10 @@
 								color: var(--error-color);
 							}
 						}
+					}
+
+					&:hover {
+						background-color: #f3f3f3;
 					}
 				}
 			}

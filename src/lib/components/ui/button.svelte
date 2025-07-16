@@ -9,17 +9,18 @@
 		href?: string;
 		center?: boolean;
 		autofocus?: boolean;
+		block?: boolean;
 	}
 
-	let { children, onclick, type = 'main', href = '', center = false, autofocus = false }: ButtonProps = $props();
+	let { children, onclick, type = 'main', href = '', center = false, autofocus = false, block = false }: ButtonProps = $props();
 </script>
 
 {#if href == ''}
-	<button type={type === 'submit' ? 'submit' : 'button'} class="button-{type}" class:center {onclick} autofocus={autofocus}>
+	<button type={type === 'submit' ? 'submit' : 'button'} class="button-{type}" class:center class:block {onclick} autofocus={autofocus}>
 		{@render children()}
 	</button>
 {:else}
-	<a class="button-{type}" href={href} {onclick} class:center>
+	<a class="button-{type}" href={href} {onclick} class:center class:block>
 		{@render children()}
 	</a>
 {/if}
@@ -51,7 +52,7 @@
 		}
 	}
 
-	.button-submit {
+	.block {
 		width: 100%;
 	}
 

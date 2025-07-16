@@ -76,3 +76,11 @@ textarea {
 	resize: vertical;
 	min-height: 100px;
 }
+
+button[type="submit"] {
+	margin-top: 1rem;
+
+	+ button {
+		margin-top: .5rem;
+	}
+}

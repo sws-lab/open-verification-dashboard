@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import PageSelector from "$components/ui/pageSelector.svelte";
-	import { Button, Modal, Project } from "$ui";
+	import { Button, Modal, Project, Search } from "$ui";
 	let { data } = $props();
 	let projects = $state(data.projects);
 
 	let searchQuery = $state(data.filter);
-	let searchTimeout: NodeJS.Timeout | null = null;
 	let errorConfirmModal: Modal.ErrorConfirm | null = $state(null);
 	let statusModal: Modal.StatusModal | null = $state(null);
 
@@ -14,21 +13,13 @@
 
 
 	function search() {
-		if (searchQuery.length > 100) {
-			searchQuery = searchQuery.slice(0, 100);
-		}
-		if (searchTimeout) {
-			clearTimeout(searchTimeout);
-		}
-		searchTimeout = setTimeout(() => {
-			goto(
-				`/projects/?page=${data.page}&filter=${encodeURIComponent(searchQuery)}`,
-				{
-					keepFocus: true,
-					replaceState: true
-				}
-			);
-		}, 300);
+		goto(
+			`/projects/?page=${data.page}&filter=${encodeURIComponent(searchQuery)}`,
+			{
+				keepFocus: true,
+				replaceState: true
+			}
+		);
 	}
 
 	function onaction(action: string, projectId: number) {
@@ -72,15 +63,9 @@
 	<h2>
 		Projects
 	</h2>
-
-	<nav class="search">
-		<input 
-			type="text"
-			placeholder="Filter" 
-			bind:value={searchQuery} 
-			oninput={search}/>
-	</nav>
-
+	<div class="search">
+		<Search searchQuery={searchQuery} onsearch={search} />
+	</div>
 	<Button type="main" href="/projects/new">
 		New Project
 	</Button>
@@ -138,22 +123,7 @@ section {
 	}
 
 	.search {
-		display: flex;
-		align-items: center;
-		padding: 0.3rem 0.6rem;
-		border: 1px solid #ccc;
-		border-radius: 4px;
 		width: max(200px, 30vw);
-		input {
-			width: 100%;
-			border: none;
-			outline: none;
-			font-size: 1rem;
-			margin-left: 0.5rem;
-		}
-		&::before {
-			@include icon-content('search', $size: 1.5rem);
-		}
 	}
 }
 

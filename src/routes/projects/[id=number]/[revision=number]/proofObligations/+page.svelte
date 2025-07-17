@@ -3,7 +3,7 @@
 	import { Control, Field, FieldErrors, Label } from 'formsnap';
 	import { Button, Icon, Modal, PageSelector } from '$ui';
 	import { goto, invalidate } from '$app/navigation';
-	import { SvelteSet } from "svelte/reactivity";
+	import { SvelteSet } from 'svelte/reactivity';
 	import Search from '$components/ui/search.svelte';
 
 	let { data } = $props();
@@ -43,13 +43,19 @@
 	const { form: formData, enhance, message } = form;
 
 	async function compareObligations() {
-		if (selectedObligations.size !== 2) {
+		if (selectedObligations.size !== 2 || allSelected) {
 			statusModal?.error('Please select exactly two proof obligations to compare.');
 			return;
 		}
 		let entries = selectedObligations.entries();
-		const proofObligationId1 = entries.next().value[0];
-		const proofObligationId2 = entries.next().value[0];
+		const entry1 = entries.next().value;
+		const entry2 = entries.next().value;
+		if (!entry1 || !entry2) {
+			statusModal?.error('Could not retrieve selected proof obligations.');
+			return;
+		}
+		const proofObligationId1 = entry1[0];
+		const proofObligationId2 = entry2[0];
 		try {
 			const response = await fetch(`/api/proofObligations/compare`, {
 				method: 'POST',
@@ -86,21 +92,22 @@
 		);
 	}
 
-	function selectObligation(id: number, event: Event & {currentTarget: EventTarget & HTMLInputElement}) {
+	function selectObligation(
+		id: number,
+		event: Event & { currentTarget: EventTarget & HTMLInputElement }
+	) {
 		const checked = event.currentTarget.checked;
-		if (checked) {
+		if ((checked && !allSelected) || (allSelected && !checked)) {
 			selectedObligations.add(id);
 		} else {
 			selectedObligations.delete(id);
 		}
 	}
 
-	function selectAll(event: Event & {currentTarget: EventTarget & HTMLInputElement}) {
+	function selectAll(event: Event & { currentTarget: EventTarget & HTMLInputElement }) {
 		const checked = event.currentTarget.checked;
 		allSelected = checked;
-		if (!checked) {
-			selectedObligations.clear();
-		}			
+		selectedObligations.clear();
 	}
 </script>
 
@@ -162,18 +169,28 @@
 					id="select-all"
 					name="select-all"
 					checked={allSelected}
-					indeterminate={selectedObligations.size > 0 && !allSelected}
+					indeterminate={selectedObligations.size > 0}
 					onchange={selectAll}
-					/>
+				/>
 				<span>
 					{#if selectedObligations.size == 0 && !allSelected}
 						{data.proofObligations.proofObligationsCount} proof obligations found
 					{:else if allSelected}
-						{data.proofObligations.proofObligationsCount}/{data.proofObligations.proofObligationsCount} selected
+						{data.proofObligations.proofObligationsCount - selectedObligations.size}/{data
+							.proofObligations.proofObligationsCount} selected
 					{:else}
 						{selectedObligations.size}/{data.proofObligations.proofObligationsCount} selected
 					{/if}
 				</span>
+				<div class="proofObligationsView__list__content__actions__spacer">&nbsp;</div>
+				<Button type="error" disabled={selectedObligations.size === 0 && !allSelected} slim>
+					<Icon icon="delete" />
+					Delete
+				</Button>
+				<Button type="secondary" disabled={selectedObligations.size !== 2} slim>
+					<Icon icon="compare" />
+					Compare
+				</Button>
 			</nav>
 			{#if data.proofObligations.proofObligationsCount > 0}
 				<ul>
@@ -272,11 +289,17 @@
 
 				&__actions {
 					border-bottom: 1px solid $border-color;
-					padding: 0.5rem 1rem;
+					padding: 0.4rem 1rem;
+					display: flex;
+					align-items: center;
+					gap: 0.5rem;
+
+					&__spacer {
+						flex-grow: 1;
+					}
 
 					input[type='checkbox'] {
 						margin: 0;
-						margin-right: 0.5rem;
 					}
 				}
 

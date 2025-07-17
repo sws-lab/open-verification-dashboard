@@ -16,21 +16,29 @@ export async function getProofObligation(page: number, projectId: number, revisi
 		filterClause
 	)
 
-	let data = await db.select()
+	let data = await db.select({
+		id: proofObligation.id,
+		name: proofObligation.name,
+		safe: proofObligation.safe,
+		warning: proofObligation.warning,
+		error: proofObligation.error,
+		uploadDate: proofObligation.uploadDate,
+	})
 		.from(proofObligation)
 		.where(whereClause)
 		.orderBy(proofObligation.id)
 		.limit(page_size)
 		.offset((page - 1) * page_size);
-	let totalProofObligation = await db.select({ count: sql<number>`COUNT(*)` })
+	let proofObligationsCount = await db.select({ count: sql<number>`COUNT(*)` })
 		.from(proofObligation)
 		.where(whereClause);
-	let totalPages = Math.ceil(totalProofObligation[0].count / page_size);
-	let lastPageCount = totalProofObligation[0].count % page_size;
+	let totalPages = Math.ceil(proofObligationsCount[0].count / page_size);
+	let lastPageCount = proofObligationsCount[0].count % page_size;
 
 	return {
-		pages: totalPages,
-		lastPageCount: lastPageCount,
+		totalPages,
+		lastPageCount,
+		proofObligationsCount: proofObligationsCount[0].count,
 		proofObligation: data
 	};
 }

@@ -3,7 +3,6 @@
 	import PageSelector from "$components/ui/pageSelector.svelte";
 	import { Button, Modal, Project, Search } from "$ui";
 	let { data } = $props();
-	let projects = $state(data.projects);
 
 	let searchQuery = $state(data.filter);
 	let errorConfirmModal: Modal.ErrorConfirm | null = $state(null);
@@ -12,8 +11,14 @@
 	let selectedProjectId: number | null = $state(null);
 
 
-	function search() {
-		invalidate("app:projects");
+	function search(searchQuery: string) {
+		goto(
+			`/projects/?page=${data.page}&filter=${encodeURIComponent(searchQuery)}`,
+			{
+				keepFocus: true,
+				replaceState: true
+			}
+		);
 	}
 
 	function onaction(action: string, projectId: number) {
@@ -63,9 +68,9 @@
 <section class="projects">
 	{#if data.errored}
 		<p class="no-elements error">Error loading projects: {data.message}</p>
-	{:else if projects.length > 0}
+	{:else if data.projects.length > 0}
 		<div class="projects__list">
-			{#each projects as project (project.id)}
+			{#each data.projects as project (project.id)}
 				<Project {project} onaction={onaction} />
 			{/each}
 		</div>

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms';
+	import { superForm, type ChangeEvent } from 'sveltekit-superforms';
 	import { Control, Field, FieldErrors, Label } from 'formsnap';
-	import { Button, Icon, Modal } from '$ui';
+	import { Button, Icon, Modal, PageSelector } from '$ui';
 	import { goto, invalidate } from '$app/navigation';
+	import { SvelteSet } from "svelte/reactivity";
 	import Search from '$components/ui/search.svelte';
 
 	let { data } = $props();
@@ -10,8 +11,8 @@
 	let statusModal: Modal.StatusModal | null = $state(null);
 	let newProofObligationModal: Modal.Modal | null = $state(null);
 
-	let selectedObligations: { id: number; index: number }[] = $state([]);
-	$inspect(selectedObligations);
+	let selectedObligations: SvelteSet<number> = $state(new SvelteSet());
+	let allSelected = $state(false);
 
 	const form = superForm(data.form, {
 		onResult: (form) => {
@@ -42,12 +43,13 @@
 	const { form: formData, enhance, message } = form;
 
 	async function compareObligations() {
-		if (selectedObligations.length !== 2) {
+		if (selectedObligations.size !== 2) {
 			statusModal?.error('Please select exactly two proof obligations to compare.');
 			return;
 		}
-		const proofObligationId1 = selectedObligations[0].id;
-		const proofObligationId2 = selectedObligations[1].id;
+		let entries = selectedObligations.entries();
+		const proofObligationId1 = entries.next().value[0];
+		const proofObligationId2 = entries.next().value[0];
 		try {
 			const response = await fetch(`/api/proofObligations/compare`, {
 				method: 'POST',
@@ -75,6 +77,30 @@
 			statusModal?.error('Failed to compare proof obligations. Please try again.');
 			return;
 		}
+	}
+
+	function onsearch(searchQuery: string) {
+		goto(
+			`/projects/${data.project.id}/${data.project.revision}/proofObligations?page=1&filter=${encodeURIComponent(searchQuery)}`,
+			{ keepFocus: true, replaceState: true }
+		);
+	}
+
+	function selectObligation(id: number, event: Event & {currentTarget: EventTarget & HTMLInputElement}) {
+		const checked = event.currentTarget.checked;
+		if (checked) {
+			selectedObligations.add(id);
+		} else {
+			selectedObligations.delete(id);
+		}
+	}
+
+	function selectAll(event: Event & {currentTarget: EventTarget & HTMLInputElement}) {
+		const checked = event.currentTarget.checked;
+		allSelected = checked;
+		if (!checked) {
+			selectedObligations.clear();
+		}			
 	}
 </script>
 
@@ -126,12 +152,30 @@
 			Proof Obligations - Revision {data.project.revision}
 		</h3>
 		<div class="proofObligationsView__list__searchNew">
-			<Search onsearch={() => {}} />
+			<Search {onsearch} searchQuery={data.proofObligations.filter} />
 			<Button onclick={newProofObligationModal?.open}>New Proof Obligation</Button>
 		</div>
 		<div class="proofObligationsView__list__content">
-			<nav class="proofObligationsView__list__content__actions"></nav>
-			{#if data.proofObligations.proofObligation.length > 0}
+			<nav class="proofObligationsView__list__content__actions">
+				<input
+					type="checkbox"
+					id="select-all"
+					name="select-all"
+					checked={allSelected}
+					indeterminate={selectedObligations.size > 0 && !allSelected}
+					onchange={selectAll}
+					/>
+				<span>
+					{#if selectedObligations.size == 0 && !allSelected}
+						{data.proofObligations.proofObligationsCount} proof obligations found
+					{:else if allSelected}
+						{data.proofObligations.proofObligationsCount}/{data.proofObligations.proofObligationsCount} selected
+					{:else}
+						{selectedObligations.size}/{data.proofObligations.proofObligationsCount} selected
+					{/if}
+				</span>
+			</nav>
+			{#if data.proofObligations.proofObligationsCount > 0}
 				<ul>
 					{#each data.proofObligations.proofObligation as obligation, index}
 						<li class="proofObligationsView__list__content__item">
@@ -141,12 +185,16 @@
 								id="obligation-{obligation.id}"
 								name="obligation-{obligation.id}"
 								value={{ id: obligation.id, index }}
-								bind:group={selectedObligations}
+								group="obligations"
+								checked={selectedObligations.has(obligation.id) || allSelected}
+								onchange={(e) => selectObligation(obligation.id, e)}
 							/>
 							<label for="obligation-{obligation.id}">
 								<h4 class="proofObligationsView__list__content__item__header">{obligation.name}</h4>
 								<p class="proofObligationsView__list__content__item__date">
-									#{obligation.id} Uploaded on {new Date(obligation.uploadDate).toLocaleDateString()}
+									#{obligation.id} Uploaded on {new Date(
+										obligation.uploadDate
+									).toLocaleDateString()}
 								</p>
 								<div class="proofObligationsView__list__content__item__status">
 									<div class="proofObligationsView__list__content__item__status__icon safe">
@@ -164,28 +212,17 @@
 					{/each}
 				</ul>
 			{:else}
-				<p class="proofObligationsView__list__content__item__no-items">No proof obligations found for this revision.</p>
+				<p class="proofObligationsView__list__content__item__no-items">
+					No proof obligations found for this revision.
+				</p>
 			{/if}
 		</div>
-	</div>
-
-	<div class="proofObligationsView__compare">
-		<h3>Compare two Proof Obligations</h3>
-		{#if selectedObligations.length < 2}
-			<p>Please select two proof obligations to compare.</p>
-		{:else if selectedObligations.length > 2}
-			<p>You can only compare two proof obligations at a time.</p>
-		{:else}
-			<p>Comparing:</p>
-			<ul>
-				{#each selectedObligations as obligation}
-					<li>
-						{data.proofObligations.proofObligation[obligation.index].name}
-					</li>
-				{/each}
-			</ul>
-			<Button onclick={compareObligations}>Compare</Button>
-		{/if}
+		<PageSelector
+			href="/projects/{data.project.id}/{data.project.revision}/proofObligations"
+			currentPage={data.proofObligations.page}
+			totalPages={data.proofObligations.totalPages}
+			params={{ filter: data.proofObligations.filter }}
+		/>
 	</div>
 </div>
 
@@ -233,13 +270,14 @@
 				border: 1px solid $border-color;
 				border-radius: 0.5rem;
 
-				&__no-items {
-					margin: 2rem;
-				}
-
 				&__actions {
 					border-bottom: 1px solid $border-color;
 					padding: 0.5rem 1rem;
+
+					input[type='checkbox'] {
+						margin: 0;
+						margin-right: 0.5rem;
+					}
 				}
 
 				&__item {
@@ -247,7 +285,7 @@
 					&:first-child {
 						border-top: none;
 					}
-					
+
 					display: flex;
 					padding: 0.5rem 1.2rem 0.5rem 0rem;
 					list-style: none;
@@ -257,11 +295,15 @@
 					label {
 						display: grid;
 						grid-template-areas:
-						'header status'
+							'header status'
 							'date status';
 						grid-template-columns: auto 1fr;
 						width: 100%;
 						cursor: pointer;
+					}
+
+					&__no-items {
+						margin: 2rem;
 					}
 
 					&__checkbox {

@@ -9,15 +9,28 @@ import { error } from "@sveltejs/kit";
 import { ProofObligationSchema } from "$lib/schemas/proofObligations";
 
 
-export const load: PageServerLoad = async ({ parent, depends }) => {
+export const load: PageServerLoad = async ({ url, parent, depends }) => {
 	depends("app:proofObligations");
 	const { project } = await parent();
 
+	let page = parseInt(url.searchParams.get("page") || "1", 10);
+	if (isNaN(page) || page < 1) {
+		page = 1;
+	}
+	let filter = url.searchParams.get("filter") || "";
+	if (filter.length > 100) {
+		filter = "";
+	}
+
 	try {
-		const proofObligations = await getProofObligation(1, project.id, project.revision);
+		const proofObligations = await getProofObligation(page, project.id, project.revision, filter);
 		return {
 			project,
-			proofObligations,
+			proofObligations:{
+				...proofObligations,
+				page,
+				filter
+			},
 			form: await superValidate(zod4(newProofObligationSchema))
 		}
 	} catch (err) {

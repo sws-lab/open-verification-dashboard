@@ -13,7 +13,7 @@
 		position: relative;
 		z-index: 100;
 		height: var(--header-height);
-		padding: 0 3rem;
+		padding: 0 1rem;
 
 		h1 {
 			width: fit-content;

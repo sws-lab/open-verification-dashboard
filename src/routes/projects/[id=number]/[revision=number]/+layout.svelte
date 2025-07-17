@@ -48,6 +48,11 @@
 		max-height: 100vh;
 	}
 
+	:global(header) {
+		height: 0px !important;
+		margin-bottom: -2px;
+	}
+
 	div {
 		background-color: white;
 		padding: 0 1rem;
@@ -62,9 +67,10 @@
 
 		h2 {
 			margin: 0;
+			color: var(--accent-color);
 			span {
-				font-size: 1.27rem;
-				color: var(--color-secondary-text);
+				font-size: 1rem;
+				color: var(--secondary-font-color);
 			}
 		}
 
@@ -101,7 +107,7 @@
 	}
 
 	section {
-		max-height: calc(100vh - calc(var(--tools-height) + var(--header-height)));
+		max-height: calc(100vh - calc(var(--tools-height)));
 		height: 100%;
 		width: 100vw;
 	}

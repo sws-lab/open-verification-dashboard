@@ -43,15 +43,8 @@ export const actions = {
 			return fail(400, { form: message(form, "File size exceeds the maximum limit of 10 MB.") });
 		}
 
-		if (!params.id || !params.revision) {
-			return fail(400, { form: form, error: "Project ID and revision are required." });
-		}
 		const id = parseInt(params.id);
 		const revision = parseInt(params.revision);
-		if (isNaN(id) || isNaN(revision)) {
-			return fail(400, { form: form, error: "Invalid project ID or revision." });
-		}
-
 		try {
 			const proofObligationJSON = await sources.text();
 			const json = ProofObligationSchema.safeParse(JSON.parse(proofObligationJSON));

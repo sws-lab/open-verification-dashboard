@@ -1,5 +1,4 @@
-import { error } from 'console';
-import { pgTable, serial, varchar, text, integer, json, date, unique } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, text, integer, date, unique, jsonb } from 'drizzle-orm/pg-core';
 
 export const projects = pgTable('projects', {
 	id: serial('id').primaryKey(),
@@ -14,7 +13,7 @@ export const proofObligation = pgTable('proof_obligation', {
 	projectRevision: integer('project_revision').notNull().default(0),
 	name: varchar('name', { length: 100 }).notNull(),
 	uploadDate: date('upload_date').notNull().defaultNow(),
-	proofObligation: json('proof_obligation').notNull(),
+	proofObligation: jsonb('proof_obligation').notNull(),
 	safe: integer('safe').notNull(),
 	warning: integer('warning').notNull(),
 	error: integer('error').notNull(),
@@ -28,7 +27,7 @@ export const conflict = pgTable('conflict', {
 	projectRevision: integer('revision').notNull().default(0),
 	proofObligationId1: integer('proof_obligation_id_1').references(() => proofObligation.id).notNull(),
 	proofObligationId2: integer('proof_obligation_id_2').references(() => proofObligation.id).notNull(),
-	conflicts: json('conflicts').notNull(),
+	conflicts: jsonb('conflicts').notNull(),
 	lastUpdated: date('last_updated').notNull().defaultNow(),
 });
 

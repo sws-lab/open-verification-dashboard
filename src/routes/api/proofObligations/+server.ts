@@ -7,7 +7,7 @@ import { json } from "@sveltejs/kit";
 export const GET: RequestHandler = async ({ request }) => {
 	const result = await checkApiSchema(request, checks.GET);
 	if (!result.success) {
-		return new Response(JSON.stringify(result), { status: 400 });
+		return json(result, { status: 400 });
 	}
 	const { page, projectId, revision, filter } = result.data;
 	try {

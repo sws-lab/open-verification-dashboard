@@ -27,6 +27,7 @@
 					errorMessage = '';
 				}
 			} else if (form.result.type == 'success') {
+				newProofObligationModal?.close();
 				statusModal?.success('Analysis uploaded successfully!');
 				errorMessage = '';
 				invalidate('app:proofObligations');
@@ -163,7 +164,7 @@
 					{/each}
 				</ul>
 			{:else}
-				<p>No proof obligations found for this revision.</p>
+				<p class="proofObligationsView__list__content__item__no-items">No proof obligations found for this revision.</p>
 			{/if}
 		</div>
 	</div>
@@ -231,6 +232,11 @@
 			&__content {
 				border: 1px solid $border-color;
 				border-radius: 0.5rem;
+
+				&__no-items {
+					margin: 2rem;
+				}
+
 				&__actions {
 					border-bottom: 1px solid $border-color;
 					padding: 0.5rem 1rem;

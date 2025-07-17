@@ -43,16 +43,6 @@
 </section>
 
 <style lang="scss">
-	:global(body) {
-		height: 100vh;
-		max-height: 100vh;
-	}
-
-	:global(header) {
-		height: 0px !important;
-		margin-bottom: -2px;
-	}
-
 	div {
 		background-color: white;
 		padding: 0 1rem;
@@ -107,8 +97,7 @@
 	}
 
 	section {
-		max-height: calc(100vh - calc(var(--tools-height)));
-		height: 100%;
+		height: calc(100vh - calc(var(--tools-height) + var(--header-height)));
 		width: 100vw;
 	}
 </style>

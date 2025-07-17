@@ -11,7 +11,7 @@
 	--warning-color: #ff9800;
 	--safe-color: #4caf50;
 
-	--header-height: 5.7rem;
+	--header-height: 3.7rem;
 	--tools-height: 80px;
 }
 
@@ -24,6 +24,7 @@ body {
 	color: var(--main-font-color);
 	border: none;
 	margin: 0;
+	min-height: 100vh;
 }
 
 *:focus {
@@ -80,7 +81,7 @@ textarea {
 button[type="submit"] {
 	margin-top: 1rem;
 
-	+ button {
+	+ button, + a {
 		margin-top: .5rem;
 	}
 }

@@ -1,7 +1,8 @@
 import type { PageServerLoad } from "./$types";
 import { getProjects } from "$lib/server/db/projectPages";
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, depends }) => {
+	depends("app:projects");
 	try {
 		let page = parseInt(url.searchParams.get("page") || "1", 10);
 		if (isNaN(page) || page < 1) {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	import { goto, invalidate } from "$app/navigation";
 	import PageSelector from "$components/ui/pageSelector.svelte";
 	import { Button, Modal, Project, Search } from "$ui";
 	let { data } = $props();
@@ -13,13 +13,7 @@
 
 
 	function search() {
-		goto(
-			`/projects/?page=${data.page}&filter=${encodeURIComponent(searchQuery)}`,
-			{
-				keepFocus: true,
-				replaceState: true
-			}
-		);
+		invalidate("app:projects");
 	}
 
 	function onaction(action: string, projectId: number) {
@@ -46,12 +40,7 @@
 		})
 		if (result.status === 204) {
 			statusModal?.info("Project deleted successfully.");
-			data.lastPageCount--;
-			if (data.lastPageCount === 0) {
-				data.totalPages--;
-				data.lastPageCount = 30;
-			}
-			projects = projects.filter(p => p.id !== savedProjectId);
+			invalidate("app:projects");
 		} else {
 			const error = await result.json();
 			console.error("Failed to delete project:", error);

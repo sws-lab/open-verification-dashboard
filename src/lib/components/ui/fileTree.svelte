@@ -90,11 +90,13 @@
 			</button>
 			<ul class={file.type}>
 				{#if file.opened}
-					{#each file.files as childFile}
-						{@render file_element(childFile, `${path}/${childFile.name}`)}
+					{#if file.loaded}
+						{#each file.files as childFile}
+							{@render file_element(childFile, `${path}/${childFile.name}`)}
+						{/each}
 					{:else}
 						<li>Loading...</li>
-					{/each}
+					{/if}
 				{/if}
 			</ul>
 		{:else if file.type === 'error'}
@@ -110,8 +112,10 @@
 {/snippet}
 
 <ul class="file-tree">
-	{#if rootFile}
-		{@render file_element(rootFile, '')}
+	{#if rootFile && rootFile.type === 'directory' && rootFile.loaded}
+		{#each rootFile.files as file}
+			{@render file_element(file, file.type === 'directory' ? file.name : '')}
+		{/each}
 	{:else}
 		<li>Loading...</li>
 	{/if}

@@ -7,6 +7,11 @@ export const GET = z.object({
 	revision: z.number().int().positive()
 }).strict();
 
+export const DELETE = z.object({
+	ids: z.array(z.number().int().positive()),
+	reversed: z.boolean().default(false),
+}).strict();
+
 const range = z.object({
 	file: z.string().max(200).optional(),
 	line: z.number().int().nonnegative().optional(),

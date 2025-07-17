@@ -10,9 +10,15 @@
 	let errorMessage = $state('');
 	let statusModal: Modal.StatusModal | null = $state(null);
 	let newProofObligationModal: Modal.Modal | null = $state(null);
+	let confirmDeleteModal: Modal.ErrorConfirm | null = $state(null);
 
 	let selectedObligations: SvelteSet<number> = $state(new SvelteSet());
 	let allSelected = $state(false);
+	let selectedCount = $derived(
+		allSelected
+			? data.proofObligations.proofObligationsCount - selectedObligations.size
+			: selectedObligations.size
+	);
 
 	const form = superForm(data.form, {
 		onResult: (form) => {
@@ -109,9 +115,44 @@
 		allSelected = checked;
 		selectedObligations.clear();
 	}
+
+	function deleteSelectedObligations(confirmed: boolean) {
+		if (!confirmed) return;
+		fetch('/api/proofObligations', {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				ids: Array.from(selectedObligations),
+				reversed: allSelected,
+			})
+		}).then(response => {
+			if (!response.ok) {
+				statusModal?.error('Failed to delete proof obligations. Please try again.');
+				return;
+			} else {
+				invalidate('app:proofObligations');
+			}
+			selectedObligations.clear();
+			allSelected = false;
+		}).catch(error => {
+			console.error('Error deleting proof obligations:', error);
+			statusModal?.error('Failed to delete proof obligations. Please try again.');
+		})
+	}
 </script>
 
 <Modal.StatusModal bind:this={statusModal} />
+<Modal.ErrorConfirm
+	bind:this={confirmDeleteModal}
+	title="Delete Proof Obligations"
+	onclose={deleteSelectedObligations}
+>
+	{selectedCount} proof obligations will be deleted.<br/>
+	Are you sure you want to delete the selected proof obligations?<br/>
+	This action cannot be undone.<br/>
+</Modal.ErrorConfirm>
 
 <Modal.Modal title="New Proof Obligation" bind:this={newProofObligationModal}>
 	{#snippet content(close)}
@@ -175,19 +216,21 @@
 				<span>
 					{#if selectedObligations.size == 0 && !allSelected}
 						{data.proofObligations.proofObligationsCount} proof obligations found
-					{:else if allSelected}
-						{data.proofObligations.proofObligationsCount - selectedObligations.size}/{data
-							.proofObligations.proofObligationsCount} selected
 					{:else}
-						{selectedObligations.size}/{data.proofObligations.proofObligationsCount} selected
+						{selectedCount}/{data.proofObligations.proofObligationsCount} selected
 					{/if}
 				</span>
 				<div class="proofObligationsView__list__content__actions__spacer">&nbsp;</div>
-				<Button type="error" disabled={selectedObligations.size === 0 && !allSelected} slim>
+				<Button
+					type="error"
+					disabled={selectedObligations.size === 0 && !allSelected}
+					slim
+					onclick={() => confirmDeleteModal?.open()}
+				>
 					<Icon icon="delete" />
 					Delete
 				</Button>
-				<Button type="secondary" disabled={selectedObligations.size !== 2} slim>
+				<Button type="secondary" disabled={selectedObligations.size !== 2} slim onclick={compareObligations}>
 					<Icon icon="compare" />
 					Compare
 				</Button>

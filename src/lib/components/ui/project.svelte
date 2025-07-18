@@ -1,6 +1,6 @@
 <script lang="ts">
-	import {Dropdown, DropdownItem} from "$ui";
-	import type { ElementClicked } from "./dropdown/dropdown.svelte";
+	import { Dropdown, DropdownItem } from '$ui';
+	import type { ElementClicked } from './dropdown/dropdown.svelte';
 	import Icon from './icon.svelte';
 	type project = {
 		id: number;
@@ -22,7 +22,6 @@
 		if (event.elementName == null) return;
 		onaction?.(event.elementName, project.id);
 	}
-
 </script>
 
 <div class="project">
@@ -31,27 +30,19 @@
 			{project.name} <span class="project__header__id">#{project.id}</span>
 		</a>
 	</h3>
-	<nav 
-		class="project__actions" 
-		aria-label="Project actions"
-		>
-		<button 
-			onclick={menu?.show}
-			aria-haspopup="true"
-			aria-expanded="false"
-			aria-controls="+li"
-		>
+	<nav class="project__actions" aria-label="Project actions">
+		<button onclick={menu?.show} aria-haspopup="true" aria-expanded="false" aria-controls="+li">
 			<Icon icon="more_vert" size="1.5rem" />
 		</button>
-		<Dropdown bind:this={menu} elementClicked={elementClicked}>
+		<Dropdown bind:this={menu} {elementClicked}>
 			<DropdownItem name="edit" href={`/projects/${project.id}/${project.revision}/code`}>
-				<Icon icon="edit_document"/> Edit
+				<Icon icon="edit_document" /> Edit
 			</DropdownItem>
 			<DropdownItem name="settings" href={`/projects/${project.id}/${project.revision}/settings`}>
-				<Icon icon="settings"/> Settings
+				<Icon icon="settings" /> Settings
 			</DropdownItem>
 			<DropdownItem name="delete" type="risky">
-				<Icon icon="delete"/>
+				<Icon icon="delete" />
 				Delete
 			</DropdownItem>
 		</Dropdown>

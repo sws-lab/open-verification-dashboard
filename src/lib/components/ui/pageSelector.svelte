@@ -18,15 +18,18 @@
 	}: PageSelectorProps = $props();
 
 	let minVisible = $derived(
-		Math.max(2, Math.min(
-			totalPages - maxVisiblePages + 2,
-			currentPage - Math.floor((maxVisiblePages - 2) / 2))
+		Math.max(
+			2,
+			Math.min(
+				totalPages - maxVisiblePages + 2,
+				currentPage - Math.floor((maxVisiblePages - 2) / 2)
+			)
 		)
 	);
 	let maxVisible = $derived(
-		Math.min(totalPages - 1, Math.max(
-			maxVisiblePages - 1,
-			 currentPage + Math.floor((maxVisiblePages - 2) / 2))
+		Math.min(
+			totalPages - 1,
+			Math.max(maxVisiblePages - 1, currentPage + Math.floor((maxVisiblePages - 2) / 2))
 		)
 	);
 	let visibleCount = $derived(maxVisible - minVisible + 1);
@@ -111,8 +114,9 @@
 			padding: 0.5rem 0.75rem;
 
 			li {
-
-				&.ellipsis, &.next, &.prev {
+				&.ellipsis,
+				&.next,
+				&.prev {
 					display: flex;
 					align-items: center;
 					justify-content: center;

@@ -1,16 +1,16 @@
-import type { PageServerLoad } from "./$types";
-import { getProjects } from "$lib/server/db/projectPages";
+import type { PageServerLoad } from './$types';
+import { getProjects } from '$lib/server/db/projectPages';
 
 export const load: PageServerLoad = async ({ url, depends }) => {
-	depends("app:projects");
+	depends('app:projects');
 	try {
-		let page = parseInt(url.searchParams.get("page") || "1", 10);
+		let page = parseInt(url.searchParams.get('page') || '1', 10);
 		if (isNaN(page) || page < 1) {
 			page = 1;
 		}
-		let filter = url.searchParams.get("filter") || "";
+		let filter = url.searchParams.get('filter') || '';
 		if (filter.length > 100) {
-			filter = "";
+			filter = '';
 		}
 
 		let { pages, projects, lastPageCount } = await getProjects(page, filter);
@@ -32,7 +32,7 @@ export const load: PageServerLoad = async ({ url, depends }) => {
 			page: 1,
 			totalPages: 0,
 			lastPageCount: 0,
-			filter: ""
+			filter: ''
 		};
 	}
-}
+};

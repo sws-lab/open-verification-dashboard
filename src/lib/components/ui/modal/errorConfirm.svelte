@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
-	import { Modal } from ".";
-	import Button from "../button.svelte";
+	import type { Snippet } from 'svelte';
+	import { Modal } from '.';
+	import Button from '../button.svelte';
 
 	interface ErrorConfirmProps {
 		title: string;
@@ -9,7 +9,7 @@
 		children: Snippet<[]>;
 	}
 
-	let {title, onclose, children}: ErrorConfirmProps = $props();
+	let { title, onclose, children }: ErrorConfirmProps = $props();
 
 	let modal: Modal | null = $state(null);
 
@@ -18,20 +18,16 @@
 	}
 
 	function customOnClose(returnValue: string) {
-		onclose(returnValue === "true");
+		onclose(returnValue === 'true');
 	}
 </script>
 
-<Modal title={title} onclose={customOnClose} bind:this={modal}>
+<Modal {title} onclose={customOnClose} bind:this={modal}>
 	{#snippet content(close)}
 		{@render children()}
 		<nav class="actions">
-			<Button type="error" onclick={() => close(true)}>
-				Ok
-			</Button>
-			<Button type="main" onclick={() => close(false)} autofocus>
-				Cancel
-			</Button>
+			<Button type="error" onclick={() => close(true)}>Ok</Button>
+			<Button type="main" onclick={() => close(false)} autofocus>Cancel</Button>
 		</nav>
 	{/snippet}
 </Modal>

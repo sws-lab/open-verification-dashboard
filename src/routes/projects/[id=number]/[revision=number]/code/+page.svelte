@@ -1,29 +1,32 @@
 <script lang="ts">
-	import type { EditorView } from "codemirror";
-	import CodeMirror from "svelte-codemirror-editor";
+	import type { EditorView } from 'codemirror';
+	import CodeMirror from 'svelte-codemirror-editor';
 	import {
-		indentOnInput, syntaxHighlighting, defaultHighlightStyle,
-		bracketMatching, foldGutter,
-	} from "@codemirror/language"
-	import { lineNumbers } from "@codemirror/view";
-	import {cpp} from "@codemirror/lang-cpp"
-	import { FileTree } from "$ui";
+		indentOnInput,
+		syntaxHighlighting,
+		defaultHighlightStyle,
+		bracketMatching,
+		foldGutter
+	} from '@codemirror/language';
+	import { lineNumbers } from '@codemirror/view';
+	import { cpp } from '@codemirror/lang-cpp';
+	import { FileTree } from '$ui';
 
 	let { data } = $props();
 
 	let editor: EditorView | null = $state(null);
 
 	async function onFileSelected(file: string) {
-		console.log("Selected file:", file);
+		console.log('Selected file:', file);
 		await fetch(`/api/projects/${data.project.id}/${data.project.revision}/${file}`)
-			.then(response => response.json())
-			.then(content => {
-				console.log("File content loaded", content);
-				file = content.content || "No content available.";
+			.then((response) => response.json())
+			.then((content) => {
+				console.log('File content loaded', content);
+				file = content.content || 'No content available.';
 			})
-			.catch(error => {
-				console.error("Error loading file:", error);
-				file = "Error loading file content.";
+			.catch((error) => {
+				console.error('Error loading file:', error);
+				file = 'Error loading file content.';
 			});
 		editor?.dispatch({
 			changes: {
@@ -31,9 +34,8 @@
 				to: editor.state.doc.length,
 				insert: file
 			}
-		})
+		});
 	}
-
 </script>
 
 <div class="project-view">
@@ -42,7 +44,7 @@
 		<FileTree
 			baseUrl={`/api/projects/${data.project.id}/${data.project.revision}`}
 			onFileClick={onFileSelected}
-			/>
+		/>
 	</nav>
 	<div class="project-view__editor">
 		<CodeMirror
@@ -58,7 +60,7 @@
 				foldGutter(),
 				lineNumbers(),
 				syntaxHighlighting(defaultHighlightStyle),
-				cpp(),
+				cpp()
 			]}
 		/>
 	</div>

@@ -39,10 +39,10 @@ export default ts.config(
 	},
 	{
 		plugins: {
-			drizzle,
+			drizzle
 		},
 		rules: {
-			...drizzle.configs.recommended.rules,
-		},
+			...drizzle.configs.recommended.rules
+		}
 	}
 );

@@ -12,7 +12,7 @@
 		line-height: var(--data-size);
 		height: var(--data-size);
 		color: var(--data-color);
-		font-family: "Material Symbols Rounded Variable";
+		font-family: 'Material Symbols Rounded Variable';
 		user-select: none;
 	}
 </style>

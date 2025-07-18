@@ -19,10 +19,10 @@
 				type: 'file';
 		  }
 		| {
-			name: string;
-			type: 'error';
-			error: string;
-		};
+				name: string;
+				type: 'error';
+				error: string;
+		  };
 
 	let { baseUrl, onFileClick }: FileTreeProps = $props();
 
@@ -34,7 +34,7 @@
 				if (response.status !== 200) {
 					throw new Error(`Failed to load file: ${response.statusText}`);
 				}
-				return response.json()
+				return response.json();
 			})
 			.then((data) => {
 				if (data.type === 'directory') {
@@ -47,13 +47,14 @@
 					data.opened = true;
 				}
 				return data;
-			}).catch((error) => {
+			})
+			.catch((error) => {
 				return {
 					name: filePath,
 					type: 'error',
 					error: error.message
-				}
-			})
+				};
+			});
 	}
 
 	function loadFolderContent(file: file) {
@@ -83,7 +84,7 @@
 </script>
 
 {#snippet file_element(file: file, path: string)}
-	<li class={file.type} class:opened={file.type === "directory" && file.opened}>
+	<li class={file.type} class:opened={file.type === 'directory' && file.opened}>
 		{#if file.type === 'directory'}
 			<button onclick={() => loadFolderContent(file)}>
 				{file.name}
@@ -135,7 +136,7 @@
 			padding-left: 1rem;
 			&.directory {
 				$color: #b3b3b3d7;
-				background: linear-gradient($color, $color) no-repeat .65rem/1px 100%;
+				background: linear-gradient($color, $color) no-repeat 0.65rem/1px 100%;
 			}
 		}
 

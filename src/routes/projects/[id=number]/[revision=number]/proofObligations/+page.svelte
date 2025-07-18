@@ -125,21 +125,23 @@
 			},
 			body: JSON.stringify({
 				ids: Array.from(selectedObligations),
-				reversed: allSelected,
+				reversed: allSelected
 			})
-		}).then(response => {
-			if (!response.ok) {
-				statusModal?.error('Failed to delete proof obligations. Please try again.');
-				return;
-			} else {
-				invalidate('app:proofObligations');
-			}
-			selectedObligations.clear();
-			allSelected = false;
-		}).catch(error => {
-			console.error('Error deleting proof obligations:', error);
-			statusModal?.error('Failed to delete proof obligations. Please try again.');
 		})
+			.then((response) => {
+				if (!response.ok) {
+					statusModal?.error('Failed to delete proof obligations. Please try again.');
+					return;
+				} else {
+					invalidate('app:proofObligations');
+				}
+				selectedObligations.clear();
+				allSelected = false;
+			})
+			.catch((error) => {
+				console.error('Error deleting proof obligations:', error);
+				statusModal?.error('Failed to delete proof obligations. Please try again.');
+			});
 	}
 </script>
 
@@ -149,9 +151,9 @@
 	title="Delete Proof Obligations"
 	onclose={deleteSelectedObligations}
 >
-	{selectedCount} proof obligations will be deleted.<br/>
-	Are you sure you want to delete the selected proof obligations?<br/>
-	This action cannot be undone.<br/>
+	{selectedCount} proof obligations will be deleted.<br />
+	Are you sure you want to delete the selected proof obligations?<br />
+	This action cannot be undone.<br />
 </Modal.ErrorConfirm>
 
 <Modal.Modal title="New Proof Obligation" bind:this={newProofObligationModal}>
@@ -230,7 +232,12 @@
 					<Icon icon="delete" />
 					Delete
 				</Button>
-				<Button type="secondary" disabled={selectedObligations.size !== 2} slim onclick={compareObligations}>
+				<Button
+					type="secondary"
+					disabled={selectedObligations.size !== 2}
+					slim
+					onclick={compareObligations}
+				>
 					<Icon icon="compare" />
 					Compare
 				</Button>

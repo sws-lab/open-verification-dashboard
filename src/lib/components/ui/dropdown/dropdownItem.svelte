@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { getContext, type Snippet } from "svelte";
-	import type { ElementClickedHandler } from "./dropdown.svelte";
+	import { getContext, type Snippet } from 'svelte';
+	import type { ElementClickedHandler } from './dropdown.svelte';
 
 	interface DropdownItemProps {
 		children: Snippet<[]>;
 		href?: string;
-		type?: "default" | "risky";
+		type?: 'default' | 'risky';
 		name: string;
 	}
-	let { children, name, href, type = "default" }: DropdownItemProps = $props();
+	let { children, name, href, type = 'default' }: DropdownItemProps = $props();
 
-	const elementClicked: ElementClickedHandler = getContext("dropdown-click");
+	const elementClicked: ElementClickedHandler = getContext('dropdown-click');
 
 	function onclick(event: MouseEvent) {
 		if (href) return;
@@ -25,11 +25,11 @@
 
 <li class="dropdown_item">
 	{#if href}
-		<a href={href} role="menuitem" class={type}>
+		<a {href} role="menuitem" class={type}>
 			{@render children()}
 		</a>
 	{:else}
-		<button onclick={onclick} role="menuitem" class={type}>
+		<button {onclick} role="menuitem" class={type}>
 			{@render children()}
 		</button>
 	{/if}
@@ -38,7 +38,8 @@
 <style lang="scss">
 	.dropdown_item {
 		list-style: none;
-		button,a {
+		button,
+		a {
 			font-size: 1rem;
 			text-decoration: none;
 			padding: 0.5rem;
@@ -52,9 +53,9 @@
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
-			
+
 			box-sizing: border-box;
-			
+
 			&:hover {
 				background-color: var(--accent-color-pale);
 			}

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { type Snippet } from "svelte";
-	import type { EventHandler } from "svelte/elements";
+	import { type Snippet } from 'svelte';
+	import type { EventHandler } from 'svelte/elements';
 
 	interface ModalProps {
 		title?: string;
@@ -8,7 +8,7 @@
 		onclose?: (returnValue?: any) => void;
 	}
 
-	let { title = "Modal", content, onclose}: ModalProps = $props();
+	let { title = 'Modal', content, onclose }: ModalProps = $props();
 
 	let dialog: HTMLDialogElement | null = $state(null);
 
@@ -27,9 +27,7 @@
 			onclose?.(null);
 		}
 	}
-
 </script>
-
 
 <dialog bind:this={dialog} class="modal" onclose={oncloseProxy}>
 	<h2>{title}</h2>
@@ -42,7 +40,7 @@
 	.modal {
 		border: 1px solid lightgray;
 		border-radius: 8px;
-		padding: .5rem 1rem;
+		padding: 0.5rem 1rem;
 
 		h2 {
 			margin: 0;

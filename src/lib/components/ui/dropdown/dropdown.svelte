@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { setContext, type Snippet } from "svelte";
-	import { clickOutside } from "svelte-outside";
+	import { setContext, type Snippet } from 'svelte';
+	import { clickOutside } from 'svelte-outside';
 
-	export type ElementClicked  = MouseEvent & {
+	export type ElementClicked = MouseEvent & {
 		elementName: string;
-	}
+	};
 	export type ElementClickedHandler = (event: ElementClicked) => void;
 
 	interface DropdownProps {
@@ -21,14 +21,14 @@
 		visible = true;
 		parent = event.currentTarget as HTMLElement;
 		if (!parent) return;
-		parent.setAttribute("aria-expanded", "true");
+		parent.setAttribute('aria-expanded', 'true');
 	}
 
 	export function hide(event: Event) {
 		if (!visible) return;
 		if (!parent) return;
 		if (event.target !== parent && !parent?.contains(event.target as Node)) {
-			parent?.setAttribute("aria-expanded", "false");
+			parent?.setAttribute('aria-expanded', 'false');
 			visible = false;
 		}
 	}
@@ -38,22 +38,24 @@
 		elementClicked(event);
 	}
 
-	setContext("dropdown-click", elementClickedHandler)
+	setContext('dropdown-click', elementClickedHandler);
 </script>
 
-<svelte:window on:keydown={(event) => {
-	if (event.key === "Escape" && visible) {
-		hide(event);
-	}
-}} />
+<svelte:window
+	on:keydown={(event) => {
+		if (event.key === 'Escape' && visible) {
+			hide(event);
+		}
+	}}
+/>
 
-<nav 
-	class="dropdown" 
-	aria-label="Dropdown menu" 
-	use:clickOutside={hide} 
+<nav
+	class="dropdown"
+	aria-label="Dropdown menu"
+	use:clickOutside={hide}
 	class:visible
-	aria-hidden="{!visible}"
-	>
+	aria-hidden={!visible}
+>
 	<ul class="dropdown__list">
 		{@render children()}
 	</ul>
@@ -64,8 +66,8 @@
 	.dropdown {
 		border-radius: 4px;
 		background-color: white;
-		box-shadow: 0px 3px 10px 0px rgba(44, 47, 60, .12);
-		padding: .2rem 0;
+		box-shadow: 0px 3px 10px 0px rgba(44, 47, 60, 0.12);
+		padding: 0.2rem 0;
 		position: absolute;
 		margin-top: -0.2rem;
 
@@ -73,7 +75,7 @@
 		&.visible {
 			display: block;
 		}
-		
+
 		&__list {
 			padding: 0;
 			margin: 0;

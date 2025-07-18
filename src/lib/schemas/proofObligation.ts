@@ -1,16 +1,20 @@
-import {z} from 'zod/v4';
+import { z } from 'zod/v4';
 
-export const GET = z.object({
-	filter: z.string().max(100).optional(),
-	page: z.number().int().positive().default(1),
-	projectId: z.number().int().positive(),
-	revision: z.number().int().positive()
-}).strict();
+export const GET = z
+	.object({
+		filter: z.string().max(100).optional(),
+		page: z.number().int().positive().default(1),
+		projectId: z.number().int().positive(),
+		revision: z.number().int().positive()
+	})
+	.strict();
 
-export const DELETE = z.object({
-	ids: z.array(z.number().int().positive()),
-	reversed: z.boolean().default(false),
-}).strict();
+export const DELETE = z
+	.object({
+		ids: z.array(z.number().int().positive()),
+		reversed: z.boolean().default(false)
+	})
+	.strict();
 
 const range = z.object({
 	file: z.string().max(200).optional(),
@@ -28,8 +32,7 @@ const check = z.object({
 	})
 });
 
-
 export const ProofObligationSchema = z.object({
 	time: z.number(),
-	checks: z.array(check),
+	checks: z.array(check)
 });

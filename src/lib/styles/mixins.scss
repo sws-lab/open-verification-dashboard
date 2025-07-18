@@ -1,6 +1,6 @@
 @mixin icon-content($icon-name, $size: 1em, $color: var(--main-font-color), $weight: 400) {
 	content: $icon-name;
-	font-family: "Material Symbols Rounded Variable";
+	font-family: 'Material Symbols Rounded Variable';
 	color: $color;
 	font-weight: $weight;
 	font-size: $size;

@@ -1,32 +1,31 @@
 <script lang="ts">
-	import { Modal } from ".";
-	import { Button } from "..";
+	import { Modal } from '.';
+	import { Button } from '..';
 
-	let title = $state("Info");
-	let displayedText = $state("Nothing to display");
+	let title = $state('Info');
+	let displayedText = $state('Nothing to display');
 	let modal = $state<Modal | null>(null);
-	
 
 	export function info(text: string) {
-		title = "Info";
+		title = 'Info';
 		displayedText = text;
 		modal?.open();
 	}
 
 	export function error(text: string) {
-		title = "Error";
+		title = 'Error';
 		displayedText = text;
 		modal?.open();
 	}
 
 	export function success(text: string) {
-		title = "Success";
+		title = 'Success';
 		displayedText = text;
 		modal?.open();
 	}
 
 	export function warning(text: string) {
-		title = "Warning";
+		title = 'Warning';
 		displayedText = text;
 		modal?.open();
 	}
@@ -40,16 +39,13 @@
 	export function close() {
 		modal?.close();
 	}
-
 </script>
 
-<Modal title={title} bind:this={modal}>
+<Modal {title} bind:this={modal}>
 	{#snippet content(close)}
 		<p>{displayedText}</p>
 		<nav class="actions">
-			<Button type="main" onclick={() => close()} autofocus>
-				Close
-			</Button>
+			<Button type="main" onclick={() => close()} autofocus>Close</Button>
 		</nav>
 	{/snippet}
 </Modal>

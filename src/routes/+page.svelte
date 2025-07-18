@@ -1,8 +1,8 @@
 <script>
-	import { Button } from "$ui";
-	import Accent from "$components/ui/accent.svelte";
-
+	import { Button } from '$ui';
+	import Accent from '$components/ui/accent.svelte';
 </script>
+
 <section>
 	<p class="capitalize">
 		Welcome to the <Accent>dashboard</Accent> app!
@@ -10,10 +10,8 @@
 	<p>
 		I don't know what to say so just click on the beautiful call to action just under this text.
 	</p>
-	
-	<Button href="/projects">
-		Browse projects
-	</Button>
+
+	<Button href="/projects">Browse projects</Button>
 </section>
 
 <style lang="scss">
@@ -31,4 +29,3 @@
 		}
 	}
 </style>
-

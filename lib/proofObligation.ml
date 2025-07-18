@@ -170,10 +170,12 @@ end
 
 type t = ProofObligation.t
 
+
+
 let of_file (file: string) =
   try
-    let json = if file == "stdin" then
-      Yojson.Safe.from_channel stdin
+    let json = if file = "stdin" then
+      Yojson.Safe.from_string @@ Option.value ~default:"" (In_channel.input_line stdin)
     else
       Yojson.Safe.from_file file
     in

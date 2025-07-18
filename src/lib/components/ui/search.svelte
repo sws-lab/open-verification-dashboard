@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { searchQuery = $bindable(''), onsearch, delay = 300, maxLength = 100 } = $props();
+	let { searchQuery = $bindable(''), onsearch, delay = 300, maxLength = 40 } = $props();
 
 	let searchTimeout: NodeJS.Timeout | null = null;
 

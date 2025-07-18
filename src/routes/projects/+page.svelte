@@ -126,8 +126,14 @@ section {
 	&__list {
 		width: 100%;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		grid-template-columns: repeat(auto-fill, 250px);
 		gap: 1rem;
+
+		@media (max-width: 650px) {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
 	}
 
 	.no-elements {

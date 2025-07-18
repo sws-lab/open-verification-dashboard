@@ -26,10 +26,7 @@
 				}
 				const new_url = `/projects/${id}/0/code`;
 				console.log("Redirecting to:", new_url);
-				goto(new_url, {
-					replaceState: true,
-					noScroll: true
-				});
+				goto(new_url);
 			}
 		},
 		onError: (error) => {
@@ -100,6 +97,14 @@
 		border-radius: 0.5rem;
 
 		width: 30vw;
+		min-width: 500px;
+		@media (max-width: 800px) {
+			width: 80vw;
+		}
+		@media (max-width: 500px) {
+			min-width: 0;
+			width: 100%;
+		}
 
 		display: flex;
 		flex-direction: column;

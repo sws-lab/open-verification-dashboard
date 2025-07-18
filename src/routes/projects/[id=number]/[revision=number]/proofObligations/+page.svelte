@@ -308,6 +308,9 @@
 			border-radius: 0.5rem;
 			padding: 1rem;
 			width: 60vw;
+			@media (max-width: 900px) {
+				width: 100%;
+			}
 		}
 
 		&__list {

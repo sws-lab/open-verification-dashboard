@@ -9,19 +9,19 @@ export async function getProjects(page: number, filter: string = '') {
 	if (filter) {
 		whereClause = like(projects.name, `%${filter}%`);
 	}
-	let data = await db
+	const data = await db
 		.select()
 		.from(projects)
 		.where(whereClause)
 		.orderBy(projects.id)
 		.limit(page_size)
 		.offset((page - 1) * page_size);
-	let totalProjects = await db
+	const totalProjects = await db
 		.select({ count: sql<number>`COUNT(*)` })
 		.from(projects)
 		.where(whereClause);
-	let totalPages = Math.ceil(totalProjects[0].count / page_size);
-	let lastPageCount = totalProjects[0].count % page_size;
+	const totalPages = Math.ceil(totalProjects[0].count / page_size);
+	const lastPageCount = totalProjects[0].count % page_size;
 
 	return {
 		pages: totalPages,

@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ url, depends }) => {
 			filter = '';
 		}
 
-		let { pages, projects, lastPageCount } = await getProjects(page, filter);
+		const { pages, projects, lastPageCount } = await getProjects(page, filter);
 		return {
 			errored: false,
 			message: '',

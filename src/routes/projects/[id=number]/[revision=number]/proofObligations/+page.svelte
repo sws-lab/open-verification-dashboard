@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { superForm, type ChangeEvent } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 	import { Control, Field, FieldErrors, Label } from 'formsnap';
 	import { Button, Icon, Modal, PageSelector } from '$ui';
 	import { goto, invalidate } from '$app/navigation';
@@ -12,7 +12,7 @@
 	let newProofObligationModal: Modal.Modal | null = $state(null);
 	let confirmDeleteModal: Modal.ErrorConfirm | null = $state(null);
 
-	let selectedObligations: SvelteSet<number> = $state(new SvelteSet());
+	let selectedObligations: SvelteSet<number> = new SvelteSet();
 	let allSelected = $state(false);
 	let selectedCount = $derived(
 		allSelected
@@ -46,7 +46,7 @@
 		}
 	});
 
-	const { form: formData, enhance, message } = form;
+	const { form: formData, enhance } = form;
 
 	async function compareObligations() {
 		if (selectedObligations.size !== 2 || allSelected) {
@@ -106,6 +106,7 @@
 		if ((checked && !allSelected) || (allSelected && !checked)) {
 			selectedObligations.add(id);
 		} else {
+			// eslint-disable-next-line drizzle/enforce-delete-with-where
 			selectedObligations.delete(id);
 		}
 	}
@@ -244,7 +245,7 @@
 			</nav>
 			{#if data.proofObligations.proofObligationsCount > 0}
 				<ul>
-					{#each data.proofObligations.proofObligation as obligation, index}
+					{#each data.proofObligations.proofObligation as obligation, index (obligation.id)}
 						<li class="proofObligationsView__list__content__item">
 							<input
 								class="proofObligationsView__list__content__item__checkbox"

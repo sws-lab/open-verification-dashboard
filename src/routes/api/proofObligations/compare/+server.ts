@@ -8,7 +8,6 @@ import { spawn } from 'child_process';
 import fs from 'fs';
 import os from 'os';
 import { env } from '$env/dynamic/private';
-import { Readable } from 'stream';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const result = await checkApiSchema(request, checks.GET);
@@ -80,7 +79,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		console.error(`Dashboard stderr: ${data}`);
 	});
 
-	const programPromise = new Promise<{ success: boolean; error?: string }>((resolve, reject) => {
+	const programPromise = new Promise<{ success: boolean; error?: string }>((resolve, _) => {
 		dashboard.on('error', (err) => {
 			console.error('Error starting dashboard process:', err);
 			resolve({ success: false, error: 'Internal server error' });

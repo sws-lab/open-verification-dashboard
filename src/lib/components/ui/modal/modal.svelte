@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { type Snippet } from 'svelte';
-	import type { EventHandler } from 'svelte/elements';
 
 	interface ModalProps {
 		title?: string;

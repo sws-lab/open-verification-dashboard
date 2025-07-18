@@ -2,7 +2,7 @@ import * as tar from 'tar';
 
 export const tarManager: ArchiveManager = {
 	async extractFile(file: File, destination: string): Promise<void> {
-		let p = tar.x({ C: destination }).on('error', (err) => {
+		const p = tar.x({ C: destination }).on('error', (err) => {
 			console.error('Error extracting project files:', err);
 			throw new Error('Failed to extract project files.');
 		});
@@ -11,7 +11,7 @@ export const tarManager: ArchiveManager = {
 	},
 	async getUnzippedSize(file: File): Promise<number> {
 		let unzippedSize = 0;
-		let p = tar
+		const p = tar
 			.list()
 			.on('entry', (entry: File) => {
 				unzippedSize += entry.size;

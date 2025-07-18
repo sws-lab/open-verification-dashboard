@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { id } = params;
-	let conflictId = Number(id);
+	const conflictId = Number(id);
 	if (isNaN(conflictId)) {
 		return json(
 			{

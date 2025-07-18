@@ -16,7 +16,7 @@ export const GET: RequestHandler = async ({ request }) => {
 	const { filter, page } = result.data;
 	try {
 		return json(await getProjects(page, filter));
-	} catch (err: any) {
+	} catch (err: Error) {
 		console.error(err);
 		return json(
 			{

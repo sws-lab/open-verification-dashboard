@@ -32,7 +32,7 @@
 			errorMessage = 'An unexpected error occurred. Please try again.';
 		}
 	});
-	const { form: formData, enhance, message } = form;
+	const { form: formData, enhance } = form;
 </script>
 
 <form method="POST" enctype="multipart/form-data" use:enhance>

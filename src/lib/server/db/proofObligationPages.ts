@@ -21,7 +21,7 @@ export async function getProofObligation(
 		filterClause
 	);
 
-	let data = await db
+	const data = await db
 		.select({
 			id: proofObligation.id,
 			name: proofObligation.name,
@@ -35,12 +35,12 @@ export async function getProofObligation(
 		.orderBy(proofObligation.id)
 		.limit(page_size)
 		.offset((page - 1) * page_size);
-	let proofObligationsCount = await db
+	const proofObligationsCount = await db
 		.select({ count: sql<number>`COUNT(*)` })
 		.from(proofObligation)
 		.where(whereClause);
-	let totalPages = Math.ceil(proofObligationsCount[0].count / page_size);
-	let lastPageCount = proofObligationsCount[0].count % page_size;
+	const totalPages = Math.ceil(proofObligationsCount[0].count / page_size);
+	const lastPageCount = proofObligationsCount[0].count % page_size;
 
 	return {
 		totalPages,

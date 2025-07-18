@@ -36,13 +36,17 @@
 				}
 				return response.json();
 			})
-			.then((data) => {
+			.then((data: file) => {
 				if (data.type === 'directory') {
-					data.files = data.files.map((child: any) => ({
-						...child,
-						opened: false,
-						loaded: false
-					}));
+					data.files = data.files.map((child: file) =>
+						child.type === 'directory'
+							? {
+									...child,
+									opened: false,
+									loaded: false
+								}
+							: child
+					);
 					data.loaded = true;
 					data.opened = true;
 				}
@@ -92,7 +96,7 @@
 			<ul class={file.type}>
 				{#if file.opened}
 					{#if file.loaded}
-						{#each file.files as childFile}
+						{#each file.files as childFile, index (index)}
 							{@render file_element(childFile, `${path}/${childFile.name}`)}
 						{/each}
 					{:else}
@@ -114,7 +118,7 @@
 
 <ul class="file-tree">
 	{#if rootFile && rootFile.type === 'directory' && rootFile.loaded}
-		{#each rootFile.files as file}
+		{#each rootFile.files as file, index (index)}
 			{@render file_element(file, file.type === 'directory' ? file.name : '')}
 		{/each}
 	{:else}

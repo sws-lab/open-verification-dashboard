@@ -32,7 +32,7 @@
 
 	<nav>
 		<ul>
-			{#each tabs as tab}
+			{#each tabs as tab (tab.name)}
 				{@render tabLink(tab.name, tab.label)}
 			{/each}
 		</ul>

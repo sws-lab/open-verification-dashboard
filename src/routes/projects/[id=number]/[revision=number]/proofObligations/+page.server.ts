@@ -6,7 +6,7 @@ import { db } from "$lib/server/db";
 import { proofObligation } from "$lib/server/db/schema";
 import { getProofObligation } from "$lib/server/db/proofObligationPages";
 import { error } from "@sveltejs/kit";
-import { ProofObligationSchema } from "$lib/schemas/proofObligations";
+import { ProofObligationSchema } from "$lib/schemas/proofObligation";
 
 
 export const load: PageServerLoad = async ({ url, parent, depends }) => {

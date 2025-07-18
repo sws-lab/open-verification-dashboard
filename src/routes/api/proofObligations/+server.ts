@@ -1,5 +1,5 @@
 import type { RequestHandler } from "./$types";
-import * as checks from "$lib/schemas/proofObligations"
+import * as checks from "$lib/schemas/proofObligation"
 import checkApiSchema from "$lib/schemas/apiJsonCheck";
 import { getProofObligation } from "$lib/server/db/proofObligationPages";
 import { json } from "@sveltejs/kit";

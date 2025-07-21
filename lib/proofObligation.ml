@@ -138,17 +138,44 @@ module Category = struct
   let yojson_of_t = string_yojson_of_t yojson_of_t
 end
 
+module StackTrace = struct
+  type t = int [@@deriving yojson_of]
+
+  let pp fmt stack_trace =
+    Format.fprintf fmt "Stack trace: %d" stack_trace
+
+  module StackSet = Hashtbl.Make(struct
+    type t = string [@@deriving hash,eq]
+  end)
+
+  let stack_set = StackSet.create 16
+
+  let reset () =
+    StackSet.clear stack_set
+
+  let add stack_trace =
+    StackSet.replace stack_set stack_trace ();
+    StackSet.length stack_set
+  
+
+  let t_of_yojson json =
+    Yojson.Safe.to_string json
+    |> add
+end
+
 module Check = struct
   type t = {
     kind: Kind.t;
     title: Category.t;
     messages: string;
     range: Range.t;
+    callstack: StackTrace.t; [@default 0]
   } [@@deriving yojson, show] [@@yojson.allow_extra_fields]
 
   let pp fmt check =
-    Format.fprintf fmt "@[<hov 2>%a: %a at %a@,"
+    Format.fprintf fmt "@[<hov 2>%a (%d): %a at %a@,"
       Kind.pp check.kind
+      check.callstack
       Category.pp check.title
       Range.pp check.range;
     if String.length check.messages > 0 then
@@ -166,6 +193,10 @@ module ProofObligation = struct
     time: float;
     checks: Check.t list;
   } [@@deriving yojson ] [@@yojson.allow_extra_fields]
+
+  let t_of_yojson =
+    StackTrace.reset ();
+    t_of_yojson
 end
 
 type t = ProofObligation.t

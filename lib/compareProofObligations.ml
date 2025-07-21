@@ -42,7 +42,7 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
             from_po1 = if proofObligation_id = 1 then check :: conflict.from_po1 else conflict.from_po1;
             from_po2 = if proofObligation_id = 2 then check :: conflict.from_po2 else conflict.from_po2;
         } in
-        RangeHash.add new_key new_conflict acc 
+        RangeHash.add new_key new_conflict acc
     ) map checks
   in
   let map1 = insert_proofObligations 1 RangeHash.empty w1.checks in

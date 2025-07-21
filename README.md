@@ -66,4 +66,8 @@ The dashboard takes two mandatory positional arguments as input for the two proo
 
 ## Json output
 
-Still in progress, see [conflict.ml](lib/conflict.ml) for the current json output format
+Still in progress, see [report.ml](lib/report.ml) and [conflict.ml](lib/conflict.ml) for the current json output format
+
+### Ranges
+
+The error's ranges are dynamically computed based on the file's content. In the output file, expect the ranges to be the ones of the most imprecise tool.

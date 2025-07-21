@@ -154,10 +154,13 @@ module StackTrace = struct
     StackSet.clear stack_set
 
   let add stack_trace =
-    StackSet.replace stack_set stack_trace ();
-    StackSet.length stack_set
+    match StackSet.find_opt stack_set stack_trace with
+    | Some n -> n
+    | None ->
+        let len = StackSet.length stack_set in
+        StackSet.add stack_set stack_trace (len + 1);
+        len + 1
   
-
   let t_of_yojson json =
     Yojson.Safe.to_string json
     |> add

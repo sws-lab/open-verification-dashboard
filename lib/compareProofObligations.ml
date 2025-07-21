@@ -12,13 +12,20 @@ type po_safety = {
   highest_error_level: ProofObligation.Kind.t;
 }
 
+module SafeMap = Map.Make(Int)
+
 let safety_of_checks (checks: ProofObligation.Check.t list) : po_safety =
-  List.fold_left (fun (acc : po_safety) (check : ProofObligation.Check.t) ->
+  let res = List.fold_left (fun ((acc, safe_map) : po_safety * (int * ProofObligation.Kind.t) SafeMap.t) (check : ProofObligation.Check.t) ->
     let is_safe = ProofObligation.Kind.is_safe check.kind in
-    let has_safe = acc.has_safe || is_safe in
     let highest_error_level = ProofObligation.Kind.max acc.highest_error_level check.kind in
-    { safe = acc.safe && is_safe; has_safe; highest_error_level }
-  ) { safe = true; has_safe = false; highest_error_level = ProofObligation.Kind.Safe } checks
+    { safe = acc.safe && is_safe; has_safe = false; highest_error_level }, 
+    SafeMap.update check.callstack (function
+      | None -> Some (1, check.kind)
+      | Some (count, existing_kind) -> Some (count + 1, ProofObligation.Kind.max existing_kind check.kind)
+    ) safe_map
+  ) ({ safe = true; has_safe = false; highest_error_level = ProofObligation.Kind.Safe }, SafeMap.empty) checks in
+  let has_safe = SafeMap.exists (fun _ (count, kind) -> count > 1 && ProofObligation.Kind.is_safe kind) @@ snd res in
+  { (fst res) with has_safe }
 
 let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObligation.t) =
   let open ProofObligation in

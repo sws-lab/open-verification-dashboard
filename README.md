@@ -1,17 +1,25 @@
-# sv
+# Dashboard UI
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is a SvelteKit project that provides an ui to the dashboard.
 
-## Creating a project
+## Initializing the project
 
-If you're seeing this, you've probably already done this step. Congrats!
+The project uses postgres as a database, so you need to have a PostgreSQL server running and configured.
+
+To initialize the project, you first need to add a .env file with the following variables:
+
+```env
+DATABASE_URL="postgres://user:password@url:port/database_name"
+DASHBOARD_APP_PATH="whatever/path/to/dashboard/executable"
+PUBLIC_PAGE_SIZE=30
+```
+
+Then, run the following commands to settup the database and install dependencies:
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+npm install
+npx drizzle-kit generate
+npx drizzle-kit push
 ```
 
 ## Developing

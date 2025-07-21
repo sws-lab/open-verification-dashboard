@@ -20,6 +20,7 @@ Then, run the following commands to settup the database and install dependencies
 npm install
 npx drizzle-kit generate
 npx drizzle-kit push
+npm run prepare
 ```
 
 ## Developing

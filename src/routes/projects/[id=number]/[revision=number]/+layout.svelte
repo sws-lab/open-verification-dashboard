@@ -98,6 +98,7 @@
 
 	section {
 		height: calc(100vh - calc(var(--tools-height) + var(--header-height)));
+		padding: 1px; // disable margin collapse
 		width: 100vw;
 	}
 </style>

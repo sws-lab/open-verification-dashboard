@@ -4,7 +4,8 @@ import { eq, and } from 'drizzle-orm';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from '../../$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, depends }) => {
+	depends('app:project');
 	const { id, revision } = params;
 	let project;
 	try {

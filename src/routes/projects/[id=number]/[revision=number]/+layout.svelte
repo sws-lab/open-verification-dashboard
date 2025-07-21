@@ -3,7 +3,7 @@
 	import { page } from '$app/state';
 
 	const tabs = [
-		{ name: 'code', label: 'Code' },
+		{ name: 'project', label: 'Project' },
 		{ name: 'proofObligations', label: 'Proof Obligations' },
 		{ name: 'settings', label: 'Settings' }
 	];

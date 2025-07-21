@@ -22,7 +22,7 @@
 					goto('/projects');
 					return;
 				}
-				const new_url = `/projects/${id}/0/code`;
+				const new_url = `/projects/${id}/0/project`;
 				console.log('Redirecting to:', new_url);
 				goto(new_url);
 			}
@@ -32,7 +32,8 @@
 			errorMessage = 'An unexpected error occurred. Please try again.';
 		}
 	});
-	const { form: formData, enhance } = form;
+	const { form: formData, enhance, capture, restore } = form;
+	export const snapshot = { capture, restore };
 </script>
 
 <form method="POST" enctype="multipart/form-data" use:enhance>

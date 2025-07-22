@@ -1,37 +1,39 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
-type sources = (string, unit) Hashtbl.t
-let yojson_of_sources (h: (string, unit) Hashtbl.t)  = `List (
-  Hashtbl.fold (fun k _ acc -> (`String k) :: acc) h [])
+type conflicts = (string, Conflict.t list) Hashtbl.t
+let yojson_of_conflicts (h: conflicts)  = `Assoc (
+  Hashtbl.fold (fun k v acc -> (k, `List (List.map Conflict.yojson_of_t v)) :: acc) h [])
 
-let sources_of_yojson = function
-  | `List lst ->
-    let tbl = Hashtbl.create (List.length lst) in
+let conflicts_of_yojson = function
+  | `Assoc l -> 
+    let tbl = Hashtbl.create 10 in
     List.iter (function
-      | `String file -> Hashtbl.add tbl file ()
-      | _ -> failwith "Invalid sources format") lst;
+      | (k: string), `List v ->
+        let conflicts = List.map Conflict.t_of_yojson v in
+        Hashtbl.add tbl k conflicts
+      | _ -> failwith "Expected a string key and a list of conflicts") l;
     tbl
-  | _ -> failwith "Expected a list of sources"
+  | _ -> failwith "Expected an associative list for conflicts"
+
 
 type t = {
-  mutable conflicts: Conflict.t list;
+  conflicts: conflicts;
   mutable po1_name: string;
   mutable po2_name: string;
-  sources: sources;
 }
 [@@deriving yojson]
 
 let create po1_name po2_name = {
-  conflicts = [];
+  conflicts = Hashtbl.create 16;
   po1_name;
   po2_name;
-  sources = Hashtbl.create 16;
 }
 
-let add_conflict t files conflicts =
-  t.conflicts <- conflicts @ t.conflicts;
-  List.iter (fun file ->
-    Hashtbl.add t.sources file ()
-  ) files
-  
+let add_conflict t files conflict =
+  let existing = Hashtbl.find_opt t.conflicts files in
+  match existing with
+  | Some existing_conflicts -> 
+    Hashtbl.replace t.conflicts files (conflict :: existing_conflicts)
+  | None -> 
+    Hashtbl.add t.conflicts files [conflict]
   

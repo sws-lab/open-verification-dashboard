@@ -74,13 +74,11 @@ let () =
   let po2 = List.hd (List.tl proofObligations) in
   let disagreement = CompareProofObligations.search_proofObligations_disagreements po1 po2 in
   if args.output <> None then (
-    let analysed_files = Hashtbl.create 16 in
+  let report = Report.create po1.name po2.name in
     List.iter (fun (conflict : Conflict.t) ->
-      Hashtbl.replace analysed_files conflict.range.file ()
+      Report.add_conflict report conflict.range.file conflict
     ) disagreement;
 
-    let report = Report.create po1.name po2.name in
-    Report.add_conflict report (Hashtbl.to_seq_keys analysed_files |> List.of_seq) disagreement;
     Report.yojson_of_t report |> Yojson.Safe.to_file (Option.get args.output);
     Format.printf "Report written to %s@." (Option.get args.output);
   ) else (

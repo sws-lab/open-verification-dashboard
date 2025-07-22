@@ -25,51 +25,7 @@ module Range = struct
     start: file_range;
     end_: file_range [@key "end"];
   }[@@deriving yojson, show, eq]
-
-  let eq_or_includes a b =
-    a.start.file = b.start.file &&
-    a.end_.file = b.end_.file &&
-    a.start.line = b.start.line &&
-    a.end_.line = b.end_.line && (
-      (a.start.column <= b.start.column && a.end_.column >= b.end_.column) ||
-      (a.start.column >= b.start.column && a.end_.column <= b.end_.column)
-    )
-  (** Checks if two ranges are equal or if one includes the other. *)
-
-  let union a b =
-    if a.start.file <> b.start.file || a.end_.file <> b.end_.file then
-      failwith "Cannot union ranges from different files";
-    {
-      start = {
-        line = min a.start.line b.start.line;
-        column = min a.start.column b.start.column;
-        file = a.start.file;
-      };
-      end_ = {
-        line = max a.end_.line b.end_.line;
-        column = max a.end_.column b.end_.column;
-        file = a.end_.file;
-      };
-    }
-  (** Unions two ranges, assuming they are from the same file. *)
-
-  let compare a b =
-    if a.start.file <> b.start.file || a.end_.file <> b.end_.file then
-      compare a.start.file b.start.file
-    else if eq_or_includes a b then
-      0
-    else if a.end_.line < b.end_.line then
-      -1
-    else if a.end_.line > b.end_.line then
-      1
-    else if a.end_.column < b.end_.column then
-      -1
-    else if a.end_.column > b.end_.column then
-      1
-    else
-      failwith "Ranges are not comparable"
-    
-    
+  
 
   let pp fmt range =
     Format.fprintf fmt "%s:%d.%d-%d.%d"

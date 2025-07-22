@@ -76,8 +76,7 @@ let () =
   if args.output <> None then (
     let analysed_files = Hashtbl.create 16 in
     List.iter (fun (conflict : Conflict.t) ->
-      Hashtbl.replace analysed_files conflict.range.start.file ();
-      Hashtbl.replace analysed_files conflict.range.end_.file ();
+      Hashtbl.replace analysed_files conflict.range.file ()
     ) disagreement;
 
     let report = Report.create po1.name po2.name in

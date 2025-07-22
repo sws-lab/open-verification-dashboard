@@ -98,11 +98,7 @@
 		);
 	}
 
-	function selectObligation(
-		id: number,
-		event: Event & { currentTarget: EventTarget & HTMLInputElement }
-	) {
-		const checked = event.currentTarget.checked;
+	function selectObligation(id: number, checked: boolean) {
 		if ((checked && !allSelected) || (allSelected && !checked)) {
 			selectedObligations.add(id);
 		} else {
@@ -111,8 +107,7 @@
 		}
 	}
 
-	function selectAll(event: Event & { currentTarget: EventTarget & HTMLInputElement }) {
-		const checked = event.currentTarget.checked;
+	function selectAll(checked: boolean) {
 		allSelected = checked;
 		selectedObligations.clear();
 	}
@@ -143,6 +138,34 @@
 				console.error('Error deleting proof obligations:', error);
 				statusModal?.error('Failed to delete proof obligations. Please try again.');
 			});
+	}
+
+	function elementKeydown(event: KeyboardEvent, id: number) {
+		const currentTarget = event.currentTarget as HTMLElement & {
+			blur: () => void;
+			previousElementSibling: HTMLElement & { focus: () => void };
+			nextElementSibling: HTMLElement & { focus: () => void };
+		};
+		if (event.target !== currentTarget || currentTarget === null) return;
+
+		if (event.key === 'Enter' || event.key === ' ') {
+			selectObligation(id, !selectedObligations.has(id));
+		} else if (event.key === 'ArrowDown') {
+			const nextSibling = currentTarget.nextElementSibling;
+			if (nextSibling) {
+				nextSibling.focus();
+			}
+		} else if (event.key === 'ArrowUp') {
+			const previousSibling = currentTarget.previousElementSibling;
+			if (previousSibling) {
+				previousSibling.focus();
+			}
+		} else if (event.key === 'Escape') {
+			currentTarget.blur();
+		} else if (event.key === 'a' && (event.ctrlKey || event.metaKey)) {
+			event.preventDefault();
+			selectAll(!allSelected);
+		}
 	}
 </script>
 
@@ -214,7 +237,7 @@
 					name="select-all"
 					checked={allSelected}
 					indeterminate={selectedObligations.size > 0}
-					onchange={selectAll}
+					onchange={(e) => selectAll(e.currentTarget.checked)}
 				/>
 				<span>
 					{#if selectedObligations.size == 0 && !allSelected}
@@ -244,20 +267,33 @@
 				</Button>
 			</nav>
 			{#if data.proofObligations.proofObligationsCount > 0}
-				<ul>
+				<ul role="listbox" aria-multiselectable="true">
 					{#each data.proofObligations.proofObligation as obligation, index (obligation.id)}
-						<li class="proofObligationsView__list__content__item">
+						<li
+							tabindex="0"
+							onkeydown={(event) => elementKeydown(event, obligation.id)}
+							onclick={(event) => {
+								if (event.target !== event.currentTarget) return;
+								selectObligation(obligation.id, !selectedObligations.has(obligation.id));
+							}}
+							role="option"
+							class="proofObligationsView__list__content__item"
+							aria-selected={(selectedObligations.has(obligation.id) && !allSelected) ||
+								(allSelected && !selectedObligations.has(obligation.id))}
+							id="obligation-{obligation.id}"
+						>
 							<input
 								class="proofObligationsView__list__content__item__checkbox"
 								type="checkbox"
-								id="obligation-{obligation.id}"
+								id="obligation-{obligation.id}-checkbox"
 								name="obligation-{obligation.id}"
 								value={{ id: obligation.id, index }}
 								group="obligations"
-								checked={selectedObligations.has(obligation.id) || allSelected}
-								onchange={(e) => selectObligation(obligation.id, e)}
+								checked={(selectedObligations.has(obligation.id) && !allSelected) ||
+									(!selectedObligations.has(obligation.id) && allSelected)}
+								onchange={(e) => selectObligation(obligation.id, e.currentTarget.checked)}
 							/>
-							<label for="obligation-{obligation.id}">
+							<label for="obligation-{obligation.id}-checkbox">
 								<h4 class="proofObligationsView__list__content__item__header">{obligation.name}</h4>
 								<p class="proofObligationsView__list__content__item__date">
 									#{obligation.id} Uploaded on {new Date(
@@ -286,6 +322,7 @@
 			{/if}
 		</div>
 		<PageSelector
+			label="Proof Obligations Pagination"
 			href="/projects/{data.project.id}/{data.project.revision}/proofObligations"
 			currentPage={data.proofObligations.page}
 			totalPages={data.proofObligations.totalPages}

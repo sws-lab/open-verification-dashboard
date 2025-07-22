@@ -68,6 +68,7 @@
 			{/each}
 		</div>
 		<PageSelector
+			label="Project pagination"
 			href="/projects"
 			currentPage={data.page}
 			totalPages={data.totalPages}

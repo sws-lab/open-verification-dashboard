@@ -7,6 +7,7 @@
 		maxVisiblePages?: number;
 		href: string;
 		params?: Record<string, string>;
+		label: string;
 	}
 
 	let {
@@ -14,6 +15,7 @@
 		totalPages,
 		maxVisiblePages = 5,
 		href,
+		label,
 		params = {}
 	}: PageSelectorProps = $props();
 
@@ -50,17 +52,19 @@
 			href={buildUrl(page)}
 			class:active={currentPage === page}
 			aria-current={currentPage === page ? 'page' : undefined}
+			aria-label={currentPage === page ? `Current page ${page}` : `Go to page ${page}`}
+			rel={currentPage === page ? 'nofollow' : undefined}
 		>
 			{page}
 		</a>
 	</li>
 {/snippet}
 
-<nav class="page-selector" aria-label="Page navigation">
+<nav class="page-selector" aria-label="{label}, page {currentPage} of {totalPages}">
 	<ul>
 		{#if currentPage > 1}
 			<li class="prev">
-				<a href={buildUrl(currentPage - 1)} aria-label="Previous page">
+				<a href={buildUrl(currentPage - 1)} aria-label="Previous page" rel="prev">
 					<Icon icon="navigate_before" />
 				</a>
 			</li>
@@ -71,7 +75,7 @@
 		{/if}
 
 		{#if currentPage > maxVisiblePages - 2}
-			<li class="ellipsis">
+			<li class="ellipsis" aria-hidden="true">
 				<Icon icon="more_horiz" />
 			</li>
 		{/if}
@@ -81,7 +85,7 @@
 		{/each}
 
 		{#if maxVisible < totalPages - 1}
-			<li class="ellipsis">
+			<li class="ellipsis" aria-hidden="true">
 				<Icon icon="more_horiz" />
 			</li>
 		{/if}
@@ -92,7 +96,7 @@
 
 		{#if currentPage < totalPages}
 			<li class="next">
-				<a href={buildUrl(currentPage + 1)} aria-label="Next page">
+				<a href={buildUrl(currentPage + 1)} aria-label="Next page" rel="next">
 					<Icon icon="navigate_next" />
 				</a>
 			</li>

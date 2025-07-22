@@ -16,8 +16,14 @@
 	}
 </script>
 
-<nav class="search">
-	<input type="text" placeholder="Filter" bind:value={searchQuery} oninput={search} />
+<nav class="search" role="search" aria-label="Filter list by name">
+	<input
+		type="text"
+		placeholder="Filter"
+		bind:value={searchQuery}
+		oninput={search}
+		role="searchbox"
+	/>
 </nav>
 
 <style lang="scss">

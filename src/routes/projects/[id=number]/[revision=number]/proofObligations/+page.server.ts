@@ -98,7 +98,7 @@ export const actions = {
 				error: errorCount
 			});
 			return message(form, 'Proof obligation created successfully.');
-		} catch (error: any) {
+		} catch (error) {
 			if (error.code == '23505') {
 				return fail(400, { form: form, error: 'Proof obligation already exists.' });
 			} else {

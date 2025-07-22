@@ -82,7 +82,7 @@
 				return;
 			}
 			const result = await response.json();
-			const url = `/projects/${data.project.id}/${data.project.revision}/project/${result.id}`;
+			const url = `/projects/analysis/${result.id}`;
 			goto(url);
 		} catch (error) {
 			console.error('Error comparing proof obligations:', error);

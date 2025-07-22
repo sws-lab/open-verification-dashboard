@@ -31,6 +31,7 @@ export const conflict = pgTable('conflict', {
 		.references(() => projects.id)
 		.notNull(),
 	projectRevision: integer('revision').notNull().default(0),
+	version: integer('version').notNull(),
 	proofObligationId1: integer('proof_obligation_id_1')
 		.references(() => proofObligation.id)
 		.notNull(),

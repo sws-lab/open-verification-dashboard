@@ -3,11 +3,9 @@ import { json, type RequestHandler } from '@sveltejs/kit';
 import * as checks from '$lib/schemas/proofObligationsComparison';
 import { db } from '$lib/server/db';
 import { conflict, proofObligation } from '$lib/server/db/schema';
-import { and, eq, or } from 'drizzle-orm';
-import { spawn } from 'child_process';
-import fs from 'fs';
-import os from 'os';
+import { and, eq, or, sql } from 'drizzle-orm';
 import { env } from '$env/dynamic/private';
+import { compareProofObligations } from '$lib/server/dashboard';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const result = await checkApiSchema(request, checks.GET);
@@ -15,9 +13,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json(result, { status: 400 });
 	}
 
+	const current_version = env.VERSION ? parseInt(env.VERSION, 10) : 0;
+	let update_id: number | null = null;
 	try {
 		const comparison = await db
-			.select({ id: conflict.id })
+			.select({ id: conflict.id, version: conflict.version })
 			.from(conflict)
 			.where(
 				and(
@@ -27,7 +27,10 @@ export const POST: RequestHandler = async ({ request }) => {
 			)
 			.limit(1);
 		if (comparison.length > 0) {
-			return json({ id: comparison[0].id });
+			if (comparison[0].version === current_version) {
+				return json({ id: comparison[0].id });
+			}
+			update_id = comparison[0].id;
 		}
 	} catch (err) {
 		console.error('Error fetching comparison:', err);
@@ -56,72 +59,49 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const [proofObligation1, proofObligation2] = proofObligations;
 
-	const workingDir = `./projects/${proofObligation1.projectId}/${proofObligation1.projectRevision}`;
-	const uuid = crypto.randomUUID();
-
-	console.log(
-		`Starting dashboard process for project ${proofObligation1.projectId} revision ${proofObligation1.projectRevision} with UUID ${uuid}`
-	);
-	const dashboard = spawn(
-		env.DASHBOARD_APP_PATH,
-		['stdin', 'stdin', '--project', '.', '--output', `../../${uuid}.json`],
-		{
-			cwd: workingDir,
-			shell: false,
-			stdio: ['pipe', 'pipe', 'pipe']
-		}
-	);
-
-	dashboard.stdout.on('data', (data) => {
-		console.log(`Dashboard stdout: ${data}`);
-	});
-	dashboard.stderr.on('data', (data) => {
-		console.error(`Dashboard stderr: ${data}`);
-	});
-
-	const programPromise = new Promise<{ success: boolean; error?: string }>((resolve, _) => {
-		dashboard.on('error', (err) => {
-			console.error('Error starting dashboard process:', err);
-			resolve({ success: false, error: 'Internal server error' });
-		});
-
-		dashboard.on('exit', async (code) => {
-			if (code !== 0) {
-				console.error(`Dashboard process exited with code ${code}`);
-				resolve({ success: false, error: 'Dashboard process failed' });
-				return;
-			}
-			console.log('Dashboard process completed');
-			resolve({ success: true });
-		});
-	});
-
-	dashboard.stdin.write(JSON.stringify(proofObligation1.proofObligation) + os.EOL);
-	dashboard.stdin.write(JSON.stringify(proofObligation2.proofObligation) + os.EOL);
-	dashboard.stdin.end();
-
 	let dashboard_result;
 	try {
 		console.log('Waiting for dashboard process to complete...');
-		const program_output = await programPromise;
+		const program_output = await compareProofObligations(proofObligation1, proofObligation2);
 		if (!program_output.success) {
 			return json(program_output, { status: 500 });
 		}
-		dashboard_result = JSON.parse(fs.readFileSync(`./projects/${uuid}.json`, 'utf-8'));
+		dashboard_result = program_output.data;
 	} catch (err) {
 		console.error('Error during dashboard process execution:', err);
 		return json({ success: false, error: 'Internal server error' }, { status: 500 });
 	}
 
 	try {
+		if (update_id !== null) {
+			console.log(`Updating existing conflict with ID ${update_id}`);
+			await db
+				.update(conflict)
+				.set({
+					version: current_version,
+					conflicts: dashboard_result,
+					lastUpdated: sql`now()`
+				})
+				.where(eq(conflict.id, update_id));
+			return json({ id: update_id });
+		}
 		const id = await db
 			.insert(conflict)
 			.values({
+				version: current_version,
 				projectId: proofObligation1.projectId,
 				projectRevision: proofObligation1.projectRevision,
 				proofObligationId1: proofObligation1.id,
 				proofObligationId2: proofObligation2.id,
 				conflicts: dashboard_result
+			})
+			.onConflictDoUpdate({
+				target: conflict.id,
+				set: {
+					version: current_version,
+					conflicts: dashboard_result,
+					lastUpdated: sql`now()`
+				}
 			})
 			.returning({ id: conflict.id });
 		if (id.length > 0) {

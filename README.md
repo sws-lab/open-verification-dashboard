@@ -12,6 +12,7 @@ To initialize the project, you first need to add a .env file with the following 
 DATABASE_URL="postgres://user:password@url:port/database_name"
 DASHBOARD_APP_PATH="whatever/path/to/dashboard/executable"
 PUBLIC_PAGE_SIZE=30
+VERSION=0
 ```
 
 Then, run the following commands to settup the database and install dependencies:
@@ -22,6 +23,10 @@ npx drizzle-kit generate
 npx drizzle-kit push
 npm run prepare
 ```
+
+## What to do if the dashboad executable changes?
+
+If the dashboard executable changes, you need to update the `VERSION` variable in the `.env` file. This will regenerate the database entries when requested by the ui.
 
 ## Developing
 

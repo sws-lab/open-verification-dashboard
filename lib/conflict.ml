@@ -10,7 +10,7 @@ module ConflictRange = struct
   type t = {
     file: string;
     start: file_position;
-    end_: file_position;
+    end_: file_position [@key "end"];
   }
   [@@deriving yojson, show, eq]
 

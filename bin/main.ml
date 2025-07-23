@@ -5,6 +5,7 @@ type args = {
   proofObligations: ProofObligation.ProofObligation.t list;
   mutable only: string option;
   mutable output: string option;
+  mutable exclude_not_found: bool;
 }
 
 let parse_args () =
@@ -13,11 +14,13 @@ let parse_args () =
     proofObligations = [];
     only = None;
     output = None;
+    exclude_not_found = false;
   } in
   let speclist = [
     ("--project", Arg.String (fun path -> args.project_path <- path), "The path to the project directory if it is not the current directory");
     ("--analyze", Arg.String (fun file -> args.only <- Some file), "Only output conflicts for the given file");
     ("--output", Arg.String (fun file -> args.output <- Some file), "The path to the json output file");
+    ("--exclude-not-found", Arg.Bool (fun b -> args.exclude_not_found <- b), "Exclude not found files from the analysis");
   ]
   and usage_msg = "Usage: dashboard [options]" in
   let input_files = ref [] in
@@ -47,7 +50,7 @@ let () =
     exit 1);
   
   let proofObligations = List.map (fun proofObligation -> 
-    ProofObligation.convert_paths proofObligation args.project_path
+    ProofObligation.convert_paths ~exclude_not_found:args.exclude_not_found proofObligation args.project_path
   ) args.proofObligations in
   let proofObligations = match args.only with
   | Some file ->

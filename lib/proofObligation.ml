@@ -194,7 +194,7 @@ let of_file (file: string) =
 
 
 
-let convert_paths proofObligation project_path =
+let convert_paths ~exclude_not_found proofObligation project_path =
   if project_path = "" then
     proofObligation
   else
@@ -204,14 +204,20 @@ let convert_paths proofObligation project_path =
         file = path_to_project_relative file_range.file
       }
     in
+    let open Check in
     ProofObligation.{
       proofObligation with
-      checks = List.map (fun check ->
-        Check.{ check with
+      checks = List.filter_map (fun check ->
+        let start = convert_file_range_path check.range.start in
+        let end_ = convert_file_range_path check.range.end_ in
+        if exclude_not_found && (Project.Folder.mem Project.warned check.range.start.file) then
+          None
+        else
+          Some ({ check with
           range = {
-            start = convert_file_range_path check.range.start;
-            end_ = convert_file_range_path check.range.end_;
+            start; 
+            end_;
           }
-        }
+        })
       ) proofObligation.checks
     }

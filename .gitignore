@@ -42,3 +42,6 @@ dune.lock
 mopsa.json
 goblint.json
 errorTests.tar.gz
+bin/main.ml
+mopsa-all.json
+goblint-all.json

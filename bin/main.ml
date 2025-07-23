@@ -76,7 +76,7 @@ let () =
   let po2 = List.hd (List.tl proofObligations) in
   let disagreement = CompareProofObligations.search_proofObligations_disagreements po1 po2 in
   if args.output <> None then (
-  let report = Report.create po1.name po2.name in
+    let report = Report.create po1.name po2.name in
     List.iter (fun (conflict : Conflict.t) ->
       Report.add_conflict report conflict.range.file conflict
     ) disagreement;

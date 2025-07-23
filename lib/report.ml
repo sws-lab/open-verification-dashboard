@@ -29,11 +29,12 @@ let create po1_name po2_name = {
   po2_name;
 }
 
-let add_conflict t files conflict =
-  let existing = Hashtbl.find_opt t.conflicts files in
+let add_conflict t file conflict =
+  let existing = Hashtbl.find_opt t.conflicts file in
   match existing with
   | Some existing_conflicts -> 
-    Hashtbl.replace t.conflicts files (conflict :: existing_conflicts)
+    Hashtbl.replace t.conflicts file (conflict :: existing_conflicts)
   | None -> 
-    Hashtbl.add t.conflicts files [conflict]
+    Format.printf "Writing conflicts for file %s@." file;
+    Hashtbl.add t.conflicts file [conflict]
   

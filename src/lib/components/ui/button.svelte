@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	type ButtonType = 'main' | 'secondary' | 'submit' | 'error';
+	type ButtonType = 'main' | 'secondary' | 'submit' | 'error' | 'link';
 	interface ButtonProps {
 		children: Snippet<[]>;
 		onclick?: (event?: MouseEvent) => void;
@@ -12,6 +12,7 @@
 		block?: boolean;
 		disabled?: boolean;
 		slim?: boolean;
+		italic?: boolean;
 	}
 
 	let {
@@ -23,7 +24,8 @@
 		autofocus = false,
 		block = false,
 		disabled = false,
-		slim = false
+		slim = false,
+		italic = false
 	}: ButtonProps = $props();
 </script>
 
@@ -34,6 +36,7 @@
 		class:center
 		class:block
 		class:slim
+		class:italic
 		onclick={disabled ? undefined : onclick}
 		{autofocus}
 		{disabled}
@@ -48,6 +51,7 @@
 		class:center
 		class:block
 		class:slim
+		class:italic
 		aria-disabled={disabled}
 	>
 		{@render children()}
@@ -77,8 +81,16 @@
 		}
 	}
 
+	.block {
+		width: 100%;
+	}
+
 	.center {
 		text-align: center;
+	}
+
+	.italic {
+		font-style: italic;
 	}
 
 	.button-main,
@@ -95,10 +107,6 @@
 		&:hover:not(#{$disabled}) {
 			background-color: var(--accent-color-hover);
 		}
-	}
-
-	.block {
-		width: 100%;
 	}
 
 	.button-secondary {
@@ -135,5 +143,17 @@
 			background-color: var(--error-color-hover);
 			color: white;
 		}
+	}
+
+	.button-link {
+		color: var(--text-color);
+		background-color: transparent;
+		border: none;
+		text-decoration: underline;
+		text-align: left;
+		font-size: 1rem;
+		cursor: pointer;
+		margin: 0;
+		padding: 0;
 	}
 </style>

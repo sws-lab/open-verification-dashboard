@@ -19,8 +19,8 @@ export type category =
 	| 'Floating-point overflow';
 
 export type check = {
-	category: category;
+	title: category;
 	kind: kind;
 	range: range;
-	message?: string;
+	messages?: string;
 };

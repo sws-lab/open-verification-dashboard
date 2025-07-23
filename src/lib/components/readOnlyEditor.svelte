@@ -10,30 +10,99 @@
 	} from '@codemirror/language';
 	import { lineNumbers } from '@codemirror/view';
 	import { cpp } from '@codemirror/lang-cpp';
+	import { linter, lintGutter, type Diagnostic } from '@codemirror/lint';
+	import {
+		conflictMessage,
+		conflictSeverity,
+		conflictCategory,
+		type Conflict
+	} from '$lib/conflicts/conflict';
+	import type { range } from '$lib/conflicts/range';
 
-	let { visible = true, sources = '' } = $props();
+	interface Props {
+		visible?: boolean;
+		sources?: string;
+		diagnostics?: Conflict[];
+		scrollToRange?: (range: number) => void;
+	}
 
-	let editor: EditorView | null = $state(null);
+	let {
+		visible = true,
+		sources = '',
+		diagnostics = [],
+		scrollToRange = () => {}
+	}: Props = $props();
+
+	let view: EditorView | null = $state(null);
+	let needsRefresh = $state(false);
+
+	function lineColumnToPos(line: number, column: number, view: EditorView): number {
+		let pos = view.state.doc.line(line).from + column - 1;
+		return pos;
+	}
 
 	export function setSourceFile(sourceFile: string) {
-		editor?.dispatch({
+		view?.dispatch({
 			changes: {
 				from: 0,
-				to: editor.state.doc.length,
+				to: view.state.doc.length,
 				insert: sourceFile
 			}
 		});
 	}
 
+	export function selectRange(range: range) {
+		view?.dispatch({
+			selection: {
+				anchor: lineColumnToPos(range.start.line, range.start.column + 1, view),
+				head: lineColumnToPos(range.end.line, range.end.column + 1, view)
+			}
+		});
+		view?.focus();
+	}
+
 	$effect(() => {
-		if (editor && sources) {
-			editor.dispatch({
+		if (view && sources) {
+			view.dispatch({
 				changes: {
 					from: 0,
-					to: editor.state.doc.length,
+					to: view.state.doc.length,
 					insert: sources
 				}
 			});
+		}
+	});
+
+	const errorDisplay = linter(
+		(view: EditorView) =>
+			diagnostics.map((conflict: Conflict, index: number): Diagnostic => {
+				needsRefresh = false;
+				return {
+					from: lineColumnToPos(conflict.range.start.line, conflict.range.start.column, view),
+					to: lineColumnToPos(conflict.range.end.line, conflict.range.end.column, view),
+					severity: conflictSeverity(conflict.kind),
+					message: conflictMessage(conflict),
+					source: conflictCategory(conflict),
+					actions: [
+						{
+							name: 'Details',
+							apply: () => {
+								console.log('Action clicked for conflict', index);
+								scrollToRange(index);
+							}
+						}
+					]
+				};
+			}),
+		{
+			needsRefresh: () => needsRefresh,
+			autoPanel: false
+		}
+	);
+
+	$effect(() => {
+		if (view && diagnostics) {
+			needsRefresh = true;
 		}
 	});
 </script>
@@ -42,7 +111,7 @@
 	class={visible ? '' : 'hidden'}
 	tabSize={4}
 	on:ready={(e: CustomEvent<EditorView>) => {
-		editor = e.detail;
+		view = e.detail;
 	}}
 	readonly={true}
 	basic={false}
@@ -52,7 +121,9 @@
 		foldGutter(),
 		lineNumbers(),
 		syntaxHighlighting(defaultHighlightStyle),
-		cpp()
+		cpp(),
+		lintGutter(),
+		errorDisplay
 	]}
 />
 

@@ -52,6 +52,7 @@
 		"sass": "^1.89.2",
 		"svelte-codemirror-editor": "^1.4.1",
 		"svelte-outside": "^0.0.3",
+		"svelte-splitpanes": "^8.0.9",
 		"sveltekit-superforms": "^2.27.1",
 		"tar": "^7.4.3",
 		"unzipper": "^0.12.3",

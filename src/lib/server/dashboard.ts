@@ -1,5 +1,5 @@
 import { env } from '$env/dynamic/private';
-import type { DashboardOutput } from '$lib/types/conflict';
+import type { DashboardOutput } from '$lib/conflicts/conflict';
 import { spawn } from 'node:child_process';
 import os from 'node:os';
 import fs from 'node:fs';
@@ -33,7 +33,16 @@ export async function compareProofObligations(
 	);
 	const dashboard = spawn(
 		env.DASHBOARD_APP_PATH,
-		['stdin', 'stdin', '--project', '.', '--output', `../../${uuid}.json`],
+		[
+			'stdin',
+			'stdin',
+			'--project',
+			'.',
+			'--output',
+			`../../${uuid}.json`,
+			'--exclude-not-found',
+			'true'
+		],
 		{
 			cwd: workingDir,
 			shell: false,

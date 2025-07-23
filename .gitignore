@@ -45,3 +45,5 @@ errorTests.tar.gz
 bin/main.ml
 mopsa-all.json
 goblint-all.json
+allErrorTest/
+allErrorTest.tar.gz

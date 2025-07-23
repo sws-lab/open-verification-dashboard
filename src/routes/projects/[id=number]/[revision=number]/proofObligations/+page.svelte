@@ -431,6 +431,7 @@
 						grid-area: header;
 						margin: 0;
 						align-self: end;
+						word-break: break-all;
 					}
 					&__date {
 						grid-area: date;

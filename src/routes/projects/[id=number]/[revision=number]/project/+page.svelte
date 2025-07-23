@@ -1,40 +1,20 @@
 <script lang="ts">
-	import type { EditorView } from 'codemirror';
-	import CodeMirror from 'svelte-codemirror-editor';
-	import {
-		indentOnInput,
-		syntaxHighlighting,
-		defaultHighlightStyle,
-		bracketMatching,
-		foldGutter
-	} from '@codemirror/language';
-	import { lineNumbers } from '@codemirror/view';
-	import { cpp } from '@codemirror/lang-cpp';
 	import { FileTree } from '$ui';
+	import ReadOnlyEditor from '$components/readOnlyEditor.svelte';
+	import loadProjectFile from '$lib/utils/fileImport.js';
 
 	let { data } = $props();
+	let editor: ReadOnlyEditor | null = $state(null);
 
-	let editor: EditorView | null = $state(null);
-
-	async function onFileSelected(file: string) {
-		console.log('Selected file:', file);
-		await fetch(`/api/projects/${data.project.id}/${data.project.revision}/${file}`)
-			.then((response) => response.json())
-			.then((content) => {
-				console.log('File content loaded', content);
-				file = content.content || 'No content available.';
+	function loadFile(file: string) {
+		loadProjectFile(data.project.id, data.project.revision, file)
+			.then((fileContent) => {
+				editor?.setSourceFile(fileContent.content || 'No content available');
 			})
-			.catch((error) => {
-				console.error('Error loading file:', error);
-				file = 'Error loading file content.';
+			.catch((err) => {
+				console.error('Failed to load file:', err);
+				editor?.setSourceFile('Error loading file');
 			});
-		editor?.dispatch({
-			changes: {
-				from: 0,
-				to: editor.state.doc.length,
-				insert: file
-			}
-		});
 	}
 </script>
 
@@ -43,26 +23,11 @@
 		<h3>Project files</h3>
 		<FileTree
 			baseUrl={`/api/projects/${data.project.id}/${data.project.revision}`}
-			onFileClick={onFileSelected}
+			onFileClick={loadFile}
 		/>
 	</nav>
 	<div class="project-view__editor">
-		<CodeMirror
-			tabSize={4}
-			on:ready={(e: CustomEvent<EditorView>) => {
-				editor = e.detail;
-			}}
-			readonly={true}
-			basic={false}
-			extensions={[
-				indentOnInput(),
-				bracketMatching(),
-				foldGutter(),
-				lineNumbers(),
-				syntaxHighlighting(defaultHighlightStyle),
-				cpp()
-			]}
-		/>
+		<ReadOnlyEditor bind:this={editor} />
 	</div>
 </div>
 

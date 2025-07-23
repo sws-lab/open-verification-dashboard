@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
 	import PageSelector from '$components/ui/pageSelector.svelte';
-	import { Button, Modal, Project, Search } from '$ui';
+	import { Button, Modal, Search } from '$ui';
+	import { Project } from '$components';
 	let { data } = $props();
 
 	let searchQuery = $state(data.filter);

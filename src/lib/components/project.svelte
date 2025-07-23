@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Dropdown, DropdownItem } from '$ui';
-	import type { ElementClicked } from './dropdown/dropdown.svelte';
-	import Icon from './icon.svelte';
+	import type { ElementClicked } from './ui/dropdown/dropdown.svelte';
+	import Icon from './ui/icon.svelte';
 	type project = {
 		id: number;
 		name: string;
@@ -108,6 +108,7 @@
 			a {
 				text-decoration: none;
 				color: var(--primary-font-color);
+				word-break: break-all;
 				&:hover {
 					color: var(--accent-color);
 				}
@@ -127,6 +128,7 @@
 			margin-bottom: 0;
 			align-self: start;
 			justify-self: start;
+			text-overflow: ellipsis;
 		}
 
 		&__revision {

@@ -1,97 +1,27 @@
 open ProofObligation
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
-module ConflictRange = struct
-  type file_position = {
-    line: int;
-    column: int;
-  }[@@deriving yojson, show, eq]
-
-  type t = {
-    file: string;
-    start: file_position;
-    end_: file_position [@key "end"];
-  }
-  [@@deriving yojson, show, eq]
-
-  let of_range (range: Range.t) =
-    {
-      file = range.start.file;
-      start = { line = range.start.line; column = range.start.column };
-      end_ = { line = range.end_.line; column = range.end_.column };
-    }
-
-  let union a b =
-    if a.file <> b.file then
-      failwith "Cannot union ranges from different files";
-    {
-      file = a.file;
-      start = {
-        line = min a.start.line b.start.line;
-        column = min a.start.column b.start.column;
-      };
-      end_ = {
-        line = max a.end_.line b.end_.line;
-        column = max a.end_.column b.end_.column;
-      };
-    }
-  (** Unions two ranges, assuming they are from the same file. *)
-
-  let eq_or_includes a b =
-    a.file = b.file &&
-    a.start.line = b.start.line &&
-    a.end_.line = b.end_.line && (
-      (a.start.column <= b.start.column && a.end_.column >= b.end_.column) ||
-      (a.start.column >= b.start.column && a.end_.column <= b.end_.column)
-    )
-  (** Checks if two ranges are equal or if one includes the other. *)
-
-
-  let compare a b =
-    if a.file <> b.file then
-      compare a.file b.file
-    else if eq_or_includes a b then
-      0
-    else if a.end_.line < b.end_.line then
-      -1
-    else if a.end_.line > b.end_.line then
-      1
-    else if a.end_.column < b.end_.column then
-      -1
-    else if a.end_.column > b.end_.column then
-      1
-    else
-      failwith "Ranges are not comparable"
-
-  let pp fmt range =
-    Format.fprintf fmt "%s:%d.%d-%d.%d"
-      range.file
-      range.start.line
-      (range.start.column + 1)
-      range.end_.line
-      (range.end_.column + 1)
-  
-  let pp fmt range =
-    Format.fprintf fmt "@{<bold>%a@}"
-      pp range
-end
 
 type kind =
-  | NoConflictSafe
-  | NoConflictWarning
-  | NoConflictError
-  | Unchecked
-  | OnlyOneProofObligation
-  | SafetyW1
-  | SafetyW2
-  | PrecisionW1
-  | PrecisionW2
-  | ErrorLevel
+  | NoConflictSafe [@name "NoConflictSafe"]
+  | NoConflictWarning [@name "NoConflictWarning"]
+  | NoConflictError [@name "NoConflictError"]
+  | Unchecked [@name "Unchecked"]
+  | OnlyOneProofObligation [@name "OnlyOneProofObligation"]
+  | SafetyW1 [@name "SafetyW1"]
+  | SafetyW2 [@name "SafetyW2"]
+  | PrecisionW1 [@name "PrecisionW1"]
+  | PrecisionW2 [@name "PrecisionW2"]
+  | ErrorLevel [@name "ErrorLevel"]
 [@@deriving show { with_path = false }, yojson]
+
+let kind_of_yojson = Utils.string_t_of_yojson kind_of_yojson "Kind"
+let yojson_of_kind = Utils.string_yojson_of_t yojson_of_kind
+
 
 type t = {
   kind: kind;
-  range: ConflictRange.t;
+  range: Range.t;
   from_po1: Check.t list;
   from_po2: Check.t list;
 }
@@ -103,7 +33,7 @@ let pp_kind fmt kind =
 
 let pp fmt conflict =
   Format.fprintf fmt
-    "%a (%a): @.    @[<v 2>" pp_kind conflict.kind ConflictRange.pp conflict.range;
+    "%a (%a): @.    @[<v 2>" pp_kind conflict.kind Range.pp conflict.range;
   
   let pp_two_checks fmt conflict =
     Format.fprintf fmt "@{<#fff>ProofObligation 1 checks:@}@, @[<hov 4>%a@]@;<0 -2>"

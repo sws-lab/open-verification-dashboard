@@ -60,8 +60,7 @@ let () =
       let filtered_po = { proofObligation with
         checks = 
           List.filter (fun (check : ProofObligation.Check.t) -> 
-            FilePath.compare check.range.start.file file == 0 &&
-            FilePath.compare check.range.end_.file file == 0
+            FilePath.compare check.range.file file == 0
           ) proofObligation.checks
       } in
       if List.length filtered_po.checks = 0 then (

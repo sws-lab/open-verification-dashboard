@@ -1,7 +1,8 @@
 (library
  (name dashboard)
  (wrapped true)
- (modules conflict proofObligation compareProofObligations report project)
+ (modules conflict proofObligation compareProofObligations report project utils)
+ (private_modules utils)
  (preprocess
   (pps
     ppx_deriving.std

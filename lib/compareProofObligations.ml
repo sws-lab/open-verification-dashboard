@@ -1,9 +1,8 @@
 module RangeHash = Map.Make(struct
   open ProofObligation
-  open Conflict
-  type t = ConflictRange.t * Category.t
+  type t = Range.t * Category.t
   let compare (r1, c1) (r2, c2) =
-    let cmp = ConflictRange.compare r1 r2 in
+    let cmp = Range.compare r1 r2 in
     if cmp <> 0 then cmp else Category.compare c1 c2
 end)
 
@@ -32,17 +31,17 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
   let open ProofObligation in
   let insert_proofObligations proofObligation_id map (checks: Check.t list) =
     List.fold_left (fun acc check ->
-      let key = Check.(Conflict.ConflictRange.of_range check.range, check.title) in
+      let key = Check.(check.range, check.title) in
       match RangeHash.find_opt key acc with
       | None ->
         RangeHash.add key Conflict.{
           kind = Unchecked;
-          range = ConflictRange.of_range check.range;
+          range = check.range;
           from_po1 = if proofObligation_id = 1 then [check] else [];
           from_po2 = if proofObligation_id = 2 then [check] else [];
         } acc
       | Some conflict ->
-        let new_range = Conflict.(ConflictRange.union conflict.range (ConflictRange.of_range check.range)) in
+        let new_range = Conflict.(Range.union conflict.range check.range) in
         let new_key = (new_range, check.title) in
         let new_conflict = Conflict.{
           conflict with
@@ -85,4 +84,4 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
       else
         assert false
   ) map2 [] in
-  List.sort Conflict.(fun c1 c2 -> ConflictRange.compare c1.range c2.range) conflicts
+  List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts

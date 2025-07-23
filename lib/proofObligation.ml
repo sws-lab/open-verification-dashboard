@@ -1,35 +1,102 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
-let string_yojson_of_t yojson_of_t kind =
-  match yojson_of_t kind with
-  | `List [l] -> (match l with
-    | `String s -> `List [`String s]
-    | _ -> failwith "Expected a string for field ")
-  | _ -> failwith "Expected a list"
-
-let string_t_of_yojson t_of_yojson name json =
-  match json with
-  | `String _ as kind ->
-    t_of_yojson (`List [kind])
-  | _ -> 
-    failwith ("Expected a string value for " ^ name ^ ", got: " ^ Yojson.Safe.to_string json)
 
 module Range = struct
-  type file_range = {
+  type file_position = {
     line: int;
     column: int;
-    file: string;
-  }[@@deriving yojson, show, eq]
+  }[@@deriving yojson_of, show, eq]
+
+  let file_position_of_yojson (json : Yojson.Safe.t) =
+    match json with
+    | `Assoc fields -> (
+      let line = List.assoc "line" fields in
+      let column = List.assoc "column" fields in
+      match line, column with
+      | `Int l, `Int c -> { line = l; column = c }
+      | _ -> failwith "Expected an associative array for file_position"
+    )
+    | _ -> failwith "Expected an associative array for file_position"
 
   type t = {
-    start: file_range;
-    end_: file_range [@key "end"];
-  }[@@deriving yojson, show, eq]
-  
+    file: string;
+    start: file_position;
+    end_: file_position [@key "end"];
+  }
+  [@@deriving yojson_of, show, eq]
+
+  let t_of_yojson (json : Yojson.Safe.t) =
+    match json with
+    | `Assoc fields ->
+      let start = List.assoc "start" fields in
+      let end_ = List.assoc "end" fields in
+      let file = List.assoc_opt "file" fields in (
+      match file with
+      | Some (`String file) ->
+        let start_pos = file_position_of_yojson start in
+        let end_pos = file_position_of_yojson end_ in
+        { file; start = start_pos; end_ = end_pos }
+      | None -> (
+        match start with
+        | `Assoc start_fields ->
+          let file = List.assoc "file" start_fields in
+          let start_pos = file_position_of_yojson (`Assoc start_fields) in
+          let end_pos = file_position_of_yojson end_ in (
+          match file with
+          | `String file ->
+            { file = file; start = start_pos; end_ = end_pos }
+          | _ -> failwith "Expected a string for file")
+        | _ -> failwith "Expected an associative array for start position")
+      | _ -> failwith "Expected a string for file")
+    | _ ->
+        failwith "Expected an associative array for Range.t"
+
+
+  let union a b =
+    if a.file <> b.file then
+      failwith "Cannot union ranges from different files";
+    {
+      file = a.file;
+      start = {
+        line = min a.start.line b.start.line;
+        column = min a.start.column b.start.column;
+      };
+      end_ = {
+        line = max a.end_.line b.end_.line;
+        column = max a.end_.column b.end_.column;
+      };
+    }
+  (** Unions two ranges, assuming they are from the same file. *)
+
+  let eq_or_includes a b =
+    a.file = b.file &&
+    a.start.line = b.start.line &&
+    a.end_.line = b.end_.line && (
+      (a.start.column <= b.start.column && a.end_.column >= b.end_.column) ||
+      (a.start.column >= b.start.column && a.end_.column <= b.end_.column)
+    )
+  (** Checks if two ranges are equal or if one includes the other. *)
+
+
+  let compare a b =
+    if a.file <> b.file then
+      compare a.file b.file
+    else if eq_or_includes a b then
+      0
+    else if a.end_.line < b.end_.line then
+      -1
+    else if a.end_.line > b.end_.line then
+      1
+    else if a.end_.column < b.end_.column then
+      -1
+    else if a.end_.column > b.end_.column then
+      1
+    else
+      failwith "Ranges are not comparable"
 
   let pp fmt range =
     Format.fprintf fmt "%s:%d.%d-%d.%d"
-      range.start.file
+      range.file
       range.start.line
       (range.start.column + 1)
       range.end_.line
@@ -66,9 +133,8 @@ module Kind = struct
     | Error -> "@{<red>error");
     Format.fprintf fmt "@}"
 
-  let t_of_yojson = string_t_of_yojson t_of_yojson "Kind"
-
-  let yojson_of_t t = string_yojson_of_t yojson_of_t t
+  let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Kind"
+  let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 end
 
 module Category = struct
@@ -90,8 +156,8 @@ module Category = struct
     | FloatingpointOverflow [@name "Floating-point overflow"]
   [@@deriving yojson, show { with_path = false }, ord]
 
-  let t_of_yojson = string_t_of_yojson t_of_yojson  "Category"
-  let yojson_of_t = string_yojson_of_t yojson_of_t
+  let t_of_yojson = Utils.string_t_of_yojson t_of_yojson  "Category"
+  let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 end
 
 module StackTrace = struct
@@ -199,7 +265,7 @@ let convert_paths ~exclude_not_found proofObligation project_path =
     proofObligation
   else
     let path_to_project_relative = Project.path_to_project_relative project_path in
-    let convert_file_range_path (file_range: Range.file_range) =
+    let convert_file_range_path (file_range: Range.t) =
       { file_range with
         file = path_to_project_relative file_range.file
       }
@@ -208,16 +274,12 @@ let convert_paths ~exclude_not_found proofObligation project_path =
     ProofObligation.{
       proofObligation with
       checks = List.filter_map (fun check ->
-        let start = convert_file_range_path check.range.start in
-        let end_ = convert_file_range_path check.range.end_ in
-        if exclude_not_found && (Project.Folder.mem Project.warned check.range.start.file) then
+        let range = convert_file_range_path check.range in
+        if exclude_not_found && (Project.Folder.mem Project.warned check.range.file) then
           None
         else
           Some ({ check with
-          range = {
-            start; 
-            end_;
-          }
+          range
         })
       ) proofObligation.checks
     }

@@ -39,5 +39,6 @@ export const conflict = pgTable('conflict', {
 		.references(() => proofObligation.id, { onDelete: 'cascade' })
 		.notNull(),
 	conflicts: jsonb('conflicts').notNull(),
+	stats: jsonb('stats').notNull(),
 	lastUpdated: date('last_updated').notNull().defaultNow()
 });

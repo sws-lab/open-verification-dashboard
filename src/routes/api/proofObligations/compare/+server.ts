@@ -6,6 +6,7 @@ import { conflict, proofObligation } from '$lib/server/db/schema';
 import { and, eq, or, sql } from 'drizzle-orm';
 import { env } from '$env/dynamic/private';
 import { compareProofObligations } from '$lib/server/dashboard';
+import { calculateStats, type Stats } from '$lib/conflicts/stats';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const result = await checkApiSchema(request, checks.GET);
@@ -72,6 +73,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ success: false, error: 'Internal server error' }, { status: 500 });
 	}
 
+	const stats: Stats = {};
+	for (const [file, conflicts] of Object.entries(dashboard_result.conflicts)) {
+		stats[file] = calculateStats(conflicts);
+	}
+
 	try {
 		if (update_id !== null) {
 			console.log(`Updating existing conflict with ID ${update_id}`);
@@ -93,7 +99,8 @@ export const POST: RequestHandler = async ({ request }) => {
 				projectRevision: proofObligation1.projectRevision,
 				proofObligationId1: proofObligation1.id,
 				proofObligationId2: proofObligation2.id,
-				conflicts: dashboard_result
+				conflicts: dashboard_result,
+				stats: stats
 			})
 			.onConflictDoUpdate({
 				target: conflict.id,

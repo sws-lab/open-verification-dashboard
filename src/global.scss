@@ -1,8 +1,8 @@
 :root {
-	--accent-color: #ff9101;
-	--accent-color-disabled: #ff9101a0;
-	--accent-color-hover: #ff6d00;
-	--accent-color-pale: #ff9101ed;
+	--primary-color: #ff9101;
+	--primary-color-disabled: #ff9101a0;
+	--primary-color-hover: #ff6d00;
+	--primary-color-pale: #ff9101ed;
 	--main-font-color: #333;
 	--secondary-font-color: #666;
 	--tertiary-font-color: #999;
@@ -36,7 +36,7 @@ body {
 }
 
 *:focus {
-	outline: 2px solid var(--accent-color);
+	outline: 2px solid var(--primary-color);
 }
 
 *,

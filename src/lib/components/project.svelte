@@ -91,7 +91,7 @@
 				background: transparent;
 
 				&:hover {
-					color: var(--accent-color);
+					color: var(--primary-color);
 				}
 			}
 		}
@@ -110,7 +110,7 @@
 				color: var(--primary-font-color);
 				word-break: break-all;
 				&:hover {
-					color: var(--accent-color);
+					color: var(--primary-color);
 				}
 			}
 

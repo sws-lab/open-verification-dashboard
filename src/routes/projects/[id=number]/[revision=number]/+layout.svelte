@@ -57,7 +57,7 @@
 
 		h2 {
 			margin: 0;
-			color: var(--accent-color);
+			color: var(--primary-color);
 			span {
 				font-size: 1rem;
 				color: var(--secondary-font-color);

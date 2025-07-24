@@ -95,34 +95,34 @@
 
 	.button-main,
 	.button-submit {
-		background-color: var(--accent-color);
+		background-color: var(--primary-color);
 		color: white;
 		border: none;
 		@include base-button;
 
 		#{$disabled} {
-			background-color: var(--accent-color-disabled);
+			background-color: var(--primary-color-disabled);
 		}
 
 		&:hover:not(#{$disabled}) {
-			background-color: var(--accent-color-hover);
+			background-color: var(--primary-color-hover);
 		}
 	}
 
 	.button-secondary {
 		background-color: white;
-		color: var(--accent-color);
-		border: 1px solid var(--accent-color);
+		color: var(--primary-color);
+		border: 1px solid var(--primary-color);
 		@include base-button;
 
 		#{$disabled} {
-			border-color: var(--accent-color-disabled);
-			color: var(--accent-color-disabled);
+			border-color: var(--primary-color-disabled);
+			color: var(--primary-color-disabled);
 			background-color: #f4f4f4;
 		}
 
 		&:hover:not(#{$disabled}) {
-			background-color: var(--accent-color-hover);
+			background-color: var(--primary-color-hover);
 			color: white;
 		}
 	}

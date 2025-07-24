@@ -57,7 +57,7 @@
 			box-sizing: border-box;
 
 			&:hover {
-				background-color: var(--accent-color-pale);
+				background-color: var(--primary-color-pale);
 			}
 
 			&.risky {

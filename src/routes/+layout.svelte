@@ -32,7 +32,7 @@
 		justify-content: start;
 		align-items: center;
 		background-color: #333;
-		border-bottom: 2px solid var(--accent-color);
+		border-bottom: 2px solid var(--primary-color);
 		box-shadow: 0 3px 5px rgb(0, 0, 0, 0.3);
 		position: relative;
 		z-index: 100;
@@ -62,11 +62,11 @@
 
 					&.active {
 						text-decoration: underline;
-						text-decoration-color: var(--accent-color);
+						text-decoration-color: var(--primary-color);
 					}
 
 					&:hover {
-						color: var(--accent-color);
+						color: var(--primary-color);
 						transform: scale(10);
 					}
 				}

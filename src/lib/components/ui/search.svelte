@@ -46,5 +46,10 @@
 		&::before {
 			@include icon-content('search', $size: 1.5rem);
 		}
+
+		&:focus-within {
+			outline: 2px solid var(--primary-color);
+			box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
+		}
 	}
 </style>

@@ -29,6 +29,7 @@
 	}: ButtonProps = $props();
 </script>
 
+<!-- svelte-ignore a11y_autofocus -->
 {#if href == ''}
 	<button
 		type={type === 'submit' ? 'submit' : 'button'}
@@ -52,6 +53,7 @@
 		class:block
 		class:slim
 		class:italic
+		{autofocus}
 		aria-disabled={disabled}
 	>
 		{@render children()}

@@ -2,6 +2,7 @@
 	import { Conflict } from '$components';
 	import ReadOnlyEditor from '$components/readOnlyEditor.svelte';
 	import Button from '$components/ui/button.svelte';
+	import type { Conflict as ConflictType } from '$lib/conflicts/conflict';
 	import loadProjectFile from '$lib/utils/fileImport';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 
@@ -10,7 +11,7 @@
 	let editor: ReadOnlyEditor | null = $state(null);
 	let loading: boolean = $state(false);
 	let error: string | null = $state(null);
-	let conflicts: Conflict[] = $state([]);
+	let conflicts = $state<ConflictType[]>([]);
 
 	const { data } = $props();
 

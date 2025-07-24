@@ -32,7 +32,7 @@
 	}
 </script>
 
-{#snippet detail(check: check, left: boolean)}
+{#snippet detail(check: check | null, left: boolean)}
 	{#if check}
 		<div
 			class="check {check.kind}"

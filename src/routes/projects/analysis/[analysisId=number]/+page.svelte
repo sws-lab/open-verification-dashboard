@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { Conflict } from '$components';
+	import AnalyzedFilesTable from '$components/analyzedFilesTable.svelte';
 	import ReadOnlyEditor from '$components/readOnlyEditor.svelte';
-	import Button from '$components/ui/button.svelte';
+	import { Button, Progress } from '$ui';
 	import type { Conflict as ConflictType } from '$lib/conflicts/conflict';
 	import loadProjectFile from '$lib/utils/fileImport';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
+
+	const { data } = $props();
 
 	let currentFile: null | string = $state(null);
 	let content = $state('');
@@ -13,7 +16,14 @@
 	let error: string | null = $state(null);
 	let conflicts = $state<ConflictType[]>([]);
 
-	const { data } = $props();
+	let totalAgreements = Object.values(data.analysis.stats).reduce(
+		(acc, stats) => acc + stats.agreeOnSafe + stats.agreeOnWarning + stats.agreeOnError,
+		0
+	);
+	let totalChecks = Object.values(data.analysis.stats).reduce(
+		(acc, stats) => acc + stats.totalSafe + stats.totalWarning + stats.totalError,
+		0
+	);
 
 	function loadFile(file: string) {
 		if (currentFile === file && content !== '') return;
@@ -50,7 +60,6 @@
 	}
 
 	function scrollToRange(index: number) {
-		console.log(`Scrolling to conflict ${index}`);
 		document.querySelector(`#conflict-${index}`)?.scrollIntoView({
 			behavior: 'smooth',
 			block: 'start'
@@ -81,13 +90,23 @@
 		{#if currentFile === null}
 			<div class="file pane">
 				<h2>Analyzed files</h2>
-				<ul>
-					{#each Object.keys(data.analysis.conflicts.conflicts) as file (file)}
-						<li>
-							<Button type="link" onclick={() => loadFile(file)}>{file}</Button>
-						</li>
-					{/each}
-				</ul>
+				<div class="file__global-stats">
+					<Progress
+						value={totalAgreements}
+						max={totalChecks}
+						id="total-progress"
+						aria-label="Percentage of checks agreed upon by both analysis tools"
+					/>
+					<label for="total-progress">
+						{totalAgreements}/{totalChecks} checks agreed upon
+					</label>
+				</div>
+
+				<AnalyzedFilesTable
+					files={Object.keys(data.analysis.conflicts.conflicts)}
+					onFileSelect={loadFile}
+					stats={data.analysis.stats}
+				/>
 			</div>
 		{:else}
 			<div class="error pane">
@@ -139,6 +158,7 @@
 	.file,
 	.error {
 		padding: 1rem;
+		padding-top: 0;
 		h2 {
 			font-size: 2rem;
 		}
@@ -146,20 +166,18 @@
 
 	.file {
 		h2 {
-			margin: 0 0 1rem;
+			margin: 1rem 0;
 		}
-		ul {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-			li {
-				margin: 0.5rem 0;
-			}
+		&__global-stats {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			margin-bottom: 1rem;
 		}
 	}
 
 	.error {
-		padding-top: 0;
 		&__header {
 			h2 {
 				margin: 0;

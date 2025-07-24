@@ -94,6 +94,7 @@
 		border-radius: 0.5rem;
 		margin: 0.5rem 0;
 		padding: 1rem;
+		scroll-margin-top: 5rem;
 
 		h3 {
 			margin: 0;

@@ -42,6 +42,7 @@
 	},
 	"dependencies": {
 		"@codemirror/lang-cpp": "^6.0.3",
+		"@fontsource-variable/fira-code": "^5.2.6",
 		"@fontsource-variable/manrope": "^5.2.6",
 		"@fontsource-variable/material-symbols-rounded": "^5.2.16",
 		"codemirror": "^6.0.2",

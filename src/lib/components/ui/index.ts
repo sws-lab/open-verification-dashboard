@@ -6,4 +6,5 @@ export { default as DropdownItem } from './dropdown/dropdownItem.svelte';
 export { default as FileTree } from './fileTree.svelte';
 export { default as Search } from './search.svelte';
 export { default as PageSelector } from './pageSelector.svelte';
+export { default as Progress } from './progress.svelte';
 export * as Modal from './modal';

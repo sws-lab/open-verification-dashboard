@@ -6,6 +6,7 @@ import type { PageServerLoad } from './$types';
 import { error, isHttpError } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import { alias } from 'drizzle-orm/pg-core';
+import type { Stats } from '$lib/conflicts/stats';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const analysisId = Number(params.analysisId);
@@ -19,6 +20,7 @@ export const load: PageServerLoad = async ({ params }) => {
 				revision: conflict.projectRevision,
 				projectId: conflict.projectId,
 				conflicts: conflict.conflicts,
+				stats: conflict.stats,
 				po1Name: po1.name,
 				po2Name: po2.name
 			})
@@ -43,6 +45,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			revision: number;
 			projectId: number;
 			conflicts: DashboardOutput;
+			stats: Stats;
 			po1Name: string;
 			po2Name: string;
 		};

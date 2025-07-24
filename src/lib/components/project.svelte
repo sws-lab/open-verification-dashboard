@@ -16,7 +16,7 @@
 
 	let { project, onaction }: ProjectProps = $props();
 
-	let menu: typeof Dropdown | undefined = $state();
+	let menu: Dropdown | undefined = $state();
 
 	function elementClicked(event: ElementClicked) {
 		if (event.elementName == null) return;
@@ -31,10 +31,15 @@
 		</a>
 	</h3>
 	<nav class="project__actions" aria-label="Project actions">
-		<button onclick={menu?.show} aria-haspopup="true" aria-expanded="false" aria-controls="+li">
+		<button
+			onclick={menu?.show}
+			role="menu"
+			aria-expanded="false"
+			aria-controls="project-dropdown-{project.id}"
+		>
 			<Icon icon="more_vert" size="1.5rem" />
 		</button>
-		<Dropdown bind:this={menu} {elementClicked}>
+		<Dropdown bind:this={menu} {elementClicked} type="menu" id="project-dropdown-{project.id}">
 			<DropdownItem name="edit" href={`/projects/${project.id}/${project.revision}/project`}>
 				<Icon icon="edit_document" /> Edit
 			</DropdownItem>

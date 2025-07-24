@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { Conflict } from '$components';
 	import ReadOnlyEditor from '$components/readOnlyEditor.svelte';
-	import { Button } from '$ui';
+	import { Button, Icon } from '$ui';
 	import type { Conflict as ConflictType } from '$lib/conflicts/conflict';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
+	import Dropdown from '$components/ui/dropdown/dropdown.svelte';
+	import DropdownItem from '$components/ui/dropdown/dropdownItem.svelte';
 
 	const { data } = $props();
 
 	let editor: ReadOnlyEditor | null = $state(null);
+	let filterDropdown: Dropdown | null = $state(null);
+
 	let conflicts = $derived<ConflictType[]>(
 		data.analysis.conflicts.conflicts[`./${data.path}`].sort((a, b) => {
 			if (a.range === b.range) return 0;
@@ -41,7 +45,22 @@
 				<Button href="/projects/analysis/{data.analysis.id}" type="secondary">
 					Back to file list
 				</Button>
-				<h2>Errors of {data.path}</h2>
+				<button
+					aria-label="Select shown errors"
+					role="combobox"
+					aria-expanded="false"
+					aria-controls="filter-dropdown"
+					onclick={(event) => filterDropdown?.show(event)}
+				>
+					Filter errors
+					<Icon icon="arrow_drop_down" />
+				</button>
+				<Dropdown bind:this={filterDropdown} id="filter-dropdown" type="combobox">
+					<DropdownItem name="Hello1">Hello1</DropdownItem>
+					<DropdownItem name="Hello2">Hello2</DropdownItem>
+					<DropdownItem name="Hello3">Hello3</DropdownItem>
+				</Dropdown>
+				<h2>{data.path}</h2>
 			</div>
 
 			{#each conflicts as conflict, index (index)}
@@ -73,6 +92,7 @@
 			padding: 1rem 0;
 			position: sticky;
 			top: 0;
+			flex-wrap: wrap;
 			h2 {
 				font-size: 2rem;
 				flex-grow: 1;

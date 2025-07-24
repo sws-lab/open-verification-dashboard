@@ -2,9 +2,9 @@ import { db } from '$lib/server/db';
 import { projects } from '$lib/server/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from '../../$types';
+import type { LayoutServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, depends }) => {
+export const load: LayoutServerLoad = async ({ params, depends }) => {
 	depends('app:project');
 	const { id, revision } = params;
 	let project;
@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ params, depends }) => {
 		project = await db
 			.select()
 			.from(projects)
-			.where(and(eq(projects.id, id), eq(projects.revision, revision)));
+			.where(and(eq(projects.id, Number(id)), eq(projects.revision, Number(revision))));
 	} catch (err) {
 		console.error('Error loading project:', err);
 		error(500, { message: 'Internal server error' });

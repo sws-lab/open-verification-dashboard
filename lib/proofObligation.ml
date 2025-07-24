@@ -120,6 +120,12 @@ module Kind = struct
     | _, Error | Error, _ -> Error
     | Safe, n | n, Safe -> n
     | Warning, Warning -> Warning
+    
+  let min a b =
+    match a, b with
+    | Safe, _ | _, Safe -> Safe
+    | Error, n | n, Error -> n 
+    | Warning, Warning -> Warning
 
   let is_safe = function
     | Safe -> true

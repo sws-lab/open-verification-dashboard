@@ -21,7 +21,7 @@ let safety_of_checks (checks: ProofObligation.Check.t list) : po_safety =
     { safe = acc.safe && is_safe; has_safe = false; highest_error_level }, 
     SafeMap.update check.callstack (function
       | None -> Some (1, check.kind)
-      | Some (count, existing_kind) -> Some (count + 1, ProofObligation.Kind.max existing_kind check.kind)
+      | Some (count, existing_kind) -> Some (count + 1, ProofObligation.Kind.min existing_kind check.kind)
     ) safe_map
   ) ({ safe = true; has_safe = false; highest_error_level = ProofObligation.Kind.Safe }, SafeMap.empty) checks in
   let has_safe = SafeMap.exists (fun _ (count, kind) -> count > 1 && ProofObligation.Kind.is_safe kind) @@ snd res in

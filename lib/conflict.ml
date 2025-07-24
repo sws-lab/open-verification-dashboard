@@ -66,13 +66,17 @@ let pp fmt conflict =
     Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the error level of the range.@}@;<0 -2>";
     pp_two_checks fmt conflict;
   | Unchecked ->
-    Format.fprintf fmt "@{<#fff>This has not been checked for conflicts yet.@}";
+    Format.fprintf fmt "@{<#fff>This has not been checked for conflicts yet.@}@;<0 -2>";
+    pp_two_checks fmt conflict;
   | NoConflictSafe ->
-    Format.fprintf fmt "@{<#0f0>Safe: No conflict found.@}";
+    Format.fprintf fmt "@{<#0f0>Safe: No conflict found.@}@;<0 -2>";
+    pp_two_checks fmt conflict;
   | NoConflictWarning ->
-    Format.fprintf fmt "@{<#ff0>Warning: No conflict found, but they agree it's a warning.@}";
+    Format.fprintf fmt "@{<#ff0>Warning: No conflict found, but they agree it's a warning.@}@;<0 -2>";
+    pp_two_checks fmt conflict;
   | NoConflictError ->
-    Format.fprintf fmt "@{<#f00>Error: No conflict found, but they agree it's an error.@}";
+    Format.fprintf fmt "@{<#f00>Error: No conflict found, but they agree it's an error.@}@;<0 -2>";
+    pp_two_checks fmt conflict;
 
   Format.fprintf fmt "@]";
   Format.pp_print_newline fmt ()

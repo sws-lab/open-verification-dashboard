@@ -4,11 +4,11 @@
 
 	interface Props {
 		files: string[];
-		onFileSelect: (file: string) => void;
+		href: string;
 		stats: Stats;
 	}
 
-	let { files, onFileSelect, stats }: Props = $props();
+	let { files, href, stats }: Props = $props();
 	let maxSafeDigits = $derived(
 		Object.values(stats).reduce((max, fileStats) => {
 			return Math.max(
@@ -85,7 +85,7 @@
 		{#each files as file (file)}
 			<tr>
 				<td>
-					<Button type="link" italic onclick={() => onFileSelect(file)}>{file}</Button>
+					<Button type="link" italic href="{href}/{file}">{file}</Button>
 				</td>
 				{@render tdProgress(maxSafeDigits, stats[file].agreeOnSafe, stats[file].totalSafe, file)}
 				{@render tdProgress(

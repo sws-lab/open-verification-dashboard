@@ -2,13 +2,13 @@ import { db } from '$lib/server/db';
 import { conflict, projects, proofObligation } from '$lib/server/db/schema';
 import type { DashboardOutput } from '$lib/conflicts/conflict';
 import { eq, lte, and } from 'drizzle-orm';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 import { error, isHttpError } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
 import { alias } from 'drizzle-orm/pg-core';
 import type { Stats } from '$lib/conflicts/stats';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: LayoutServerLoad = async ({ params }) => {
 	const analysisId = Number(params.analysisId);
 
 	try {

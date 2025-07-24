@@ -7,9 +7,10 @@
 		title: string;
 		onclose: (confirmed: boolean) => void;
 		children: Snippet<[]>;
+		id: string;
 	}
 
-	let { title, onclose, children }: ErrorConfirmProps = $props();
+	let { title, onclose, children, id }: ErrorConfirmProps = $props();
 
 	let modal: Modal | null = $state(null);
 
@@ -17,17 +18,17 @@
 		modal?.open();
 	}
 
-	function customOnClose(returnValue: string) {
+	function customOnClose(returnValue?: string) {
 		onclose(returnValue === 'true');
 	}
 </script>
 
-<Modal {title} onclose={customOnClose} bind:this={modal}>
+<Modal {title} onclose={customOnClose} bind:this={modal} {id}>
 	{#snippet content(close)}
 		{@render children()}
 		<nav class="actions">
-			<Button type="error" onclick={() => close(true)}>Ok</Button>
-			<Button type="main" onclick={() => close(false)} autofocus>Cancel</Button>
+			<Button type="error" onclick={() => close('true')}>Ok</Button>
+			<Button type="main" onclick={() => close('false')} autofocus>Cancel</Button>
 		</nav>
 	{/snippet}
 </Modal>

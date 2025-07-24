@@ -6,6 +6,8 @@
 	let displayedText = $state('Nothing to display');
 	let modal = $state<Modal | null>(null);
 
+	let { id } = $props();
+
 	export function info(text: string) {
 		title = 'Info';
 		displayedText = text;
@@ -41,7 +43,7 @@
 	}
 </script>
 
-<Modal {title} bind:this={modal}>
+<Modal {title} bind:this={modal} {id}>
 	{#snippet content(close)}
 		<p>{displayedText}</p>
 		<nav class="actions">

@@ -84,10 +84,11 @@
 	title="Are you sure?"
 	onclose={oncloseConfirmModal}
 	bind:this={errorConfirmModal}
+	id="delete-project-confirm"
 >
 	Deleting a project is irreversible. This action will remove all associated data.
 </Modal.ErrorConfirm>
-<Modal.StatusModal bind:this={statusModal} />
+<Modal.StatusModal bind:this={statusModal} id="project-status-modal" />
 
 <style lang="scss">
 	@use '$styles/mixins.scss' as *;

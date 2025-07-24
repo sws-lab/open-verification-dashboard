@@ -1,31 +1,49 @@
 <script lang="ts">
 	import { type Snippet } from 'svelte';
+	import { pushState } from '$app/navigation';
+	import { page } from '$app/state';
 
 	interface ModalProps {
 		title?: string;
-		content: Snippet<[close: (returnValue?: any) => void]>;
-		onclose?: (returnValue?: any) => void;
+		content: Snippet<[close: (returnValue?: string) => void]>;
+		onclose?: (returnValue?: string) => void;
+		id: string;
 	}
 
-	let { title = 'Modal', content, onclose }: ModalProps = $props();
+	let { title = 'Modal', content, onclose, id }: ModalProps = $props();
 
 	let dialog: HTMLDialogElement | null = $state(null);
 
-	export function close(data?: any) {
-		dialog?.close(data);
+	export function close(data?: string) {
+		if (dialog) {
+			dialog.close(data);
+			history.back();
+		}
 	}
 
 	export function open() {
 		dialog?.showModal();
+		if (page.state[id]) return;
+		pushState('', {
+			[id]: true
+		});
 	}
 
-	function oncloseProxy(event: Event & { returnValue: any }) {
+	function oncloseProxy(event: Event & { currentTarget: HTMLDialogElement }) {
 		if (event.returnValue) {
 			onclose?.(dialog?.returnValue);
 		} else {
-			onclose?.(null);
+			onclose?.();
 		}
 	}
+
+	$effect(() => {
+		if (!page.state[id]) {
+			dialog?.close();
+		} else {
+			dialog?.showModal();
+		}
+	});
 </script>
 
 <dialog bind:this={dialog} class="modal" onclose={oncloseProxy}>

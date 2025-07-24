@@ -103,8 +103,13 @@
 	}
 </script>
 
-<Modal.StatusModal bind:this={statusModal} />
-<Modal.ErrorConfirm title="Project deletion" bind:this={errorConfirm} onclose={onErrorConfirmClose}>
+<Modal.StatusModal bind:this={statusModal} id="settings-status-modal" />
+<Modal.ErrorConfirm
+	title="Project deletion"
+	bind:this={errorConfirm}
+	onclose={onErrorConfirmClose}
+	id="delete-project-confirm"
+>
 	<p>Are you sure you want to delete this project? This action is irreversible.</p>
 </Modal.ErrorConfirm>
 

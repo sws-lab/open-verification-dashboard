@@ -169,18 +169,23 @@
 	}
 </script>
 
-<Modal.StatusModal bind:this={statusModal} />
+<Modal.StatusModal bind:this={statusModal} id="proof-obligation-status-modal" />
 <Modal.ErrorConfirm
 	bind:this={confirmDeleteModal}
 	title="Delete Proof Obligations"
 	onclose={deleteSelectedObligations}
+	id="delete-proof-obligations-confirm"
 >
 	{selectedCount} proof obligations will be deleted.<br />
 	Are you sure you want to delete the selected proof obligations?<br />
 	This action cannot be undone.<br />
 </Modal.ErrorConfirm>
 
-<Modal.Modal title="New Proof Obligation" bind:this={newProofObligationModal}>
+<Modal.Modal
+	title="New Proof Obligation"
+	bind:this={newProofObligationModal}
+	id="new-proof-obligation-modal"
+>
 	{#snippet content(close)}
 		<form method="POST" use:enhance enctype="multipart/form-data">
 			{#if errorMessage}

@@ -51,9 +51,10 @@
 					aria-expanded="false"
 					aria-controls="filter-dropdown"
 					onclick={(event) => filterDropdown?.show(event)}
+					class="filter-button"
 				>
 					Filter errors
-					<Icon icon="arrow_drop_down" />
+					<Icon icon="arrow_drop_down" size="2rem" />
 				</button>
 				<Dropdown bind:this={filterDropdown} id="filter-dropdown" type="combobox">
 					<DropdownSelectItem name="Hello1" label="Hello 1" />
@@ -98,6 +99,22 @@
 				flex-grow: 1;
 				margin: 0;
 			}
+		}
+	}
+
+	.filter-button {
+		display: flex;
+		align-items: center;
+		gap: 0.1rem;
+		font-size: 1rem;
+		padding: 0rem 0rem 0rem 0.6rem;
+		cursor: pointer;
+		background: var(--main-background-color);
+		border: none;
+		color: var(--text-color);
+		transition: background-color 0.2s ease-in-out;
+		&:hover {
+			background: var(--main-background-color-hover);
 		}
 	}
 </style>

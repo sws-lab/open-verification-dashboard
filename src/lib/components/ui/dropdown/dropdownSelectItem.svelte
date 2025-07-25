@@ -55,9 +55,16 @@
 		gap: 0.5rem;
 		cursor: pointer;
 		padding: 0.35rem 0.75rem;
+		font-size: 1rem;
 
 		label {
 			cursor: pointer;
+			user-select: none;
+			font-size: 1rem;
+		}
+
+		&:hover {
+			background-color: var(--primary-color-pale);
 		}
 	}
 </style>

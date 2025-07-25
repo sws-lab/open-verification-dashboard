@@ -47,7 +47,7 @@ export function conflictSeverity(kind: Conflict['kind']): 'warning' | 'error' | 
 		case 'PrecisionW2':
 			return 'hint';
 		case 'ErrorLevel':
-			return 'error';
+			return 'warning';
 		default:
 			console.warn(`Unknown conflict kind: ${kind}`);
 			return 'warning';

@@ -23,6 +23,7 @@
 
 	let x: number = $state(0);
 	let y: number = $state(0);
+	let top: number = $state(0);
 
 	function parentKeydownListener(event: KeyboardEvent) {
 		if (event.key === 'ArrowDown') {
@@ -54,6 +55,7 @@
 		parent.addEventListener('blur', parentBlurListener);
 		x = parent.offsetLeft;
 		y = parent.offsetTop + parent.offsetHeight;
+		top = parent.getBoundingClientRect().bottom - window.scrollY;
 	}
 
 	function _hide(focus: boolean) {
@@ -107,6 +109,7 @@
 	}}
 	style:--x="{x}px"
 	style:--y="{y}px"
+	style:--top="{top}px"
 >
 	<ul class="dropdown__list">
 		{@render children()}
@@ -125,6 +128,8 @@
 		left: var(--x);
 		margin-top: -0.2rem;
 		z-index: 1000;
+		overflow-y: scroll;
+		max-height: calc(100vh - var(--top) - 1rem);
 
 		display: none;
 		&.visible {

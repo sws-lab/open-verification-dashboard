@@ -18,11 +18,12 @@
 
 	function onclick(event: MouseEvent) {
 		if (href) return;
+		if (!event.target) return;
 		event.preventDefault();
 		event.stopPropagation();
 		elementClicked(
 			{
-				...event,
+				target: event.target,
 				elementName: name
 			},
 			true

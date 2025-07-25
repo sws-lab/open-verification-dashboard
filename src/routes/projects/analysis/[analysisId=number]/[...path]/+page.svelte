@@ -5,7 +5,7 @@
 	import type { Conflict as ConflictType } from '$lib/conflicts/conflict';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 	import Dropdown from '$components/ui/dropdown/dropdown.svelte';
-	import DropdownItem from '$components/ui/dropdown/dropdownItem.svelte';
+	import DropdownSelectItem from '$components/ui/dropdown/dropdownSelectItem.svelte';
 
 	const { data } = $props();
 
@@ -56,9 +56,9 @@
 					<Icon icon="arrow_drop_down" />
 				</button>
 				<Dropdown bind:this={filterDropdown} id="filter-dropdown" type="combobox">
-					<DropdownItem name="Hello1">Hello1</DropdownItem>
-					<DropdownItem name="Hello2">Hello2</DropdownItem>
-					<DropdownItem name="Hello3">Hello3</DropdownItem>
+					<DropdownSelectItem name="Hello1" label="Hello 1" />
+					<DropdownSelectItem name="Hello2" label="Hello 2" />
+					<DropdownSelectItem name="Hello3" label="Hello 3" />
 				</Dropdown>
 				<h2>{data.path}</h2>
 			</div>

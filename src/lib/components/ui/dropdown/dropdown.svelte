@@ -2,14 +2,15 @@
 	import { setContext, type Snippet } from 'svelte';
 	import { clickOutside } from 'svelte-outside';
 
-	export type ElementClicked = MouseEvent & {
+	export type ElementClicked = {
+		target: EventTarget;
 		elementName: string;
 	};
 	export type ElementClickedHandler = (event: ElementClicked, hideDropdown: boolean) => void;
 
 	interface DropdownProps {
 		children: Snippet<[]>;
-		elementClicked?: ElementClickedHandler;
+		elementClicked?: (event: ElementClicked) => void;
 		id?: string;
 		type: 'menu' | 'combobox';
 	}
@@ -65,12 +66,12 @@
 		visible = false;
 	}
 
-	export function hide(event?: Event) {
+	export function hide(event?: { target: EventTarget | null }) {
 		if (!visible) return;
 		if (!parent) return;
 		if (event) {
 			if (event.target !== parent && !parent?.contains(event.target as Node)) {
-				_hide(true);
+				_hide(false);
 			}
 		} else {
 			_hide(true);

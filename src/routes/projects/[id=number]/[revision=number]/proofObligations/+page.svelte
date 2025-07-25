@@ -278,8 +278,11 @@
 							tabindex="0"
 							onkeydown={(event) => elementKeydown(event, obligation.id)}
 							onclick={(event) => {
-								if (event.target !== event.currentTarget) return;
-								selectObligation(obligation.id, !selectedObligations.has(obligation.id));
+								if (event.target !== event.currentTarget) {
+									event.currentTarget.focus();
+								} else {
+									selectObligation(obligation.id, !selectedObligations.has(obligation.id));
+								}
 							}}
 							role="option"
 							class="proofObligationsView__list__content__item"

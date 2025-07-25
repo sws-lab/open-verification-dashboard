@@ -3,8 +3,7 @@
 	import type { ElementClickedHandler } from './dropdown.svelte';
 	import DropdownLiItem from './dropdownLiItem.svelte';
 
-	let { name, label, hideMenu = false } = $props();
-	let value = $state(false);
+	let { name, label, hideMenu = false, value = $bindable(false) } = $props();
 
 	const elementClicked: ElementClickedHandler = getContext('dropdown-click');
 	const menuType: 'menu' | 'combobox' = getContext('dropdown-type');
@@ -15,12 +14,13 @@
 
 <DropdownLiItem>
 	{#snippet content(onkeydown: (event: KeyboardEvent) => void)}
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div
 			{role}
 			onkeydown={(event) => {
-				event.stopPropagation();
-				event.preventDefault();
 				if (event.key === 'Enter' || event.key === ' ') {
+					event.stopPropagation();
+					event.preventDefault();
 					value = !value;
 				}
 				onkeydown(event);
@@ -32,7 +32,7 @@
 					value = !value;
 				}
 			}}
-			tabindex="-1"
+			tabindex="0"
 		>
 			<input
 				type="checkbox"

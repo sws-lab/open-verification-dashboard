@@ -12,14 +12,52 @@
 	let editor: ReadOnlyEditor | null = $state(null);
 	let filterDropdown: Dropdown | null = $state(null);
 
+	let filterOptions = $state({
+		NoConflictSafe: false,
+		NoConflictWarning: false,
+		NoConflictError: false,
+		Unchecked: false,
+		OnlyOneProofObligation: true,
+		SafetyW1: true,
+		SafetyW2: true,
+		PrecisionW1: true,
+		PrecisionW2: true,
+		ErrorLevel: true
+	});
+
 	let conflicts = $derived<ConflictType[]>(
-		data.analysis.conflicts.conflicts[`./${data.path}`].sort((a, b) => {
-			if (a.range === b.range) return 0;
-			if (a.range.start.line !== b.range.start.line) {
-				return a.range.start.line - b.range.start.line;
-			}
-			return a.range.start.column - b.range.start.column;
-		})
+		data.analysis.conflicts.conflicts[`./${data.path}`]
+			.filter((element) => {
+				switch (element.kind) {
+					case 'NoConflictSafe':
+						return filterOptions.NoConflictSafe;
+					case 'NoConflictWarning':
+						return filterOptions.NoConflictWarning;
+					case 'NoConflictError':
+						return filterOptions.NoConflictError;
+					case 'Unchecked':
+						return filterOptions.Unchecked;
+					case 'OnlyOneProofObligation':
+						return filterOptions.OnlyOneProofObligation;
+					case 'SafetyW1':
+						return filterOptions.SafetyW1;
+					case 'SafetyW2':
+						return filterOptions.SafetyW2;
+					case 'PrecisionW1':
+						return filterOptions.PrecisionW1;
+					case 'PrecisionW2':
+						return filterOptions.PrecisionW2;
+					default:
+						return true; // Default case to include all other types
+				}
+			})
+			.sort((a, b) => {
+				if (a.range === b.range) return 0;
+				if (a.range.start.line !== b.range.start.line) {
+					return a.range.start.line - b.range.start.line;
+				}
+				return a.range.start.column - b.range.start.column;
+			})
 	);
 
 	function scrollToRange(index: number) {
@@ -57,9 +95,51 @@
 					<Icon icon="arrow_drop_down" size="2rem" />
 				</button>
 				<Dropdown bind:this={filterDropdown} id="filter-dropdown" type="combobox">
-					<DropdownSelectItem name="Hello1" label="Hello 1" />
-					<DropdownSelectItem name="Hello2" label="Hello 2" />
-					<DropdownSelectItem name="Hello3" label="Hello 3" />
+					<DropdownSelectItem
+						name="noConflictSafe"
+						label="No Conflict Safe"
+						bind:checked={filterOptions.NoConflictSafe}
+					/>
+					<DropdownSelectItem
+						name="noConflictWarning"
+						label="No Conflict Warning"
+						bind:checked={filterOptions.NoConflictWarning}
+					/>
+					<DropdownSelectItem
+						name="noConflictError"
+						label="No Conflict Error"
+						bind:checked={filterOptions.NoConflictError}
+					/>
+					<DropdownSelectItem
+						name="unchecked"
+						label="Unchecked"
+						bind:checked={filterOptions.Unchecked}
+					/>
+					<DropdownSelectItem
+						name="onlyOneProofObligation"
+						label="Only One Proof Obligation"
+						bind:checked={filterOptions.OnlyOneProofObligation}
+					/>
+					<DropdownSelectItem
+						name="safetyW1"
+						label="Safety W1"
+						bind:checked={filterOptions.SafetyW1}
+					/>
+					<DropdownSelectItem
+						name="safetyW2"
+						label="Safety W2"
+						bind:checked={filterOptions.SafetyW2}
+					/>
+					<DropdownSelectItem
+						name="precisionW1"
+						label="Precision W1"
+						bind:checked={filterOptions.PrecisionW1}
+					/>
+					<DropdownSelectItem
+						name="precisionW2"
+						label="Precision W2"
+						bind:checked={filterOptions.PrecisionW2}
+					/>
 				</Dropdown>
 				<h2>{data.path}</h2>
 			</div>
@@ -73,7 +153,7 @@
 					id={`conflict-${index}`}
 				/>
 			{:else}
-				<p>No errors found in this file.</p>
+				<p class="error__message">No errors found in this file.</p>
 			{/each}
 		</div>
 	</Pane>
@@ -85,6 +165,7 @@
 		max-height: calc(100vh - var(--header-height));
 		padding: 1rem;
 		padding-top: 0;
+		height: 100%;
 
 		&__header {
 			display: flex;
@@ -99,6 +180,10 @@
 				flex-grow: 1;
 				margin: 0;
 			}
+		}
+
+		&__message {
+			height: 100%;
 		}
 	}
 

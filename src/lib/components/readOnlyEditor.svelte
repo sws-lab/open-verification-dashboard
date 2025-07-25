@@ -37,7 +37,7 @@
 	let needsRefresh = $state(false);
 
 	function lineColumnToPos(line: number, column: number, view: EditorView): number {
-		let pos = view.state.doc.line(line).from + column - 1;
+		let pos = view.state.doc.line(line).from + column;
 		return pos;
 	}
 
@@ -54,24 +54,12 @@
 	export function selectRange(range: range) {
 		view?.dispatch({
 			selection: {
-				anchor: lineColumnToPos(range.start.line, range.start.column + 1, view),
-				head: lineColumnToPos(range.end.line, range.end.column + 1, view)
+				anchor: lineColumnToPos(range.start.line, range.start.column, view),
+				head: lineColumnToPos(range.end.line, range.end.column, view)
 			}
 		});
 		view?.focus();
 	}
-
-	$effect(() => {
-		if (view && sources) {
-			view.dispatch({
-				changes: {
-					from: 0,
-					to: view.state.doc.length,
-					insert: sources
-				}
-			});
-		}
-	});
 
 	const errorDisplay = linter(
 		(view: EditorView) =>
@@ -101,8 +89,21 @@
 	);
 
 	$effect(() => {
-		if (view && diagnostics) {
+		if (diagnostics !== null) {
+			console.log('Refreshing diagnostics');
 			needsRefresh = true;
+			setTimeout(() => view?.dispatch(), 0);
+		}
+	});
+	$effect(() => {
+		if (view && sources) {
+			view.dispatch({
+				changes: {
+					from: 0,
+					to: view.state.doc.length,
+					insert: sources
+				}
+			});
 		}
 	});
 </script>

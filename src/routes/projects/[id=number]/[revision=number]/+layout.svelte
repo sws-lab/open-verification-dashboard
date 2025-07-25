@@ -19,7 +19,10 @@
 		<a
 			href={`/projects/${data.project.id}/${data.project.revision}/${page}`}
 			aria-current={currentTab === page ? 'page' : undefined}
+			aria-selected={currentTab === page}
 			aria-label={label}
+			aria-controls={currentTab === page ? 'layout-content' : ''}
+			role="tab"
 			data-sveltekit-keepfocus
 		>
 			{label}
@@ -31,14 +34,14 @@
 	<h2>{data.project.name} <span>#{data.project.id}</span></h2>
 
 	<nav>
-		<ul>
+		<ul role="tablist">
 			{#each tabs as tab (tab.name)}
 				{@render tabLink(tab.name, tab.label)}
 			{/each}
 		</ul>
 	</nav>
 </div>
-<section>
+<section id="layout-content">
 	{@render children()}
 </section>
 

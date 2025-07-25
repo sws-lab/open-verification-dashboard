@@ -3,7 +3,7 @@
 	import type { ElementClickedHandler } from './dropdown.svelte';
 	import DropdownLiItem from './dropdownLiItem.svelte';
 
-	let { name, label, hideMenu = false, value = $bindable(false) } = $props();
+	let { name, label, hideMenu = false, checked = $bindable(false) } = $props();
 
 	const elementClicked: ElementClickedHandler = getContext('dropdown-click');
 	const menuType: 'menu' | 'combobox' = getContext('dropdown-type');
@@ -17,11 +17,12 @@
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div
 			{role}
+			aria-checked={checked}
 			onkeydown={(event) => {
 				if (event.key === 'Enter' || event.key === ' ') {
 					event.stopPropagation();
 					event.preventDefault();
-					value = !value;
+					checked = !checked;
 				}
 				onkeydown(event);
 			}}
@@ -29,7 +30,7 @@
 				if (event.target !== event.currentTarget) {
 					event.currentTarget.focus();
 				} else {
-					value = !value;
+					checked = !checked;
 				}
 			}}
 			tabindex="0"
@@ -37,7 +38,7 @@
 			<input
 				type="checkbox"
 				id={uid}
-				bind:checked={value}
+				bind:checked
 				oninput={(event) => {
 					if (!event.target) return;
 					elementClicked({ elementName: name, target: event.target }, hideMenu);

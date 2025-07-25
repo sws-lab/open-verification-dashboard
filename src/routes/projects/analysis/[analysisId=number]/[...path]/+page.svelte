@@ -70,12 +70,14 @@
 
 <Splitpanes style="height: calc(100vh - var(--header-height))">
 	<Pane snapSize={10}>
-		<ReadOnlyEditor
-			bind:this={editor}
-			sources={data.fileContent}
-			diagnostics={conflicts}
-			{scrollToRange}
-		/>
+		<div class="editor">
+			<ReadOnlyEditor
+				bind:this={editor}
+				sources={data.fileContent}
+				diagnostics={conflicts}
+				{scrollToRange}
+			/>
+		</div>
 	</Pane>
 	<Pane snapSize={27}>
 		<div class="error">
@@ -160,9 +162,13 @@
 </Splitpanes>
 
 <style lang="scss">
+	.editor,
 	.error {
 		overflow-y: scroll;
 		max-height: calc(100vh - var(--header-height));
+	}
+
+	.error {
 		padding: 1rem;
 		padding-top: 0;
 		height: 100%;

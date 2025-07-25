@@ -43,9 +43,9 @@ export function conflictSeverity(kind: Conflict['kind']): 'warning' | 'error' | 
 		case 'SafetyW2':
 			return 'error';
 		case 'PrecisionW1':
-			return 'hint';
+			return 'warning';
 		case 'PrecisionW2':
-			return 'hint';
+			return 'warning';
 		case 'ErrorLevel':
 			return 'warning';
 		default:

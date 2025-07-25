@@ -71,6 +71,10 @@
 					severity: conflictSeverity(conflict.kind),
 					message: conflictMessage(conflict),
 					source: conflictCategory(conflict),
+					markClass:
+						conflict.kind === 'OnlyOneProofObligation'
+							? 'cm-kind-OnlyOneProofObligation'
+							: `cm-kind-${conflict.kind} cm-kind-multiple`,
 					actions: [
 						{
 							name: 'Details',
@@ -131,5 +135,13 @@
 <style lang="scss">
 	:global(.hidden) {
 		display: none;
+	}
+
+	:global(.cm-editor) {
+		font-size: 1.1rem;
+	}
+
+	:global(.cm-kind-OnlyOneProofObligation:not([class*='cm-kind-multiple'])) {
+		background-color: #c1c1c1;
 	}
 </style>

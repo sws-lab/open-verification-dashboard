@@ -50,6 +50,12 @@ module Range = struct
       | _ -> failwith "Expected a string for file")
     | _ ->
         failwith "Expected an associative array for Range.t"
+  (** Converts a JSON object to a Range.t. 
+      This is made by hand because it can support multiple formats:
+      - { "file": "path/to/file", "start": { "line": 1, "column": 0 }, "end": { "line": 2, "column": 5 } }
+      - { "start": { "file": "path/to/file", "line": 1, "column": 0 }, "end": { "file": "path/to/file", "line": 2, "column": 5 } }
+      Those two formats are equivalent, but the first one is the one used by the program and we want to support both.
+  *)
 
 
   let union a b =

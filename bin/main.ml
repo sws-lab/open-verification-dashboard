@@ -10,11 +10,11 @@ type args = {
 
 let parse_args () =
   let args = {
-    project_path = ".";
-    proofObligations = [];
-    only = None;
-    output = None;
-    exclude_not_found = false;
+    project_path = "."; (* The root directory of the project, used for resolving file paths *)
+    proofObligations = []; (* List of proof obligations to compare, for now only two can be compared simultaneously *) 
+    only = None; (* If set, only output conflicts for the given file *)
+    output = None; (* If set, the path to the json output file *)
+    exclude_not_found = false; (* If set, exclude files with path that can't be matched against the project structure *)
   } in
   let speclist = [
     ("--project", Arg.String (fun path -> args.project_path <- path), "The path to the project directory if it is not the current directory");
@@ -74,7 +74,7 @@ let () =
   in
   let po1 = List.hd proofObligations in
   let po2 = List.hd (List.tl proofObligations) in
-  let disagreement = CompareProofObligations.search_proofObligations_disagreements po1 po2 in
+  let disagreement = CompareProofObligations.disagreements_between po1 po2 in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in
     List.iter (fun (conflict : Conflict.t) ->

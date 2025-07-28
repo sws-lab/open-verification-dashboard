@@ -11,6 +11,12 @@ type po_safety = {
   has_safe: bool;
   highest_error_level: ProofObligation.Kind.t;
 }
+(**
+  Store comparison informations about a given range and category for later categorization.
+  - [safe]: [true] if all checks are safe, [false] otherwise.
+  - [has_safe]: [true] if there is at least one safe check in all possible contexts, [false] otherwise.
+  - [highest_error_level]: the highest error level of all checks in the range, which can be used to determine the severity of the issues.
+*)
 
 module SafeMap = Map.Make(Int)
 
@@ -27,7 +33,7 @@ let safety_of_checks (checks: ProofObligation.Check.t list) : po_safety =
   let has_safe = SafeMap.exists (fun _ (count, kind) -> count > 1 && ProofObligation.Kind.is_safe kind) @@ snd res in
   { (fst res) with has_safe }
 
-let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObligation.t) =
+let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
   let open ProofObligation in
   let insert_proofObligations proofObligation_id map (checks: Check.t list) =
     List.fold_left (fun acc check ->
@@ -51,6 +57,10 @@ let search_proofObligations_disagreements (w1: ProofObligation.t) (w2: ProofObli
         } in
         RangeHash.add new_key new_conflict acc
     ) map checks
+  (**
+    Insert proof obligations into a map, categorizing them by their range and title.
+    The [proofObligation_id] is used to distinguish between the two proof obligations being compared.
+  *)
   in
   let map1 = insert_proofObligations 1 RangeHash.empty w1.checks in
   let map2 = insert_proofObligations 2 map1 w2.checks in

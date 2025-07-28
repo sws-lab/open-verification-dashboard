@@ -269,7 +269,11 @@ let of_file (file: string) =
   | Failure msg ->
       Format.eprintf "Error extracting proofObligation from file %s: %s\n" file msg;
       None
-
+(**
+  Reads a proof obligation from a file, parsing it as JSON.
+  If the file is ["stdin"], it reads from standard input, one json object per line.
+  Returns an option type, which is None if there was an error.
+*)
 
 
 let convert_paths ~exclude_not_found proofObligation project_path =

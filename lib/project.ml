@@ -1,3 +1,5 @@
+(** Set of functions used to analyse the project structure to match paths against it *)
+
 module Folder = Hashtbl.Make(struct
   type t = string
   let equal = String.equal
@@ -6,7 +8,13 @@ end)
 
 type project_structure =
   | File of string
-  | Directory of string *bool ref * project_structure Folder.t
+  | Directory of string * bool ref * project_structure Folder.t
+(**
+  Represents the structure of the project.
+  - [File path]: a file with the given path.
+  - [Directory (name, scanned, files)]: a directory with the given name,
+    a boolean indicating if it has been scanned, and a map of files and directories.
+*)
 
 
 let rec pp_project_structure fmt = function
@@ -79,6 +87,9 @@ let match_path (project_path: string) (path: string list) =
       []
   in
   List.rev @@ aux project project_path path []
+(**
+  Tries to match the given path against the project structure. The function dynamically scans directories as needed.
+*)
 
 
 let warned = Folder.create 10
@@ -102,6 +113,12 @@ let path_to_project_relative ?(warn=true) project_path file_path =
   | relative_path ->
       let relative_path_str = String.concat "/" relative_path in
       Filename.concat project_path relative_path_str
+(**
+  Converts a file path to a project-relative path.
+  If the file is not found in the project structure, it prints a warning and returns the original path.
+  If [warn] is false, it exits with an error if the file is not found.
+  The function initializes the project structure and scans it dynamically as needed.
+*)
 
 
 

@@ -3,14 +3,19 @@ import type { PageServerLoad } from '../../../$types';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { newProofObligationSchema } from '$lib/schemas/newProofObligation';
 import { db } from '$lib/server/db';
-import { proofObligation } from '$lib/server/db/schema';
+import { proofObligation, projects } from '$lib/server/db/schema';
 import { getProofObligation } from '$lib/server/db/proofObligationPages';
 import { error } from '@sveltejs/kit';
 import { ProofObligationSchema } from '$lib/schemas/proofObligation';
+import postgres from 'postgres';
 
 export const load: PageServerLoad = async ({ url, parent, depends }) => {
 	depends('app:proofObligations');
-	const { project } = await parent();
+
+	const data = await parent();
+	const { project } = data as {
+		project: typeof projects.$inferSelect;
+	};
 
 	let page = parseInt(url.searchParams.get('page') || '1', 10);
 	if (isNaN(page) || page < 1) {
@@ -99,7 +104,7 @@ export const actions = {
 			});
 			return message(form, 'Proof obligation created successfully.');
 		} catch (error) {
-			if (error.code == '23505') {
+			if (error instanceof postgres.PostgresError && error.code == '23505') {
 				return fail(400, { form: form, error: 'Proof obligation already exists.' });
 			} else {
 				console.error('Error creating proof obligation:', error);

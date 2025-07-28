@@ -16,11 +16,11 @@ export const GET: RequestHandler = async ({ request }) => {
 	const { filter, page } = result.data;
 	try {
 		return json(await getProjects(page, filter));
-	} catch (err: Error) {
+	} catch (err) {
 		console.error(err);
 		return json(
 			{
-				error: err.message || 'An error occurred while fetching projects'
+				error: 'An error occurred while fetching projects'
 			},
 			{ status: 500 }
 		);
@@ -43,11 +43,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (updated[0].count === 0) {
 			return json({ error: 'Project not found' }, { status: 404 });
 		}
-	} catch (err: any) {
+	} catch (err) {
 		console.error(err);
 		return json(
 			{
-				error: err.message || 'An error occurred while updating the project'
+				error: 'An error occurred while updating the project'
 			},
 			{ status: 500 }
 		);
@@ -72,11 +72,11 @@ export const DELETE: RequestHandler = async ({ request }) => {
 			}
 			await tx.delete(projects).where(eq(projects.id, projectId));
 		});
-	} catch (err: any) {
+	} catch (err) {
 		console.error(err);
 		return json(
 			{
-				error: err.message || 'An error occurred while deleting the project'
+				error: 'An error occurred while deleting the project'
 			},
 			{ status: 500 }
 		);

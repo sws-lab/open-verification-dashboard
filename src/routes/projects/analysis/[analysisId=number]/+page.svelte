@@ -73,11 +73,4 @@
 			gap: 0.5rem;
 		}
 	}
-
-	.error {
-		&__header {
-			position: sticky;
-			top: 0;
-		}
-	}
 </style>

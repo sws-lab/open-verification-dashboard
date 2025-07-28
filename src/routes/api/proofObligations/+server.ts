@@ -15,11 +15,11 @@ export const GET: RequestHandler = async ({ request }) => {
 	const { page, projectId, revision, filter } = result.data;
 	try {
 		return json(await getProofObligation(page, projectId, revision, filter));
-	} catch (err: any) {
+	} catch (err) {
 		console.error(err);
 		return json(
 			{
-				error: err.message || 'An error occurred while fetching proof obligations'
+				error: 'An error occurred while fetching proof obligations'
 			},
 			{ status: 500 }
 		);
@@ -37,11 +37,11 @@ export const DELETE: RequestHandler = async ({ request }) => {
 			.delete(proofObligation)
 			.where(reversed ? notInArray(proofObligation.id, ids) : inArray(proofObligation.id, ids));
 		return new Response(null, { status: 204 });
-	} catch (err: any) {
+	} catch (err) {
 		console.error(err);
 		return json(
 			{
-				error: err.message || 'An error occurred while deleting proof obligations'
+				error: 'An error occurred while deleting proof obligations'
 			},
 			{ status: 500 }
 		);

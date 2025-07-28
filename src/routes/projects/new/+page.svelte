@@ -85,16 +85,17 @@
 
 		width: 30vw;
 		min-width: 500px;
+		display: flex;
+		flex-direction: column;
+
 		@media (max-width: 800px) {
 			width: 80vw;
 		}
+
 		@media (max-width: 500px) {
 			min-width: 0;
 			width: 100%;
 		}
-
-		display: flex;
-		flex-direction: column;
 
 		h2 {
 			margin-top: 0;

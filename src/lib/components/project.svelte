@@ -1,13 +1,9 @@
 <script lang="ts">
+	import type { projects } from '$lib/server/db/schema';
 	import { Dropdown, DropdownItem } from '$ui';
 	import type { ElementClicked } from './ui/dropdown/dropdown.svelte';
 	import Icon from './ui/icon.svelte';
-	type project = {
-		id: number;
-		name: string;
-		description: string | null;
-		revision: number;
-	};
+	type project = typeof projects.$inferSelect;
 
 	interface ProjectProps {
 		project: project;
@@ -33,9 +29,9 @@
 	<nav class="project__actions" aria-label="Project actions">
 		<button
 			onclick={menu?.show}
-			role="menu"
 			aria-expanded="false"
 			aria-controls="project-dropdown-{project.id}"
+			aria-owns="project-dropdown-{project.id}"
 		>
 			<Icon icon="more_vert" size="1.5rem" />
 		</button>

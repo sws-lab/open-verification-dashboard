@@ -1,4 +1,5 @@
 import * as tar from 'tar';
+import type { ArchiveManager } from './archivesManager';
 
 export const tarManager: ArchiveManager = {
 	async extractFile(file: File, destination: string): Promise<void> {

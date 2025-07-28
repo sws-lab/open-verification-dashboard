@@ -9,6 +9,10 @@
 	function loadFile(file: string) {
 		loadProjectFile(data.project.id, data.project.revision, file)
 			.then((fileContent) => {
+				if (fileContent.type !== 'file') {
+					editor?.setSourceFile('Selected item is not a file');
+					return;
+				}
 				editor?.setSourceFile(fileContent.content || 'No content available');
 			})
 			.catch((err) => {

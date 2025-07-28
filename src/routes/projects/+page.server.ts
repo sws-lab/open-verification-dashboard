@@ -23,16 +23,18 @@ export const load: PageServerLoad = async ({ url, depends }) => {
 			lastPageCount,
 			filter
 		};
-	} catch (error: any) {
+	} catch (error) {
 		console.error(error);
-		return {
-			errored: true,
-			message: error.message,
-			projects: [],
-			page: 1,
-			totalPages: 0,
-			lastPageCount: 0,
-			filter: ''
-		};
+		if (error instanceof Error)
+			return {
+				errored: true,
+				message: error.message,
+				projects: [],
+				page: 1,
+				totalPages: 0,
+				lastPageCount: 0,
+				filter: ''
+			};
+		else throw new Error('An unexpected error occurred while loading projects');
 	}
 };

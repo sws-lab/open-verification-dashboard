@@ -1,4 +1,5 @@
 import unzipper from 'unzipper';
+import type { ArchiveManager } from './archivesManager';
 
 export const zipManager: ArchiveManager = {
 	async extractFile(file: File, destination: string): Promise<void> {

@@ -124,10 +124,6 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-
-					a {
-						padding: 0;
-					}
 				}
 
 				a {
@@ -141,6 +137,7 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
+					padding: 0;
 
 					&:hover {
 						background-color: var(--hover-background-color);

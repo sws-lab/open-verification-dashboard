@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ parent }) => {
 	const editForm = await superValidate(
 		{
 			name: project.name,
-			description: project.description
+			description: project.description || undefined
 		},
 		zod4(editProjectSchema)
 	);

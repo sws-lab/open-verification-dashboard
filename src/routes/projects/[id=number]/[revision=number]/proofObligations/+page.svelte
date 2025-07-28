@@ -220,7 +220,7 @@
 
 			<Button type="submit" block>Upload Proof Obligation</Button>
 
-			<Button type="secondary" block onclick={close}>Cancel</Button>
+			<Button type="secondary" block onclick={() => close()}>Cancel</Button>
 		</form>
 	{/snippet}
 </Modal.Modal>

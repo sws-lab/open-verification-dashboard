@@ -1,7 +1,7 @@
 import { z } from 'zod/v4';
 import type { $ZodIssue } from 'zod/v4/core';
 
-type result<Schema extends z.ZodSchema<any>> =
+type result<T, Schema extends z.ZodSchema<T>> =
 	| {
 			success: true;
 			data: z.infer<Schema>;
@@ -12,10 +12,10 @@ type result<Schema extends z.ZodSchema<any>> =
 			issues?: $ZodIssue[];
 	  };
 
-export default async function checkApiSchema<Schema extends z.ZodSchema<any>>(
+export default async function checkApiSchema<T, Schema extends z.ZodSchema<T>>(
 	request: Request,
 	schema: Schema
-): Promise<result<Schema>> {
+): Promise<result<T, Schema>> {
 	const json = await request.json().catch(() => {
 		return null;
 	});

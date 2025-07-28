@@ -96,6 +96,8 @@
 
 <nav
 	class="dropdown"
+	role={type === 'menu' ? 'menu' : 'listbox'}
+	aria-orientation="vertical"
 	aria-label="Dropdown menu"
 	use:clickOutside={hide}
 	class:visible

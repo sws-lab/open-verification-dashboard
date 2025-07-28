@@ -6,14 +6,51 @@ import { db } from '$lib/server/db';
 import { projects } from '$lib/server/db/schema';
 import sanitize from 'sanitize-filename';
 import fs from 'fs';
+import type { ArchiveManager } from '$lib/server/archivesManager/archivesManager';
 import { zipManager } from '$lib/server/archivesManager/zipManager';
 import { tarManager } from '$lib/server/archivesManager/tarManager';
+import postgres from 'postgres';
 
 export const load: PageServerLoad = async () => {
 	return {
 		form: await superValidate(zod4(newProjectSchema))
 	};
 };
+
+interface FormData {
+	data: {
+		name: string;
+		description?: string | undefined;
+	};
+}
+
+async function checkUnzipedSize<T extends FormData>(
+	sources: File,
+	manager: ArchiveManager,
+	form: T
+) {
+	let unzippedSize = 0;
+	try {
+		unzippedSize = await manager.getUnzippedSize(sources);
+	} catch (error) {
+		console.error('Error reading file:', error);
+		return fail(400, { form, error: 'Invalid project file format.' });
+	}
+
+	if (unzippedSize === 0) {
+		return fail(400, { form, error: 'Project file is empty.' });
+	}
+
+	if (unzippedSize > 1024 * 1024 * 1024) {
+		return fail(400, { form, error: 'Unzipped project size exceeds 1GB limit.' });
+	} else {
+		console.log('Uploading project...');
+		console.log(`Project name: ${form.data.name}`);
+		console.log(`Project description: ${form.data.description}`);
+		console.log(`Project file size: ${sources.size} bytes`);
+		console.log(`Unzipped project size: ${unzippedSize} bytes`);
+	}
+}
 
 export const actions = {
 	default: async ({ request }) => {
@@ -49,28 +86,7 @@ export const actions = {
 			return fail(400, { form, error: 'Unsupported project file format.' });
 		}
 
-		// Check that the unzipped size is less than 1Gb
-		let unzippedSize = 0;
-		try {
-			unzippedSize = await manager.getUnzippedSize(sources);
-		} catch (error) {
-			console.error('Error reading file:', error);
-			return fail(400, { form, error: 'Invalid project file format.' });
-		}
-
-		if (unzippedSize === 0) {
-			return fail(400, { form, error: 'Project file is empty.' });
-		}
-
-		if (unzippedSize > 1024 * 1024 * 1024) {
-			return fail(400, { form, error: 'Unzipped project size exceeds 1GB limit.' });
-		} else {
-			console.log('Uploading project...');
-			console.log(`Project name: ${data.name}`);
-			console.log(`Project description: ${data.description}`);
-			console.log(`Project file size: ${sources.size} bytes`);
-			console.log(`Unzipped project size: ${unzippedSize} bytes`);
-		}
+		checkUnzipedSize(sources, manager, form);
 
 		let errorMessage = null;
 		let id = null;
@@ -91,8 +107,8 @@ export const actions = {
 				await manager.extractFile(sources, destination);
 				console.log(`Project files extracted to: ${destination}`);
 			});
-		} catch (error: any) {
-			if (error.code === '23505') {
+		} catch (error) {
+			if (error instanceof postgres.PostgresError && error.code === '23505') {
 				console.error('Project creation failed: Duplicate project name');
 				errorMessage = 'Project with this name already exists.';
 			} else {

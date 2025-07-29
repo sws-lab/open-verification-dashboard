@@ -16,7 +16,8 @@ export type category =
 	| 'Insufficient format arguments'
 	| 'Invalid type of format argument'
 	| 'Floating-point division by zero'
-	| 'Floating-point overflow';
+	| 'Floating-point overflow'
+	| 'Incorrect number of arguments';
 
 export type check = {
 	title: category;

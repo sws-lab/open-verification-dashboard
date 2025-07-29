@@ -11,6 +11,7 @@
 
 	let editor: ReadOnlyEditor | null = $state(null);
 	let filterDropdown: Dropdown | null = $state(null);
+	let filterErrorTypesDropdown: Dropdown | null = $state(null);
 
 	let filterOptions = $state({
 		NoConflictSafe: false,
@@ -23,6 +24,25 @@
 		PrecisionW1: true,
 		PrecisionW2: true,
 		ErrorLevel: true
+	});
+
+	let filterErrorTypesOptions: Record<string, boolean> = $state({
+		'Assertion failure': true,
+		'Invalid memory access': true,
+		'Division by zero': true,
+		'Integer overflow': true,
+		'Invalid pointer comparison': true,
+		'Invalid pointer subtraction': true,
+		'Double free': true,
+		'Negative array size': true,
+		'Invalid floating point operation': true,
+		'Stub condition': true,
+		'Insufficient variadic arguments': true,
+		'Insufficient format arguments': true,
+		'Invalid type of format argument': true,
+		'Floating-point division by zero': true,
+		'Floating-point overflow': true,
+		'Incorrect number of arguments': true
 	});
 
 	let conflicts = $derived<ConflictType[]>(
@@ -50,6 +70,11 @@
 					default:
 						return true; // Default case to include all other types
 				}
+			})
+			.filter((element) => {
+				const title =
+					element.from_po1.length > 0 ? element.from_po1[0].title : element.from_po2[0].title;
+				return filterErrorTypesOptions[title];
 			})
 			.sort((a, b) => {
 				if (a.range === b.range) return 0;
@@ -143,6 +168,27 @@
 						bind:checked={filterOptions.PrecisionW2}
 					/>
 				</Dropdown>
+				<button
+					aria-label="Select error types"
+					role="combobox"
+					aria-expanded="false"
+					aria-controls="error-types-dropdown"
+					onclick={(event) => filterErrorTypesDropdown?.show(event)}
+					class="filter-button"
+				>
+					Error Types
+					<Icon icon="arrow_drop_down" size="2rem" />
+				</button>
+				<Dropdown bind:this={filterErrorTypesDropdown} id="error-types-dropdown" type="combobox">
+					{#each Object.keys(filterErrorTypesOptions) as type (type)}
+						<DropdownSelectItem
+							name={type}
+							label={type}
+							bind:checked={filterErrorTypesOptions[type]}
+						/>
+					{/each}
+				</Dropdown>
+
 				<h2>{data.path}</h2>
 			</div>
 

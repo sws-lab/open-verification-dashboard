@@ -58,8 +58,14 @@ let match_path (project_path: string) (path: string list) =
     | [], _ -> acc
     | "." :: rest, _ -> 
       aux structure matched_path rest acc
-    | ".." :: _, _ ->
-      exit 1
+    | ".." :: rest, _ -> (
+      match acc with
+      | [] ->
+        aux structure matched_path rest acc
+      | _ ->
+        Format.eprintf "Error: '..' not allowed in project structure.\n";
+        exit 1
+    )
     | file :: [], Directory (_, scanned, files) ->
       scan_folder matched_path scanned files;
       (match Folder.find_opt files file with
@@ -93,8 +99,9 @@ let match_path (project_path: string) (path: string list) =
 
 
 let warned = Folder.create 10
+let memo = Folder.create 10
 
-let path_to_project_relative ?(warn=true) project_path file_path =
+let path_to_project_relative__ ?(warn=true) project_path file_path =
   init project_path;
   match (match_path project_path (String.split_on_char '/' file_path)) with
   | [] -> 
@@ -120,5 +127,11 @@ let path_to_project_relative ?(warn=true) project_path file_path =
   The function initializes the project structure and scans it dynamically as needed.
 *)
 
-
-
+let path_to_project_relative ?(warn=true) project_path file_path =
+  match Folder.find_opt memo file_path with
+  | Some relative_path -> relative_path
+  | None ->
+    Format.printf "Converting path %s to project-relative path...@." file_path;
+    let relative_path = path_to_project_relative__ ~warn project_path file_path in
+    Folder.replace memo file_path relative_path;
+    relative_path

@@ -29,6 +29,7 @@ let parse_args () =
     match proofObligation with
     | Some proofObligation -> input_files := proofObligation :: !input_files
     | None -> 
+      Printf.eprintf "Failed to parse proof obligation from file %s.\n" file;
       exit 1
   in
   Arg.parse
@@ -49,7 +50,8 @@ let () =
     Printf.eprintf "More than two proofObligation files are not supported for comparison (TODO).\n";
     exit 1);
   
-  let proofObligations = List.map (fun proofObligation -> 
+  let proofObligations = List.map (fun (proofObligation : ProofObligation.t) -> 
+    Format.printf "Converting paths to project paths for proof obligation %s@." proofObligation.name;
     ProofObligation.convert_paths ~exclude_not_found:args.exclude_not_found proofObligation args.project_path
   ) args.proofObligations in
   let proofObligations = match args.only with
@@ -74,6 +76,7 @@ let () =
   in
   let po1 = List.hd proofObligations in
   let po2 = List.hd (List.tl proofObligations) in
+  Format.printf "Comparing proof obligations %s and %s@." po1.name po2.name;
   let disagreement = CompareProofObligations.disagreements_between po1 po2 in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in

@@ -166,6 +166,7 @@ module Category = struct
     | InvalidTypeOfFormatArgument [@name "Invalid type of format argument"]
     | FloatingpointDivisionByZero [@name "Floating-point division by zero"]
     | FloatingpointOverflow [@name "Floating-point overflow"]
+    | IncorrectNumberOfArguments [@name "Incorrect number of arguments"]
   [@@deriving yojson, show { with_path = false }, ord]
 
   let t_of_yojson = Utils.string_t_of_yojson t_of_yojson  "Category"

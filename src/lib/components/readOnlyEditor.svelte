@@ -56,7 +56,8 @@
 			selection: {
 				anchor: lineColumnToPos(range.start.line, range.start.column, view),
 				head: lineColumnToPos(range.end.line, range.end.column, view)
-			}
+			},
+			scrollIntoView: true
 		});
 		view?.focus();
 	}

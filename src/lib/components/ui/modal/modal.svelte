@@ -38,10 +38,8 @@
 	}
 
 	$effect(() => {
-		if (!page.state[id]) {
+		if (page.state[id] == undefined) {
 			dialog?.close();
-		} else {
-			dialog?.showModal();
 		}
 	});
 </script>

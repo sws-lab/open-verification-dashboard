@@ -41,7 +41,7 @@
 			}
 		},
 		onError: (error) => {
-			console.error('Form error:', error);
+			console.error('Form error:', error.message);
 			errorMessage = 'An unexpected error occurred. Please try again.';
 		}
 	});

@@ -54,16 +54,17 @@ export const actions = {
 		const data = form.data;
 		const sources = data.proofObligation;
 		if (!(sources instanceof File)) {
-			return fail(400, { form: message(form, 'Please upload a valid file.') });
+			return fail(400, { form, message: 'Please upload a valid file.' });
 		}
-		if (sources.size > 10 * 1024 * 1024) {
-			// 10 MB max file size
-			return fail(400, { form: message(form, 'File size exceeds the maximum limit of 10 MB.') });
+		if (sources.size > 500 * 1024 * 1024) {
+			// 500 MB max file size
+			return fail(400, { form, message: 'File size exceeds the maximum limit of 500 MB.' });
 		}
 
 		const id = parseInt(params.id);
 		const revision = parseInt(params.revision);
 		try {
+			console.log('Creating proof obligation for project:', id, 'revision:', revision);
 			const proofObligationJSON = await sources.text();
 			const json = ProofObligationSchema.safeParse(JSON.parse(proofObligationJSON));
 			if (!json.success) {
@@ -78,7 +79,7 @@ export const actions = {
 			let safeCount = 0;
 			let warningCount = 0;
 			let errorCount = 0;
-
+			console.log('Parsed proof obligation data');
 			json.data.checks.forEach((check) => {
 				switch (check.kind) {
 					case 'safe':

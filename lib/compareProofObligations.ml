@@ -114,3 +114,21 @@ let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
         assert false
   ) map2 [] in
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
+
+
+
+
+let exit_code_of_disagreement (disagreement: Conflict.t list) =
+  List.fold_left (fun acc (conflict: Conflict.t) ->
+    match conflict.kind with
+    | Conflict.NoConflictSafe -> max acc 0
+    | Conflict.NoConflictWarning -> max acc 0
+    | Conflict.NoConflictError -> max acc 0
+    | Conflict.OnlyOneProofObligation -> max acc 3
+    | Conflict.SafetyW1 -> max acc 4
+    | Conflict.SafetyW2 -> max acc 4
+    | Conflict.PrecisionW1 -> max acc 2
+    | Conflict.PrecisionW2 -> max acc 2
+    | Conflict.ErrorLevel -> max acc 2
+    | Conflict.Unchecked -> max acc 5
+  ) 0 disagreement

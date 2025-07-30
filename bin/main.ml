@@ -22,7 +22,16 @@ let parse_args () =
     ("--output", Arg.String (fun file -> args.output <- Some file), "The path to the json output file");
     ("--exclude-not-found", Arg.Bool (fun b -> args.exclude_not_found <- b), "Exclude not found files from the analysis");
   ]
-  and usage_msg = "Usage: dashboard [options]" in
+  and usage_msg = 
+    "Usage:\n  dashboard [--project <path>] [--analyze <file>] [--output <file>] [--exclude-not-found <bool>] PO1 PO2" ^ 
+    "\nReturn code:" ^
+    "\n  0 - no conflicts found" ^
+    "\n  1 - error in input files or arguments" ^
+    "\n  2 - precision conflicts found" ^
+    "\n  3 - only one tool emit a PO for a given range" ^
+    "\n  4 - safety conflicts found" ^
+    "\n  5 - internal error (unexpected state)\n\n"
+  in
   let input_files = ref [] in
   let add_file file = 
     let proofObligation = ProofObligation.of_file file in
@@ -91,4 +100,5 @@ let () =
       Format.printf "%a@." Conflict.pp conflict
     ) disagreement
   );
-  reset_ppf ()
+  reset_ppf ();
+  exit @@ CompareProofObligations.exit_code_of_disagreement disagreement

@@ -118,7 +118,7 @@ module Kind = struct
     | Safe [@name "safe"]
     | Warning [@name "warning"]
     | Error [@name "error"]
-  [@@deriving yojson, show { with_path = false }, eq]
+  [@@deriving yojson, show { with_path = false }, ord]
 
   (* Safe < Warning < Error *)
   let max a b =
@@ -175,7 +175,7 @@ module Category = struct
 end
 
 module StackTrace = struct
-  type t = int [@@deriving yojson_of]
+  type t = int [@@deriving yojson_of, ord]
 
   let pp fmt stack_trace =
     Format.fprintf fmt "Stack trace: %d" stack_trace
@@ -209,7 +209,7 @@ module Check = struct
     messages: string;
     range: Range.t;
     callstack: StackTrace.t; [@default 0]
-  } [@@deriving yojson, show] [@@yojson.allow_extra_fields]
+  } [@@deriving yojson, show, ord] [@@yojson.allow_extra_fields]
 
   let pp fmt check =
     Format.fprintf fmt "@[<hov 2>%a (%d): %a at %a@,"
@@ -231,7 +231,7 @@ module ProofObligation = struct
     name: string; [@default ""]
     time: float;
     checks: Check.t list;
-  } [@@deriving yojson ] [@@yojson.allow_extra_fields]
+  } [@@deriving yojson, ord ] [@@yojson.allow_extra_fields]
 
   let t_of_yojson =
     StackTrace.reset ();

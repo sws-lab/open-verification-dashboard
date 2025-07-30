@@ -17,9 +17,9 @@ export const DELETE = z
 	.strict();
 
 const range = z.object({
-	file: z.string().max(200).optional(),
-	line: z.number().int().nonnegative().optional(),
-	column: z.number().int().nonnegative().optional()
+	file: z.string().max(200),
+	line: z.number().int().min(-1),
+	column: z.number().int().min(-1)
 });
 
 const check = z.object({

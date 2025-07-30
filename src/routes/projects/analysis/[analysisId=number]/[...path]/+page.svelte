@@ -42,7 +42,8 @@
 		'Invalid type of format argument': true,
 		'Floating-point division by zero': true,
 		'Floating-point overflow': true,
-		'Incorrect number of arguments': true
+		'Incorrect number of arguments': true,
+		'Invalid shift': true
 	});
 
 	let conflicts = $derived<ConflictType[]>(
@@ -166,6 +167,11 @@
 						name="precisionW2"
 						label="Precision W2"
 						bind:checked={filterOptions.PrecisionW2}
+					/>
+					<DropdownSelectItem
+						name="errorLevel"
+						label="Error Level"
+						bind:checked={filterOptions.ErrorLevel}
 					/>
 				</Dropdown>
 				<button

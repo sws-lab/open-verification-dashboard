@@ -18,6 +18,20 @@ type kind =
 let kind_of_yojson = Utils.string_t_of_yojson kind_of_yojson "Kind"
 let yojson_of_kind = Utils.string_yojson_of_t yojson_of_kind
 
+let conflict_of_string s =
+  match String.lowercase_ascii s with
+  | "no_conflict_safe" -> Some NoConflictSafe
+  | "no_conflict_warning" -> Some NoConflictWarning
+  | "no_conflict_error" -> Some NoConflictError
+  | "unchecked" -> Some Unchecked
+  | "only_one_proof_obligation" -> Some OnlyOneProofObligation
+  | "safety_w1" -> Some SafetyW1
+  | "safety_w2" -> Some SafetyW2
+  | "precision_w1" -> Some PrecisionW1
+  | "precision_w2" -> Some PrecisionW2
+  | "error_level" -> Some ErrorLevel
+  | _ -> None
+
 
 type t = {
   kind: kind;

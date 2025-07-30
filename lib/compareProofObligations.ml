@@ -116,7 +116,25 @@ let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
 
 
-
+let filter_disagreements (disagreements: Conflict.t list) (filter_kind: Conflict.kind list) (filter_error_category: ProofObligation.Category.t list) =
+  match (filter_kind, filter_error_category) with
+  | [], [] -> disagreements
+  | _ ->
+    let kind_set = Hashtbl.of_seq (List.to_seq filter_kind |> Seq.map (fun el -> (el, ()))) in
+    let error_category_set = Hashtbl.of_seq (List.to_seq filter_error_category |> Seq.map (fun el -> (el, ()))) in
+    List.filter (fun (conflict: Conflict.t) ->
+      let kind_match = Hashtbl.length kind_set = 0 ||
+        Hashtbl.mem kind_set conflict.kind in
+      let error_category_match = Hashtbl.length error_category_set = 0 || 
+        match conflict.from_po1, conflict.from_po2 with
+          | [], [] -> false
+          | po::_, _ ->
+            Hashtbl.mem error_category_set po.title
+          | _, po::_ ->
+            Hashtbl.mem error_category_set po.title
+      in
+      kind_match && error_category_match
+    ) disagreements
 
 let exit_code_of_disagreement (disagreement: Conflict.t list) =
   List.fold_left (fun acc (conflict: Conflict.t) ->

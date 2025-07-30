@@ -6,6 +6,8 @@ type args = {
   mutable only: string option;
   mutable output: string option;
   mutable exclude_not_found: bool;
+  mutable filter_kind: Conflict.kind list;
+  mutable filter_error_category: ProofObligation.Category.t list;
 }
 
 let parse_args () =
@@ -15,15 +17,48 @@ let parse_args () =
     only = None; (* If set, only output conflicts for the given file *)
     output = None; (* If set, the path to the json output file *)
     exclude_not_found = false; (* If set, exclude files with path that can't be matched against the project structure *)
+    filter_kind = []; (* If set, only output conflicts of the given kind *)
+    filter_error_category = []; (* If set, only output conflicts of the given error category *)
   } in
   let speclist = [
     ("--project", Arg.String (fun path -> args.project_path <- path), "The path to the project directory if it is not the current directory");
     ("--analyze", Arg.String (fun file -> args.only <- Some file), "Only output conflicts for the given file");
     ("--output", Arg.String (fun file -> args.output <- Some file), "The path to the json output file");
     ("--exclude-not-found", Arg.Bool (fun b -> args.exclude_not_found <- b), "Exclude not found files from the analysis");
+    ("--filter-kind", Arg.String (fun s -> 
+        List.iter (fun kind ->
+          match Conflict.conflict_of_string kind with
+          | Some k -> args.filter_kind <- k :: args.filter_kind
+          | None -> Printf.eprintf "Unknown conflict kind: %s\n" kind; exit 1
+        ) (String.split_on_char ',' s)
+      ),
+      "Filter conflicts by kind, comma-separated list of kinds: \n      - " ^
+      (String.concat "\n      - " [
+        "no_conflict_safe"; "no_conflict_warning"; "no_conflict_error";
+        "unchecked"; "only_one_proof_obligation"; "safety_w1"; "safety_w2";
+        "precision_w1"; "precision_w2"; "error_level"
+      ])
+    );
+    ("--filter-error-category", Arg.String (fun s -> 
+        List.iter (fun category ->
+          match ProofObligation.Category.of_string category with
+          | Some c -> args.filter_error_category <- c :: args.filter_error_category
+          | None -> Printf.eprintf "Unknown error category: %s\n" category; exit 1
+        ) (String.split_on_char ',' s)
+      ),
+      "Filter conflicts by error category, comma-separated list of categories: \n      - " ^
+      (String.concat "\n      - " [
+        "assertion_failure"; "invalid_memory_access"; "division_by_zero";
+        "integer_overflow"; "invalid_pointer_comparison"; "invalid_pointer_subtraction";
+        "double_free"; "negative_array_size"; "invalid_floating_point_operation";
+        "stub_condition"; "insufficient_variadic_arguments"; "insufficient_format_arguments";
+        "invalid_type_of_format_argument"; "floatingpoint_division_by_zero";
+        "floatingpoint_overflow"; "incorrect_number_of_arguments"; "invalid_shift"
+      ])
+    );
   ]
   and usage_msg = 
-    "Usage:\n  dashboard [--project <path>] [--analyze <file>] [--output <file>] [--exclude-not-found <bool>] PO1 PO2" ^ 
+    "Usage:\n  dashboard [options] PO1 PO2" ^ 
     "\nReturn code:" ^
     "\n  0 - no conflicts found" ^
     "\n  1 - error in input files or arguments" ^
@@ -87,6 +122,7 @@ let () =
   let po2 = List.hd (List.tl proofObligations) in
   Format.printf "Comparing proof obligations %s and %s@." po1.name po2.name;
   let disagreement = CompareProofObligations.disagreements_between po1 po2 in
+  let disagreement = CompareProofObligations.filter_disagreements disagreement args.filter_kind args.filter_error_category in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in
     List.iter (fun (conflict : Conflict.t) ->

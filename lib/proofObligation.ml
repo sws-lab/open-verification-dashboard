@@ -151,7 +151,7 @@ end
 
 module Category = struct
   type t = 
-    | AssersionFaillure [@name "Assertion failure"]
+    | AssertionFailure [@name "Assertion failure"]
     | InvalidMemoryAccess [@name "Invalid memory access"]
     | DivisionByZero [@name "Division by zero"]
     | IntegerOverflow [@name "Integer overflow"]
@@ -161,8 +161,8 @@ module Category = struct
     | NegativeArraySize [@name "Negative array size"]
     | InvalidFloatingPointOperation [@name "Invalid floating point operation"]
     | StubCondition [@name "Stub condition"]
-    | InsuficientVariadicArguments [@name "Insufficient variadic arguments"]
-    | InsuficientFormatArguments [@name "Insufficient format arguments"]
+    | InsufficientVariadicArguments [@name "Insufficient variadic arguments"]
+    | InsufficientFormatArguments [@name "Insufficient format arguments"]
     | InvalidTypeOfFormatArgument [@name "Invalid type of format argument"]
     | FloatingpointDivisionByZero [@name "Floating-point division by zero"]
     | FloatingpointOverflow [@name "Floating-point overflow"]

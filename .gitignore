@@ -36,14 +36,8 @@ setup.log
 _opam/
 
 .vscode/
-out.json
-out1.json
 dune.lock
-mopsa.json
-goblint.json
 errorTests.tar.gz
-bin/main.ml
-mopsa-all.json
-goblint-all.json
 allErrorTest/
 allErrorTest.tar.gz
+*.json

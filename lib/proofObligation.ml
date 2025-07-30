@@ -167,6 +167,7 @@ module Category = struct
     | FloatingpointDivisionByZero [@name "Floating-point division by zero"]
     | FloatingpointOverflow [@name "Floating-point overflow"]
     | IncorrectNumberOfArguments [@name "Incorrect number of arguments"]
+    | InvalidShift [@name "Invalid shift"]
   [@@deriving yojson, show { with_path = false }, ord]
 
   let t_of_yojson = Utils.string_t_of_yojson t_of_yojson  "Category"
@@ -240,7 +241,6 @@ end
 type t = ProofObligation.t
 
 
-
 let of_file (file: string) =
   try
     let json = if file = "stdin" then
@@ -292,7 +292,9 @@ let convert_paths ~exclude_not_found proofObligation project_path =
       proofObligation with
       checks = List.filter_map (fun check ->
         let range = convert_file_range_path check.range in
-        if exclude_not_found && (Project.Folder.mem Project.warned check.range.file) then
+        if (exclude_not_found && (Project.Folder.mem Project.warned check.range.file)) || 
+           range.start.column = -1 || range.start.line = -1 || range.end_.column = -1 || range.end_.line = -1 
+        then
           None
         else
           Some ({ check with

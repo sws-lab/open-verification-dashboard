@@ -4,7 +4,8 @@ DASHBOARD_PATH="<dashbard>"
 
 echo "Running analysis on $FILE_NAME" 1>&2
 ls -l . 1>&2
-goblint --ana.arrayoob true --ana.int.interval_set true --ana.float.interval true --ana.float.evaluate_math_functions true --ana.base.arrays.domain trivial --ana.base.arrays.nullbytes true --ana.base.strings.domain disjoint --sem.malloc.fail true --set "ana.activated[+]" memOutOfBounds --set "ana.activated[+]"  useAfterFree --warn.quote-code true  --dbg.timing.enabled true --result dashboard  --ana.sv-comp.functions true --outfile out1.json "$FILE_NAME"
+goblint --ana.arrayoob true --ana.int.interval_set true --ana.float.interval true --ana.float.evaluate_math_functions true --ana.base.arrays.domain trivial --ana.base.arrays.nullbytes true --ana.base.strings.domain disjoint --sem.malloc.fail true --set "ana.activated[+]" memOutOfBounds --set "ana.activated[+]"  useAfterFree --warn.quote-code true  --dbg.timing.enabled true --result dashboard  --ana.sv-comp.functions true  --warn.error false --warn.warning false --warn.info false \
+ --outfile out1.json "$FILE_NAME"
 if [ $? -ne 0 ]; then
 	echo "Goblint analysis failed"
 	cat out1.json

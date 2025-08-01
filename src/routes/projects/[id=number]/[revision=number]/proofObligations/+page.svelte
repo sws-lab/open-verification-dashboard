@@ -41,7 +41,7 @@
 			}
 		},
 		onError: (error) => {
-			console.error('Form error:', error.message);
+			console.error('Form error:', error.result.error);
 			errorMessage = 'An unexpected error occurred. Please try again.';
 		}
 	});
@@ -167,6 +167,14 @@
 			selectAll(!allSelected);
 		}
 	}
+
+	function newFileSelected(event: Event) {
+		const input = event.target as HTMLInputElement;
+		if (input.files && input.files.length > 0 && $formData.name === '') {
+			// Automatically set the name to the file name if not already set
+			$formData.name = input.files[0].name.replace('.json', '');
+		}
+	}
 </script>
 
 <Modal.StatusModal bind:this={statusModal} id="proof-obligation-status-modal" />
@@ -212,7 +220,13 @@
 				<Control>
 					{#snippet children({ props })}
 						<Label>Upload Proof Obligation File</Label>
-						<input type="file" accept=".json" {...props} bind:value={$formData.proofObligation} />
+						<input
+							type="file"
+							accept=".json"
+							{...props}
+							bind:value={$formData.proofObligation}
+							oninput={newFileSelected}
+						/>
 					{/snippet}
 				</Control>
 				<FieldErrors />

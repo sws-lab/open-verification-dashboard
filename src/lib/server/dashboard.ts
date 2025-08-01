@@ -64,7 +64,7 @@ export async function compareProofObligations(
 		});
 
 		dashboard.on('exit', async (code) => {
-			if (code !== 0) {
+			if (code === 1) {
 				console.error(`Dashboard process exited with code ${code}`);
 				resolve({ success: false, error: 'Dashboard process failed' });
 				return;

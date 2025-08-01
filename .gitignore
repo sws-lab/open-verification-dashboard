@@ -41,3 +41,4 @@ errorTests.tar.gz
 allErrorTest/
 allErrorTest.tar.gz
 *.json
+reducer.sh

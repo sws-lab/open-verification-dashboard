@@ -1,11 +1,11 @@
 #!/bin/sh
-FILE_NAME="$(pwd)/<path>"
-DASHBOARD_PATH="<dashbard"
+FILE_NAME="$(pwd)/<file>"
+DASHBOARD_PATH="<path_to_dashboard_executable>"
 MIN_ERR_CODE=4
 
 echo "Running analysis on $FILE_NAME" 1>&2
 
-gcc -fsyntax-only "$FILE_NAME" -std=c11
+gcc -fsyntax-only -Werror=unused-value "$FILE_NAME" -std=c11
 if [ $? -ne 0 ]; then
 	echo "GCC syntax check failed"
 	exit 1

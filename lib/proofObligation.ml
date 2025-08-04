@@ -119,18 +119,18 @@ module Kind = struct
     | Error [@name "error"]
   [@@deriving yojson, show { with_path = false }, ord]
 
-  (* Safe < Warning < Error *)
+  (* Safe < Error < Warning *)
   let max a b =
     match a, b with
-    | _, Error | Error, _ -> Error
-    | Safe, n | n, Safe -> n
-    | Warning, Warning -> Warning
+    | Warning, _ | _, Warning -> Warning
+    | Safe, other | other, Safe -> other
+    | Error, Error -> Error
     
   let min a b =
     match a, b with
     | Safe, _ | _, Safe -> Safe
-    | Error, n | n, Error -> n 
-    | Warning, Warning -> Warning
+    | Warning, other | other, Warning -> other 
+    | Error, Error -> Error
 
   let is_safe = function
     | Safe -> true

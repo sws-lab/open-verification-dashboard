@@ -32,8 +32,12 @@
 	}
 </script>
 
-{#snippet detail(check: check | null, left: boolean)}
-	{#if check}
+{#snippet detail(check: check | null, index: number, left: boolean)}
+	{#if !check}
+		{#if index === 0}
+			<p class="nochecks {left ? 'left' : ''}">No checks for this range</p>
+		{/if}
+	{:else}
 		<div
 			class="check {check.kind}"
 			class:left
@@ -72,17 +76,11 @@
 		<h4 class="conflict__details__name-right">{po2Name}</h4>
 
 		{#each zip(conflict.from_po1, conflict.from_po2) as [po1Check, po2Check], index (index)}
-			{#if !po1Check && index === 0}
-				<p>No checks for this range</p>
-			{/if}
-			{#if !po2Check && index === 0}
-				<p>No checks for this range</p>
-			{/if}
-			{@render detail(po1Check, true)}
-			{@render detail(po2Check, false)}
+			{@render detail(po1Check, index, true)}
+			{@render detail(po2Check, index, false)}
 		{:else}
-			<p>No checks for this range</p>
-			<p>No checks for this range</p>
+			<p class="nochecks left">No checks for this range</p>
+			<p class="nochecks">No checks for this range</p>
 		{/each}
 	</div>
 </div>
@@ -181,6 +179,13 @@
 					align-self: start;
 					justify-self: start;
 					text-wrap: break-word;
+				}
+			}
+
+			.nochecks {
+				grid-column: 2;
+				&.left {
+					grid-column: 1;
 				}
 			}
 		}

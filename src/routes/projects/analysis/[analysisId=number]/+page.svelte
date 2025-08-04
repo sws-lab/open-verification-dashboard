@@ -37,7 +37,7 @@
 	</div>
 
 	<AnalyzedFilesTable
-		files={Object.keys(data.analysis.conflicts.conflicts)}
+		files={Object.keys(data.analysis.conflicts.conflicts).sort((a, b) => a.localeCompare(b))}
 		href="/projects/analysis/{data.analysis.id}"
 		stats={data.analysis.stats}
 	/>

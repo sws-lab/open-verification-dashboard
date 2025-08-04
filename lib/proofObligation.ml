@@ -73,29 +73,28 @@ module Range = struct
       };
     }
   (** Unions two ranges, assuming they are from the same file. *)
+      
 
-  let eq_or_includes a b =
+  let overlap a b =
+    a.start.line < b.start.line || (a.start.line = b.start.line && a.start.column <= b.start.column) &&
+    a.end_.line > b.start.line || (a.end_.line = b.start.line && a.end_.column >= b.start.column)
+
+  let overlap a b =
     a.file = b.file &&
-    a.start.line = b.start.line &&
-    a.end_.line = b.end_.line && (
-      (a.start.column <= b.start.column && a.end_.column >= b.end_.column) ||
-      (a.start.column >= b.start.column && a.end_.column <= b.end_.column)
-    )
-  (** Checks if two ranges are equal or if one includes the other. *)
+    (overlap a b || overlap b a)
+  (** Checks if two ranges overlap *)
 
 
   let compare a b =
     if a.file <> b.file then
       compare a.file b.file
-    else if eq_or_includes a b then
+    else if overlap a b then
       0
-    else if a.end_.line < b.end_.line then
+    else if a.end_.line < b.start.line ||
+            (a.end_.line = b.start.line && a.end_.column < b.start.column) then
       -1
-    else if a.end_.line > b.end_.line then
-      1
-    else if a.end_.column < b.end_.column then
-      -1
-    else if a.end_.column > b.end_.column then
+    else if a.start.line > b.end_.line ||
+            (a.start.line = b.end_.line && a.start.column > b.end_.column) then
       1
     else
       failwith "Ranges are not comparable"

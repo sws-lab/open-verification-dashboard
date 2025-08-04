@@ -65,7 +65,7 @@ export function conflictMessage(conflict: Conflict): string {
 		case 'Unchecked':
 			return 'This conflict has not been checked yet';
 		case 'OnlyOneProofObligation':
-			return `Only ${conflict.from_po1.length == 0 ? 'the first' : 'the second'} analyser has a proof obligation for this conflict`;
+			return `Only ${conflict.from_po1.length != 0 ? 'the first' : 'the second'} analyser has a proof obligation for this conflict`;
 		case 'PrecisionW1':
 			return 'The first analyser is more precise than the second one regarding safety';
 		case 'PrecisionW2':

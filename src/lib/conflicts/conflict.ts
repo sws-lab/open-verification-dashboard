@@ -75,7 +75,7 @@ export function conflictMessage(conflict: Conflict): string {
 		case 'SafetyW2':
 			return 'Only the second analyser says that this is safe';
 		case 'ErrorLevel':
-			return 'The two analysers disagree on the error level of this conflict';
+			return 'The two analyzers disagree on the error level of this conflict';
 		default:
 			console.warn(`Unknown conflict kind: ${conflict.kind}`);
 			return 'Unknown conflict kind';

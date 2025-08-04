@@ -1,4 +1,4 @@
 {
 	"eslint.validate": ["javascript", "javascriptreact", "svelte"],
-	"cSpell.words": ["onrange"]
+	"cSpell.words": ["nochecks", "onrange"]
 }

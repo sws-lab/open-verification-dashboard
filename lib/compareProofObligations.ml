@@ -55,8 +55,8 @@ let safety_of_checks (checks: unit ChecksSet.t) : po_safety =
 
 let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
   let open ProofObligation in
-  let insert_proofObligations proofObligation_id map (checks: Check.t list) =
-    List.fold_left (fun acc check ->
+  let insert_proofObligations map (checks: (Check.t * int) list) =
+    List.fold_left (fun acc (check, proofObligation_id) ->
       let key = Check.(check.range, check.title) in
       match RangeHash.find_opt key acc with
       | None ->
@@ -82,8 +82,11 @@ let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
     The [proofObligation_id] is used to distinguish between the two proof obligations being compared.
   *)
   in
-  let map1 = insert_proofObligations 1 RangeHash.empty w1.checks in
-  let map2 = insert_proofObligations 2 map1 w2.checks in
+  let ranges = List.rev_append (List.rev_map (fun check -> (check, 1)) w1.checks) (List.rev_map (fun check -> (check, 2)) w2.checks) in
+  let map2 = insert_proofObligations RangeHash.empty (List.sort (
+    fun ((c1: Check.t), _) ((c2: Check.t), _) -> 
+      Range.compare_file_position c1.range.start c2.range.start
+    ) ranges) in
   let conflicts = RangeHash.fold (fun _ (proofObligation : unique_conflict) acc ->
     match (ChecksSet.is_empty proofObligation.from_po1, ChecksSet.is_empty proofObligation.from_po2) with
     | (true, true) -> acc

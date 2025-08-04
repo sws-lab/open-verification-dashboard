@@ -7,6 +7,12 @@ module Range = struct
     column: int;
   }[@@deriving yojson_of, show, eq]
 
+  let compare_file_position a b =
+    if a.line <> b.line then
+      compare a.line b.line
+    else
+      compare a.column b.column
+
   let file_position_of_yojson (json : Yojson.Safe.t) =
     match json with
     | `Assoc fields -> (

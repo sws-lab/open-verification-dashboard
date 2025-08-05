@@ -85,7 +85,12 @@ let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
   let ranges = List.rev_append (List.rev_map (fun check -> (check, 1)) w1.checks) (List.rev_map (fun check -> (check, 2)) w2.checks) in
   let map2 = insert_proofObligations RangeHash.empty (List.sort (
     fun ((c1: Check.t), _) ((c2: Check.t), _) -> 
-      Range.compare_file_position c1.range.start c2.range.start
+      let comp =  Range.compare c1.range c2.range in
+      if comp <> 0 then comp 
+      else
+        let comp = Range.compare_file_position c1.range.start c2.range.start in
+        if comp <> 0 then comp
+        else Range.compare_file_position c1.range.end_ c2.range.end_
     ) ranges) in
   let conflicts = RangeHash.fold (fun _ (proofObligation : unique_conflict) acc ->
     match (ChecksSet.is_empty proofObligation.from_po1, ChecksSet.is_empty proofObligation.from_po2) with

@@ -13,6 +13,12 @@ module Range = struct
     else
       compare a.column b.column
 
+  let min_file_position a b =
+    if compare_file_position a b < 0 then a else b
+
+  let max_file_position a b =
+    if compare_file_position a b > 0 then a else b
+
   let file_position_of_yojson (json : Yojson.Safe.t) =
     match json with
     | `Assoc fields -> (
@@ -69,14 +75,8 @@ module Range = struct
       failwith "Cannot union ranges from different files";
     {
       file = a.file;
-      start = {
-        line = min a.start.line b.start.line;
-        column = min a.start.column b.start.column;
-      };
-      end_ = {
-        line = max a.end_.line b.end_.line;
-        column = max a.end_.column b.end_.column;
-      };
+      start = min_file_position a.start b.start;
+      end_ = max_file_position a.end_ b.end_;
     }
   (** Unions two ranges, assuming they are from the same file. *)
       

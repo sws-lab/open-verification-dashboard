@@ -35,7 +35,19 @@ module Range = struct
     start: file_position;
     end_: file_position [@key "end"];
   }
-  [@@deriving yojson_of, show, eq]
+  [@@deriving yojson_of, eq]
+
+  let pp fmt range =
+    Format.fprintf fmt "%s:%d.%d-%d.%d"
+      range.file
+      range.start.line
+      (range.start.column + 1)
+      range.end_.line
+      (range.end_.column + 1)
+  
+  let pp fmt range =
+    Format.fprintf fmt "@{<bold>%a@}"
+      pp range
 
   let t_of_yojson (json : Yojson.Safe.t) =
     match json with
@@ -79,15 +91,11 @@ module Range = struct
       end_ = max_file_position a.end_ b.end_;
     }
   (** Unions two ranges, assuming they are from the same file. *)
-      
 
-  let overlap a b =
-    a.start.line < b.start.line || (a.start.line = b.start.line && a.start.column <= b.start.column) &&
-    a.end_.line > b.start.line || (a.end_.line = b.start.line && a.end_.column >= b.start.column)
 
   let overlap a b =
     a.file = b.file &&
-    (overlap a b || overlap b a)
+    (compare_file_position (max_file_position a.start b.start) (min_file_position a.end_ b.end_) < 0)
   (** Checks if two ranges overlap *)
 
 
@@ -96,26 +104,14 @@ module Range = struct
       compare a.file b.file
     else if overlap a b then
       0
-    else if a.end_.line < b.start.line ||
-            (a.end_.line = b.start.line && a.end_.column < b.start.column) then
+    else if compare_file_position a.end_ b.start < 0 then
       -1
-    else if a.start.line > b.end_.line ||
-            (a.start.line = b.end_.line && a.start.column > b.end_.column) then
+    else if compare_file_position a.start b.end_ > 0 then
       1
-    else
-      failwith "Ranges are not comparable"
-
-  let pp fmt range =
-    Format.fprintf fmt "%s:%d.%d-%d.%d"
-      range.file
-      range.start.line
-      (range.start.column + 1)
-      range.end_.line
-      (range.end_.column + 1)
-  
-  let pp fmt range =
-    Format.fprintf fmt "@{<bold>%a@}"
-      pp range
+    else (
+      Format.eprintf "Ranges are not comparable: %a and %a\n" pp a pp b;
+      exit 1
+    )
 end
 
 module Kind = struct

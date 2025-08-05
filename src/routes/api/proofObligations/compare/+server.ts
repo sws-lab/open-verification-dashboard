@@ -16,22 +16,41 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const current_version = env.VERSION ? parseInt(env.VERSION, 10) : 0;
 	let update_id: number | null = null;
+
+	console.log(
+		`Comparing proof obligations with IDs ${result.data.proofObligationId1} and ${result.data.proofObligationId2} at version ${current_version}`
+	);
+
 	try {
 		const comparison = await db
 			.select({ id: conflict.id, version: conflict.version })
 			.from(conflict)
 			.where(
-				and(
-					eq(conflict.proofObligationId1, result.data.proofObligationId1),
-					eq(conflict.proofObligationId2, result.data.proofObligationId2)
+				or(
+					and(
+						eq(conflict.proofObligationId1, result.data.proofObligationId1),
+						eq(conflict.proofObligationId2, result.data.proofObligationId2)
+					),
+					and(
+						eq(conflict.proofObligationId1, result.data.proofObligationId2),
+						eq(conflict.proofObligationId2, result.data.proofObligationId1)
+					)
 				)
 			)
 			.limit(1);
 		if (comparison.length > 0) {
 			if (comparison[0].version === current_version) {
+				console.log(
+					`Found existing conflict with ID ${comparison[0].id} and matching version ${current_version}`
+				);
 				return json({ id: comparison[0].id });
 			}
+			console.log(
+				`Found existing conflict with ID ${comparison[0].id} but version ${comparison[0].version} does not match current version ${current_version}`
+			);
 			update_id = comparison[0].id;
+		} else {
+			console.log('No existing conflict found, computing new comparison');
 		}
 	} catch (err) {
 		console.error('Error fetching comparison:', err);

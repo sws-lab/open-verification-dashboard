@@ -36,17 +36,22 @@ export async function newProofObligation(
 		}
 	});
 	try {
-		await db.insert(proofObligation).values({
-			projectId,
-			projectRevision,
-			name,
-			proofObligation: json.data,
-			safe: safeCount,
-			warning: warningCount,
-			error: errorCount
-		});
+		const [{ id }] = await db
+			.insert(proofObligation)
+			.values({
+				projectId,
+				projectRevision,
+				name,
+				proofObligation: json.data,
+				safe: safeCount,
+				warning: warningCount,
+				error: errorCount
+			})
+			.returning({ id: proofObligation.id });
+
 		return {
-			code: 200
+			code: 200,
+			id
 		};
 	} catch (error) {
 		if (error instanceof postgres.PostgresError && error.code == '23505') {

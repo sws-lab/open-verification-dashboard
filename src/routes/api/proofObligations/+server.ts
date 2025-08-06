@@ -52,7 +52,7 @@ export const PUT: RequestHandler = async ({ request }) => {
 			{ status: insertionResult.code }
 		);
 	}
-	return json({ success: true }, { status: 200 });
+	return json({ success: true, id: insertionResult.id }, { status: 200 });
 };
 
 export const DELETE: RequestHandler = async ({ request }) => {

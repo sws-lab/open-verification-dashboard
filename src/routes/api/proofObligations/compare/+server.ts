@@ -43,7 +43,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				console.log(
 					`Found existing conflict with ID ${comparison[0].id} and matching version ${current_version}`
 				);
-				return json({ id: comparison[0].id });
+				return json({ success: true, id: comparison[0].id });
 			}
 			console.log(
 				`Found existing conflict with ID ${comparison[0].id} but version ${comparison[0].version} does not match current version ${current_version}`
@@ -131,7 +131,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			})
 			.returning({ id: conflict.id });
 		if (id.length > 0) {
-			return json({ id: id[0].id });
+			return json({ success: true, id: id[0].id });
 		}
 	} catch (err) {
 		console.error('Error inserting conflict into database:', err);

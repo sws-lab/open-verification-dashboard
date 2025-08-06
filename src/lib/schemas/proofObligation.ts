@@ -21,7 +21,7 @@ export const PUT = z
 		name: z.string().max(100),
 		projectId: z.number().int().nonnegative(),
 		revision: z.number().int().nonnegative(),
-		proofObligation: z.object()
+		proofObligation: z.looseObject({})
 	})
 	.strict();
 

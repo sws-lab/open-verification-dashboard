@@ -16,6 +16,18 @@ export const DELETE = z
 	})
 	.strict();
 
+const fileSchema = z.file();
+fileSchema.mime('application/json');
+fileSchema.max(500 * 1024 * 1024); // 500 MB max file size
+export const PUT = z
+	.object({
+		name: z.string().max(100),
+		projectId: z.number().int().positive(),
+		revision: z.number().int().positive(),
+		proofObligation: fileSchema
+	})
+	.strict();
+
 const range = z.object({
 	file: z.string().max(200),
 	line: z.number().int().min(-1),

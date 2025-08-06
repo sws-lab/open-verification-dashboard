@@ -1,13 +1,11 @@
-import { fail, message, superValidate } from 'sveltekit-superforms';
+import { fail, superValidate } from 'sveltekit-superforms';
 import type { PageServerLoad } from '../../../$types';
 import { zod4 } from 'sveltekit-superforms/adapters';
 import { newProofObligationSchema } from '$lib/schemas/newProofObligation';
-import { db } from '$lib/server/db';
-import { proofObligation, projects } from '$lib/server/db/schema';
+import { projects } from '$lib/server/db/schema';
 import { getProofObligation } from '$lib/server/db/proofObligationPages';
 import { error } from '@sveltejs/kit';
-import { ProofObligationSchema } from '$lib/schemas/proofObligation';
-import postgres from 'postgres';
+import { newProofObligation } from '$lib/server/proofObligations';
 
 export const load: PageServerLoad = async ({ url, parent, depends }) => {
 	depends('app:proofObligations');
@@ -63,54 +61,13 @@ export const actions = {
 
 		const id = parseInt(params.id);
 		const revision = parseInt(params.revision);
-		try {
-			console.log('Creating proof obligation for project:', id, 'revision:', revision);
-			const proofObligationJSON = await sources.text();
-			const json = ProofObligationSchema.safeParse(JSON.parse(proofObligationJSON));
-			if (!json.success) {
-				console.log(json);
-				return fail(400, {
-					form,
-					error: 'Invalid proof obligation format.',
-					issues: json.error.issues
-				});
-			}
 
-			let safeCount = 0;
-			let warningCount = 0;
-			let errorCount = 0;
-			console.log('Parsed proof obligation data');
-			json.data.checks.forEach((check) => {
-				switch (check.kind) {
-					case 'safe':
-						safeCount++;
-						break;
-					case 'warning':
-						warningCount++;
-						break;
-					case 'error':
-						errorCount++;
-						break;
-				}
-			});
+		console.log('Creating proof obligation for project:', id, 'revision:', revision);
+		const proofObligationJSON = JSON.parse(await sources.text()); // this has a limit of ~500 MB
 
-			await db.insert(proofObligation).values({
-				projectId: id,
-				projectRevision: revision,
-				name: data.name,
-				proofObligation: json.data,
-				safe: safeCount,
-				warning: warningCount,
-				error: errorCount
-			});
-			return message(form, 'Proof obligation created successfully.');
-		} catch (error) {
-			if (error instanceof postgres.PostgresError && error.code == '23505') {
-				return fail(400, { form: form, error: 'Proof obligation already exists.' });
-			} else {
-				console.error('Error creating proof obligation:', error);
-				return fail(500, { form: form, error: 'Failed to create proof obligation.' });
-			}
+		const result = await newProofObligation(id, revision, data.name, proofObligationJSON);
+		if (result.code !== 200) {
+			return fail(result.code, { form, error: result.error, issues: result.issues });
 		}
 	}
 };

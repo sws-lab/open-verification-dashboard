@@ -6,6 +6,9 @@ import { json } from '@sveltejs/kit';
 import { proofObligation } from '$lib/server/db/schema';
 import { inArray, notInArray } from 'drizzle-orm';
 import { db } from '$lib/server/db';
+import { superValidate } from 'sveltekit-superforms';
+import { zod4 } from 'sveltekit-superforms/adapters';
+import { newProofObligation } from '$lib/server/proofObligations';
 
 export const GET: RequestHandler = async ({ request }) => {
 	const result = await checkApiSchema(request, checks.GET);
@@ -24,6 +27,26 @@ export const GET: RequestHandler = async ({ request }) => {
 			{ status: 500 }
 		);
 	}
+};
+
+export const PUT: RequestHandler = async ({ request }) => {
+	const form = await superValidate(request, zod4(checks.PUT), {
+		strict: true
+	});
+	if (!form.valid) {
+		return json({ errors: form.errors }, { status: 400 });
+	}
+	const jsonData = JSON.parse(await form.data.proofObligation.text());
+	const result = await newProofObligation(
+		form.data.projectId,
+		form.data.revision,
+		form.data.name,
+		jsonData
+	);
+	if (result.code !== 200) {
+		return json({ errors: form.errors, error: result.error }, { status: result.code });
+	}
+	return json({ errors: form.errors, success: true }, { status: 200 });
 };
 
 export const DELETE: RequestHandler = async ({ request }) => {

@@ -1,3 +1,7 @@
+(**
+  This module defines the report structure and provides functions to create and export the final json report.
+*)
+
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type conflicts = (string, Conflict.t list) Hashtbl.t

@@ -1,3 +1,6 @@
+(**
+  This module provides functions to compare proof obligations and identify conflicts.
+*)
 module RangeHash = Map.Make(struct
   open ProofObligation
   type t = Range.t * Category.t
@@ -53,7 +56,7 @@ let safety_of_checks (checks: unit ChecksSet.t) : po_safety =
   let has_safe = SafeMap.exists (fun _ (count, kind) -> count > 1 && ProofObligation.Kind.is_safe kind) @@ snd res in
   { (fst res) with has_safe }
 
-let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
+let conflicts_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
   let open ProofObligation in
   let insert_proofObligations map (checks: (Check.t * int) list) =
     List.fold_left (fun acc (check, proofObligation_id) ->
@@ -124,9 +127,9 @@ let disagreements_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
 
 
-let filter_disagreements (disagreements: Conflict.t list) (filter_kind: Conflict.kind list) (filter_error_category: ProofObligation.Category.t list) =
+let filter_conflicts (conflicts: Conflict.t list) (filter_kind: Conflict.kind list) (filter_error_category: ProofObligation.Category.t list) =
   match (filter_kind, filter_error_category) with
-  | [], [] -> disagreements
+  | [], [] -> conflicts
   | _ ->
     let kind_set = Hashtbl.of_seq (List.to_seq filter_kind |> Seq.map (fun el -> (el, ()))) in
     let error_category_set = Hashtbl.of_seq (List.to_seq filter_error_category |> Seq.map (fun el -> (el, ()))) in
@@ -142,9 +145,9 @@ let filter_disagreements (disagreements: Conflict.t list) (filter_kind: Conflict
             Hashtbl.mem error_category_set po.title
       in
       kind_match && error_category_match
-    ) disagreements
+    ) conflicts
 
-let exit_code_of_disagreement (disagreement: Conflict.t list) =
+let exit_code_of_conflict (conflict: Conflict.t list) =
   List.fold_left (fun acc (conflict: Conflict.t) ->
     match conflict.kind with
     | Conflict.NoConflictSafe -> max acc 0
@@ -157,4 +160,4 @@ let exit_code_of_disagreement (disagreement: Conflict.t list) =
     | Conflict.PrecisionW2 -> max acc 2
     | Conflict.ErrorLevel -> max acc 2
     | Conflict.Unchecked -> max acc 5
-  ) 0 disagreement
+  ) 0 conflict

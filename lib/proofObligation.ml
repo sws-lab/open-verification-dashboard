@@ -1,3 +1,7 @@
+(**
+  Definition of the OCaml proof obligation type. This module provides functions to create and manipulate proof obligations.
+*)
+
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 

@@ -121,20 +121,20 @@ let () =
   let po1 = List.hd proofObligations in
   let po2 = List.hd (List.tl proofObligations) in
   Format.printf "Comparing proof obligations %s and %s@." po1.name po2.name;
-  let disagreement = CompareProofObligations.disagreements_between po1 po2 in
-  let disagreement = CompareProofObligations.filter_disagreements disagreement args.filter_kind args.filter_error_category in
+  let conflict = CompareProofObligations.conflicts_between po1 po2 in
+  let conflict = CompareProofObligations.filter_conflicts conflict args.filter_kind args.filter_error_category in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in
     List.iter (fun (conflict : Conflict.t) ->
       Report.add_conflict report conflict.range.file conflict
-    ) disagreement;
+    ) conflict;
 
     Report.yojson_of_t report |> Yojson.Safe.to_file (Option.get args.output);
     Format.printf "Report written to %s@." (Option.get args.output);
   ) else (
     List.iter (fun conflict ->
       Format.printf "%a@." Conflict.pp conflict
-    ) disagreement
+    ) conflict
   );
   reset_ppf ();
-  exit @@ CompareProofObligations.exit_code_of_disagreement disagreement
+  exit @@ CompareProofObligations.exit_code_of_conflict conflict

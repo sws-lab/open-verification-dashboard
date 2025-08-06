@@ -99,7 +99,7 @@ module Range = struct
 
   let overlap a b =
     a.file = b.file &&
-    (compare_file_position (max_file_position a.start b.start) (min_file_position a.end_ b.end_) < 0)
+    (compare_file_position (max_file_position a.start b.start) (min_file_position a.end_ b.end_) <= 0)
   (** Checks if two ranges overlap *)
 
 

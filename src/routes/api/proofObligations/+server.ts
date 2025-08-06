@@ -6,8 +6,6 @@ import { json } from '@sveltejs/kit';
 import { proofObligation } from '$lib/server/db/schema';
 import { inArray, notInArray } from 'drizzle-orm';
 import { db } from '$lib/server/db';
-import { superValidate } from 'sveltekit-superforms';
-import { zod4 } from 'sveltekit-superforms/adapters';
 import { newProofObligation } from '$lib/server/proofObligations';
 
 export const GET: RequestHandler = async ({ request }) => {
@@ -30,23 +28,28 @@ export const GET: RequestHandler = async ({ request }) => {
 };
 
 export const PUT: RequestHandler = async ({ request }) => {
-	const form = await superValidate(request, zod4(checks.PUT), {
-		strict: true
-	});
-	if (!form.valid) {
-		return json({ errors: form.errors }, { status: 400 });
+	// check the request body size to ensure it is not too large
+	const maxSize = 520 * 1024 * 1024; // 500 MB
+	const contentLength = request.headers.get('content-length');
+	if (contentLength && parseInt(contentLength, 10) > maxSize) {
+		return json({ error: 'Request body is too large' }, { status: 413 });
 	}
-	const jsonData = JSON.parse(await form.data.proofObligation.text());
-	const result = await newProofObligation(
-		form.data.projectId,
-		form.data.revision,
-		form.data.name,
-		jsonData
+
+	const result = await checkApiSchema(request, checks.PUT);
+	if (!result.success) {
+		return json(result, { status: 400 });
+	}
+
+	const insertionResult = await newProofObligation(
+		result.data.projectId,
+		result.data.revision,
+		result.data.name,
+		result.data.proofObligation
 	);
-	if (result.code !== 200) {
-		return json({ errors: form.errors, error: result.error }, { status: result.code });
+	if (insertionResult.code !== 200) {
+		return json({ error: insertionResult.error }, { status: insertionResult.code });
 	}
-	return json({ errors: form.errors, success: true }, { status: 200 });
+	return json({ success: true }, { status: 200 });
 };
 
 export const DELETE: RequestHandler = async ({ request }) => {

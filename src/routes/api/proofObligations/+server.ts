@@ -47,7 +47,10 @@ export const PUT: RequestHandler = async ({ request }) => {
 		result.data.proofObligation
 	);
 	if (insertionResult.code !== 200) {
-		return json({ error: insertionResult.error }, { status: insertionResult.code });
+		return json(
+			{ error: insertionResult.error, issues: insertionResult.issues },
+			{ status: insertionResult.code }
+		);
 	}
 	return json({ success: true }, { status: 200 });
 };

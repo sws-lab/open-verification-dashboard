@@ -19,8 +19,8 @@ export const DELETE = z
 export const PUT = z
 	.object({
 		name: z.string().max(100),
-		projectId: z.number().int().positive(),
-		revision: z.number().int().positive(),
+		projectId: z.number().int().nonnegative(),
+		revision: z.number().int().nonnegative(),
 		proofObligation: z.object()
 	})
 	.strict();

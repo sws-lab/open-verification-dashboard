@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { conflictCategory, conflictMessage, type Conflict } from '$lib/conflicts/conflict';
+	import { conflictMessage, type Conflict } from '$lib/conflicts/conflict';
 	import type { check } from '$lib/conflicts/check';
 	import type { range } from '$lib/conflicts/range';
 	import { Button } from './ui';
@@ -62,7 +62,7 @@
 
 <div class="conflict" {id}>
 	<h3>
-		{conflictCategory(conflict)}:
+		{conflict.title}:
 		<Button type="link" italic onclick={() => onrange?.(conflict.range)}>
 			{conflict.range.start.line}.{conflict.range.start.column}-{conflict.range.end.line}.{conflict
 				.range.end.column}

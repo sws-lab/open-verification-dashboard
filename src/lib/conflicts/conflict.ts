@@ -13,9 +13,29 @@ export type kind =
 	| 'PrecisionW2'
 	| 'ErrorLevel';
 
+export type category =
+	| 'Assertion failure'
+	| 'Invalid memory access'
+	| 'Division by zero'
+	| 'Integer overflow'
+	| 'Invalid pointer comparison'
+	| 'Invalid pointer subtraction'
+	| 'Double free'
+	| 'Negative array size'
+	| 'Invalid floating point operation'
+	| 'Stub condition'
+	| 'Insufficient variadic arguments'
+	| 'Insufficient format arguments'
+	| 'Invalid type of format argument'
+	| 'Floating-point division by zero'
+	| 'Floating-point overflow'
+	| 'Incorrect number of arguments'
+	| 'Invalid shift';
+
 export type Conflict = {
 	kind: kind;
 	range: range;
+	title: category;
 	from_po1: check[];
 	from_po2: check[];
 };
@@ -79,15 +99,5 @@ export function conflictMessage(conflict: Conflict): string {
 		default:
 			console.warn(`Unknown conflict kind: ${conflict.kind}`);
 			return 'Unknown conflict kind';
-	}
-}
-
-export function conflictCategory(conflict: Conflict): string {
-	if (conflict.from_po1.length > 0) {
-		return conflict.from_po1[0].title;
-	} else if (conflict.from_po2.length > 0) {
-		return conflict.from_po2[0].title;
-	} else {
-		return 'Unknown source';
 	}
 }

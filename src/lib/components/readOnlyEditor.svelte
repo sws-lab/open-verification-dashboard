@@ -11,12 +11,7 @@
 	import { lineNumbers } from '@codemirror/view';
 	import { cpp } from '@codemirror/lang-cpp';
 	import { linter, lintGutter, type Diagnostic } from '@codemirror/lint';
-	import {
-		conflictMessage,
-		conflictSeverity,
-		conflictCategory,
-		type Conflict
-	} from '$lib/conflicts/conflict';
+	import { conflictMessage, conflictSeverity, type Conflict } from '$lib/conflicts/conflict';
 	import type { range } from '$lib/conflicts/range';
 
 	interface Props {
@@ -71,7 +66,7 @@
 					to: lineColumnToPos(conflict.range.end.line, conflict.range.end.column, view),
 					severity: conflictSeverity(conflict.kind),
 					message: conflictMessage(conflict),
-					source: conflictCategory(conflict),
+					source: conflict.title,
 					markClass:
 						conflict.kind === 'OnlyOneProofObligation'
 							? 'cm-kind-OnlyOneProofObligation'

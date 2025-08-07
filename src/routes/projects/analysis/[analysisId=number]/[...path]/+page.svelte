@@ -72,11 +72,7 @@
 						return true; // Default case to include all other types
 				}
 			})
-			.filter((element) => {
-				const title =
-					element.from_po1.length > 0 ? element.from_po1[0].title : element.from_po2[0].title;
-				return filterErrorTypesOptions[title];
-			})
+			.filter((element) => filterErrorTypesOptions[element.title])
 			.sort((a, b) => {
 				if (a.range === b.range) return 0;
 				if (a.range.start.line !== b.range.start.line) {

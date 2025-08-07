@@ -1,33 +1,29 @@
 (**
   This module provides functions to compare proof obligations and identify conflicts.
 *)
-module RangeHash = Map.Make(struct
-  open ProofObligation
-  type t = Range.t * Category.t
-  let compare (r1, c1) (r2, c2) =
-    let cmp = Range.compare r1 r2 in
-    if cmp <> 0 then cmp else Category.compare c1 c2
-end)
-
 module ChecksSet = Map.Make(struct
-  type t = ProofObligation.Check.t
-  let compare = ProofObligation.Check.compare
+  type t = Conflict.ConflictCheck.t
+  let compare = Conflict.ConflictCheck.compare
 end)
 
-type unique_conflict = {
-  kind: Conflict.kind;
-  range: ProofObligation.Range.t;
-  from_po1: unit ChecksSet.t;
-  from_po2: unit ChecksSet.t;
-}
-
-let check_of_unique_check ?new_kind (check: unique_conflict) =
-  Conflict.{
-    kind = Option.value new_kind ~default:check.kind;
-    range = check.range;
-    from_po1 = ChecksSet.to_seq check.from_po1 |> Seq.map fst |> List.of_seq;
-    from_po2 = ChecksSet.to_seq check.from_po2 |> Seq.map fst |> List.of_seq;
+module UniqueConflict = struct
+  type t = {
+    kind: Conflict.kind;
+    title: ProofObligation.Category.t;
+    range: ProofObligation.Range.t;
+    from_po1: unit ChecksSet.t;
+    from_po2: unit ChecksSet.t;
   }
+
+  let check_of_unique_check ?new_kind (check: t) =
+    Conflict.{
+      kind = Option.value new_kind ~default:check.kind;
+      range = check.range;
+      title = check.title;
+      from_po1 = ChecksSet.to_seq check.from_po1 |> Seq.map fst |> List.of_seq;
+      from_po2 = ChecksSet.to_seq check.from_po2 |> Seq.map fst |> List.of_seq;
+    }
+end
 
 type po_safety = {
   safe: bool;
@@ -44,7 +40,8 @@ type po_safety = {
 module SafeMap = Map.Make(Int)
 
 let safety_of_checks (checks: unit ChecksSet.t) : po_safety =
-  let res = ChecksSet.fold (fun (check : ProofObligation.Check.t) _ ((acc, safe_map) : po_safety * (int * ProofObligation.Kind.t) SafeMap.t) ->
+  let open Conflict in
+  let res = ChecksSet.fold (fun (check : ConflictCheck.t) _ ((acc, safe_map) : po_safety * (int * ProofObligation.Kind.t) SafeMap.t) ->
     let is_safe = ProofObligation.Kind.is_safe check.kind in
     let highest_error_level = ProofObligation.Kind.max acc.highest_error_level check.kind in
     { safe = acc.safe && is_safe; has_safe = false; highest_error_level }, 
@@ -58,72 +55,75 @@ let safety_of_checks (checks: unit ChecksSet.t) : po_safety =
 
 let conflicts_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
   let open ProofObligation in
-  let insert_proofObligations map (checks: (Check.t * int) list) =
-    List.fold_left (fun acc (check, proofObligation_id) ->
-      let key = Check.(check.range, check.title) in
-      match RangeHash.find_opt key acc with
-      | None ->
-        RangeHash.add key {
-          kind = Unchecked;
-          range = check.range;
-          from_po1 = if proofObligation_id = 1 then ChecksSet.singleton check () else ChecksSet.empty;
-          from_po2 = if proofObligation_id = 2 then ChecksSet.singleton check () else ChecksSet.empty;
-        } acc
-      | Some conflict ->
-        let new_range = Range.union conflict.range check.range in
-        let new_key = (new_range, check.title) in
-        let new_conflict = {
-          conflict with
-            range = new_range;
-            from_po1 = if proofObligation_id = 1 then ChecksSet.add check () conflict.from_po1 else conflict.from_po1;
-            from_po2 = if proofObligation_id = 2 then ChecksSet.add check () conflict.from_po2 else conflict.from_po2;
-        } in
-        RangeHash.add new_key new_conflict acc
-    ) map checks
-  (**
-    Insert proof obligations into a map, categorizing them by their range and title.
-    The [proofObligation_id] is used to distinguish between the two proof obligations being compared.
-  *)
-  in
-  let ranges = List.rev_append (List.rev_map (fun check -> (check, 1)) w1.checks) (List.rev_map (fun check -> (check, 2)) w2.checks) in
-  let map2 = insert_proofObligations RangeHash.empty (List.sort (
-    fun ((c1: Check.t), _) ((c2: Check.t), _) -> 
-      let comp =  Range.compare c1.range c2.range in
-      if comp <> 0 then comp 
-      else
-        let comp = Range.compare_file_position c1.range.start c2.range.start in
-        if comp <> 0 then comp
-        else Range.compare_file_position c1.range.end_ c2.range.end_
-    ) ranges) in
-  let conflicts = RangeHash.fold (fun _ (proofObligation : unique_conflict) acc ->
+  let open Conflict in
+  let gather_conflicts checks f =
+    let rec build_unique_conflict acc = function
+      | [] -> acc, []
+      | (analyzer_id, (check: Check.t)) :: rest ->
+        match acc with
+        | None -> build_unique_conflict (Some UniqueConflict.{ 
+            kind = Conflict.Unchecked; 
+            range = check.range;
+            title = check.title;
+            from_po1 = if analyzer_id = 1 then ChecksSet.singleton (ConflictCheck.of_check check) () else ChecksSet.empty;
+            from_po2 = if analyzer_id = 2 then ChecksSet.singleton (ConflictCheck.of_check check) () else ChecksSet.empty;
+          }) rest
+        | Some conflict ->
+          if Range.compare conflict.range check.range = 0 && Category.compare conflict.title check.title = 0 then
+            let from_po1 = if analyzer_id = 1 then ChecksSet.add (ConflictCheck.of_check check) () conflict.from_po1 else conflict.from_po1 in
+            let from_po2 = if analyzer_id = 2 then ChecksSet.add (ConflictCheck.of_check check) () conflict.from_po2 else conflict.from_po2 in
+            let new_range = Range.union conflict.range check.range in
+            build_unique_conflict (Some { conflict with from_po1; from_po2; range = new_range }) rest
+          else
+            acc, (analyzer_id, check) :: rest
+    in
+    let rec aux acc checks = 
+      match build_unique_conflict None checks with
+      | None, [] -> acc
+      | Some conflict, [] -> f conflict :: acc
+      | Some conflict, rest ->
+        aux (f conflict :: acc) rest
+      | None, _::_ -> assert false
+    in
+    aux [] checks
+  in    
+
+  let checks = List.rev_append (List.map (fun check -> (1, check)) w1.checks) (List.map (fun check -> (2, check)) w2.checks) in
+  let checks = List.sort (
+    fun (_, (c1: Check.t)) (_, (c2: Check.t)) -> 
+      let comp = Category.compare c1.title c2.title in
+      if comp <> 0 then comp
+      else Range.compare_file_position c1.range.start c2.range.start
+    ) checks in
+  let conflicts = gather_conflicts checks (fun proofObligation -> 
     match (ChecksSet.is_empty proofObligation.from_po1, ChecksSet.is_empty proofObligation.from_po2) with
-    | (true, true) -> acc
     | (true, false) 
     | (false, true) ->
-      check_of_unique_check ~new_kind:Conflict.OnlyOneProofObligation proofObligation :: acc
+      UniqueConflict.check_of_unique_check ~new_kind:Conflict.OnlyOneProofObligation proofObligation
     | false, false ->
       let c1_safety = safety_of_checks proofObligation.from_po1 in
       let c2_safety = safety_of_checks proofObligation.from_po2 in
       (* Order of conditions matter because there is an overlap between them *)
       if c1_safety.safe && c2_safety.safe then
-        check_of_unique_check ~new_kind:Conflict.NoConflictSafe proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.NoConflictSafe proofObligation
       else if c1_safety.safe && not c2_safety.safe then
-        check_of_unique_check ~new_kind:Conflict.SafetyW1 proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW1 proofObligation
       else if not c1_safety.safe && c2_safety.safe then
-        check_of_unique_check ~new_kind:Conflict.SafetyW2 proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW2 proofObligation
       else if c1_safety.has_safe && not c2_safety.has_safe then
-        check_of_unique_check ~new_kind:Conflict.PrecisionW1 proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.PrecisionW1 proofObligation
       else if not c1_safety.has_safe && c2_safety.has_safe then
-        check_of_unique_check ~new_kind:Conflict.PrecisionW2 proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.PrecisionW2 proofObligation
       else if c1_safety.highest_error_level <> c2_safety.highest_error_level then
-        check_of_unique_check ~new_kind:Conflict.ErrorLevel proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.ErrorLevel proofObligation
       else if c1_safety.highest_error_level = Kind.Warning && c2_safety.highest_error_level = Kind.Warning then
-        check_of_unique_check ~new_kind:Conflict.NoConflictWarning proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.NoConflictWarning proofObligation
       else if c1_safety.highest_error_level = Kind.Error && c2_safety.highest_error_level = Kind.Error then
-        check_of_unique_check ~new_kind:Conflict.NoConflictError proofObligation :: acc
+        UniqueConflict.check_of_unique_check ~new_kind:Conflict.NoConflictError proofObligation
       else
         assert false
-  ) map2 [] in
+    | (true, true) -> assert false
+  ) in
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
 
 
@@ -136,14 +136,7 @@ let filter_conflicts (conflicts: Conflict.t list) (filter_kind: Conflict.kind li
     List.filter (fun (conflict: Conflict.t) ->
       let kind_match = Hashtbl.length kind_set = 0 ||
         Hashtbl.mem kind_set conflict.kind in
-      let error_category_match = Hashtbl.length error_category_set = 0 || 
-        match conflict.from_po1, conflict.from_po2 with
-          | [], [] -> false
-          | po::_, _ ->
-            Hashtbl.mem error_category_set po.title
-          | _, po::_ ->
-            Hashtbl.mem error_category_set po.title
-      in
+      let error_category_match = Hashtbl.length error_category_set = 0 || Hashtbl.mem error_category_set conflict.title in
       kind_match && error_category_match
     ) conflicts
 

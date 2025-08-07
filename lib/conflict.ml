@@ -5,6 +5,31 @@
 open ProofObligation
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
+module ConflictCheck = struct
+  type t = {
+    kind: Kind.t;
+    messages: string;
+    range: Range.t;
+    callstack: int;
+  }
+  [@@deriving show, yojson, ord]
+
+  let pp fmt check =
+    Format.fprintf fmt "@[<hov 2>%a (%d): %a@,"
+      Kind.pp check.kind
+      check.callstack
+      Range.pp check.range;
+    if String.length check.messages > 0 then
+      Format.fprintf fmt " @,- ";
+      let words = String.split_on_char ' ' check.messages in
+      List.iter (fun word ->
+        Format.fprintf fmt "%s@;<1 0>" word
+      ) words;
+      Format.fprintf fmt "@]"
+
+  let of_check (check: Check.t) =
+    { kind = check.kind; messages = check.messages; range = check.range; callstack = check.callstack }
+end
 
 type kind =
   | NoConflictSafe [@name "NoConflictSafe"]
@@ -39,9 +64,10 @@ let conflict_of_string s =
 
 type t = {
   kind: kind;
+  title: Category.t;
   range: Range.t;
-  from_po1: Check.t list;
-  from_po2: Check.t list;
+  from_po1: ConflictCheck.t list;
+  from_po2: ConflictCheck.t list;
 }
 [@@deriving show, yojson]
 
@@ -51,23 +77,23 @@ let pp_kind fmt kind =
 
 let pp fmt conflict =
   Format.fprintf fmt
-    "%a (%a): @.    @[<v 2>" pp_kind conflict.kind Range.pp conflict.range;
-  
+    "%a (%a):@.    %a @.    @[<v 2>" pp_kind conflict.kind Category.pp conflict.title Range.pp conflict.range;
+
   let pp_two_checks fmt conflict =
     Format.fprintf fmt "@{<#fff>ProofObligation 1 checks:@}@, @[<hov 4>%a@]@;<0 -2>"
-      (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) Check.pp) conflict.from_po1;
+      (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po1;
     Format.fprintf fmt "@{<#fff>ProofObligation 2 checks:@}@, @[<hov 4>%a@]"
-      (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) Check.pp) conflict.from_po2
+      (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po2
   in
 
   match conflict.kind with
   | OnlyOneProofObligation ->
     if List.length conflict.from_po1 > 0 then
       Format.fprintf fmt "@{<#fff>Only ProofObligation 1 checked:@}@, @[<hov 4>%a@]"
-        (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) Check.pp) conflict.from_po1
+        (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po1
     else
       Format.fprintf fmt "@{<#fff>Only ProofObligation 2 checked:@}@, @[<hov 4>%a@]"
-        (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) Check.pp) conflict.from_po2;
+        (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po2;
   | PrecisionW1 ->
     Format.fprintf fmt "@{<#fff>ProofObligation 1 detects safe sub ranges that ProofObligation 2 does not detect.@}@;<0 -2>";
     pp_two_checks fmt conflict;

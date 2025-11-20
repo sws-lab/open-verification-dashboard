@@ -91,3 +91,11 @@ The `kind` field of the `check` object can be one of the following:
 ### Ranges
 
 The error's ranges are dynamically computed based on the file's content. In the output file, expect the ranges to be the ones of the most imprecise tool.
+
+## Return codes
+- 0 - no conflicts found
+- 1 - error in input files or arguments
+- 2 - precision conflicts found
+- 3  - only one tool emits a PO for a given range
+- 4 - safety conflicts found
+- 5 - internal error (unexpected state)

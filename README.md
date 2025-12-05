@@ -99,3 +99,16 @@ The error's ranges are dynamically computed based on the file's content. In the 
 - 3  - only one tool emits a PO for a given range
 - 4 - safety conflicts found
 - 5 - internal error (unexpected state)
+
+# Quickstart
+
+Add local opam switch `opam switch create . 4.14.2` and build `dune build`.
+Then, use Goblint and Mopsa to analyze the same file and generate proof obligations in json format:
+
+```bash
+mopsa-c -output mopsa.json -format=json -show-safe-checks examples/simples/overflow.c
+goblint --outfile goblint.json --result dashboard examples/simples/overflow.c
+```
+
+Finally, run the dashboard to compare the two proof obligations:
+`dune exec dashboard -- mopsa.json goblint.json`

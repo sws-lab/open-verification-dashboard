@@ -93,6 +93,7 @@ The `kind` field of the `check` object can be one of the following:
 The error's ranges are dynamically computed based on the file's content. In the output file, expect the ranges to be the ones of the most imprecise tool.
 
 ## Return codes
+
 - 0 - no conflicts found
 - 1 - error in input files or arguments
 - 2 - precision conflicts found
@@ -100,10 +101,27 @@ The error's ranges are dynamically computed based on the file's content. In the 
 - 4 - safety conflicts found
 - 5 - internal error (unexpected state)
 
-# Quickstart
+## Quickstart
 
-Add local opam switch `opam switch create . 4.14.2` and build `dune build`.
-Then, use Goblint and Mopsa to analyze the same file and generate proof obligations in json format:
+To setup the dashboard, simply run `opam install . --deps-only` in the root of the repository. Then, build the project with `dune build`.
+
+### Run the examples on Mopsa and Goblint
+
+#### Installing Mopsa
+
+Follow the instructions on the [installation page](https://mopsa.gitlab.io/mopsa-analyzer/user-manual/quick-start/installation.html).
+
+#### Installing Goblint
+
+The dashboard output is not yet incorporated in the main Goblint repository. To use Goblint with the dashboard, you need to clone this fork:
+
+```bash
+git clone -b checks https://github.com/Robotechnic/analyzer.git
+```
+
+Then, follow the [installation instructions](https://github.com/goblint/analyzer#installing) in the section "Installing" of the README.
+
+#### Running the examples
 
 ```bash
 mopsa-c -output mopsa.json -format=json -show-safe-checks examples/simples/overflow.c
@@ -111,4 +129,4 @@ goblint --outfile goblint.json --result dashboard examples/simples/overflow.c
 ```
 
 Finally, run the dashboard to compare the two proof obligations:
-`dune exec dashboard -- mopsa.json goblint.json`
+`dune exec dashboard -- --exclude-not-found mopsa.json goblint.json`

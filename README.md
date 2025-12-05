@@ -119,7 +119,14 @@ The dashboard output is not yet incorporated in the main Goblint repository. To 
 git clone -b checks https://github.com/Robotechnic/analyzer.git
 ```
 
-Then, follow the [installation instructions](https://github.com/goblint/analyzer#installing) in the section "Installing" of the README.
+Then, there are two possible solutions:
+
+- To follow the [installation instructions](https://github.com/goblint/analyzer#installing) in the section "Installing" of the README. In this case, goblint will be in a separated switch and this might not be optimal for development.
+- To install Goblint in the current opam switch, run the following command in the root of the cloned repository:
+
+```bash
+make deps
+```
 
 #### Running the examples
 
@@ -129,4 +136,4 @@ goblint --outfile goblint.json --result dashboard examples/simples/overflow.c
 ```
 
 Finally, run the dashboard to compare the two proof obligations:
-`dune exec dashboard -- --exclude-not-found mopsa.json goblint.json`
+`dune exec dashboard -- --exclude-not-found true mopsa.json goblint.json`

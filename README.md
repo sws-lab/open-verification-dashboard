@@ -137,3 +137,17 @@ goblint --outfile goblint.json --result dashboard examples/simples/overflow.c
 
 Finally, run the dashboard to compare the two proof obligations:
 `dune exec dashboard -- --exclude-not-found true mopsa.json goblint.json`
+
+## Get the paper example
+
+To get the example used in the paper, run the following command:
+
+```bash
+mopsa-c ./errorTests/*.c -show-safe-checks -format=json -output ./mopsa.json
+goblint --ana.arrayoob true --ana.int.interval true --ana.float.interval true --ana.float.evaluate_math_functions true --ana.base.arrays.domain trivial --ana.base.arrays.nullbytes true --ana.base.strings.domain disjoint --sem.malloc.fail true --set "ana.activated[+]" memOutOfBounds --set "ana.activated[+]"  useAfterFree  --dbg.timing.enabled true --result dashboard  ./allErrorTest/*.c  --outfile ./goblint.json --ana.sv-comp.functions true
+dune exec dashboard -- --exclude-not-found true ./mopsa.json ./goblint.json --output ./report.json
+```
+
+This will generate a `report.json` file containing the comparison between Mopsa and Goblint on the error tests.
+
+To use this with the Gui, just compress the [examples/allErrorTest](examples/allErrorTest) folder and upload it along with the two json files (`mopsa.json` and `goblint.json`).

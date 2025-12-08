@@ -126,6 +126,7 @@ Then, there are two possible solutions:
 
 ```bash
 make deps
+make install
 ```
 
 #### Running the examples

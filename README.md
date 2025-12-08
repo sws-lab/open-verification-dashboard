@@ -152,3 +152,25 @@ dune exec dashboard -- --exclude-not-found true ./mopsa.json ./goblint.json --ou
 This will generate a `report.json` file containing the comparison between Mopsa and Goblint on the error tests.
 
 To use this with the Gui, just compress the [examples/allErrorTest](examples/allErrorTest) folder and upload it along with the two json files (`mopsa.json` and `goblint.json`).
+
+## Docker image
+
+To build the docker image, run the following command in the root of the repository:
+
+```bash
+docker build -t dashboard .
+```
+
+You can then run an environment with the dashboard cli using:
+
+```bash
+docker run -it --rm -v $(pwd):/app dashboard bash
+```
+
+You can also simply run the dashboard cli directly using:
+
+```bash
+docker run --rm -v $(pwd):/app dashboard dune exec dashboard -- [args]
+```
+
+Replace `[args]` with the appropriate arguments.

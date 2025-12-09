@@ -164,13 +164,16 @@ docker build -t dashboard .
 You can then run an environment with the dashboard cli using:
 
 ```bash
-docker run -it --rm -v $(pwd):/app dashboard bash
+docker run -it --rm -v $(pwd):/dashboard/app dashboard bash
 ```
+
+This will mount the current directory, meaning that you will be able to access everything in the current directory from inside the docker container.
+
 
 You can also simply run the dashboard cli directly using:
 
 ```bash
-docker run --rm -v $(pwd):/app dashboard dune exec dashboard -- [args]
+docker run --rm -v $(pwd):/dashboard/app dashboard dune exec dashboard -- [args]
 ```
 
 Replace `[args]` with the appropriate arguments.

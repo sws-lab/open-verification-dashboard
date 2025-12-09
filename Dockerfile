@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	ca-certificates \
 	clang \
 	git \
+	libclang-cpp-dev \
 	libclang-dev \
 	libgmp-dev \
 	libmpfr-dev \
@@ -30,7 +31,8 @@ USER opam
 
 RUN opam init --disable-sandboxing --shell-setup -y && \
 	opam switch create . 4.14.2 && \
-	opam install dune
+	eval $(opam env) && \
+	opam install dune ocamlfind -y
 
 RUN	git clone -b checks https://github.com/Robotechnic/analyzer.git && \
 	cd analyzer && \
@@ -38,6 +40,7 @@ RUN	git clone -b checks https://github.com/Robotechnic/analyzer.git && \
 	make install
 
 RUN	git clone https://gitlab.com/mopsa/mopsa-analyzer.git && \
+	eval $(opam env) && \
 	cd mopsa-analyzer && \
 	LANG=C opam install --deps-only --with-doc --with-test . -y && \
 	./configure && \
@@ -48,7 +51,9 @@ COPY . ./dashboard
 WORKDIR /dashboard/dashboard
 
 USER root
-RUN chown -R opam:opam /dashboard/dashboard
+RUN mkdir /dashboard/app && \
+	chown -R opam:opam /dashboard/dashboard
+
 USER opam
 
 # Install dependencies and build
@@ -57,3 +62,5 @@ RUN opam install . --deps-only -y &&\
 	dune build && \
 	dune install --profile release && \
 	echo 'eval $(opam env)' >> ~/.bashrc
+
+WORKDIR /dashboard/app

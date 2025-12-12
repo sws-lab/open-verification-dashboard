@@ -24,7 +24,7 @@ npx drizzle-kit push
 npm run prepare
 ```
 
-## What to do if the dashboad executable changes?
+## What to do if the dashboard executable changes?
 
 If the dashboard executable changes, you need to update the `VERSION` variable in the `.env` file. This will regenerate the database entries when requested by the ui.
 
@@ -50,6 +50,52 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+## Docker
+
+To build and run the project using Docker, you can use the provided `Dockerfile` and `docker-compose.yml` files.
+
+First, build the Docker image and initialize the database:
+
+While the project is private we need to do the following.
+
+```bash
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa # or your SSH key used for accessing the private git repository
+docker buildx build --ssh default=$SSH_AUTH_SOCK . -t dashboard-gui
+docker-compose up -d
+DATABASE_URL=postgres://postgress:postgress@127.0.0.1:5432/dashboard npm run db:push
+```
+
+After that, the dashboard UI will be accessible at <http://localhost:3000>.
+
+To start the app after initialization, run:
+
+```bash
+docker-compose up -d
+```
+
+`-d` runs the containers in detached mode, allowing them to run in the background. To attach to the logs, you can use:
+
+```bash
+docker-compose logs -f
+```
+
+To stop the Docker containers, run:
+
+```bash
+docker-compose down
+```
+
+To remove the Docker containers and associated volumes, run:
+
+```bash
+docker-compose down -v
+```
+
+## Important notes about project path
+
+The uploaded archive should be the zip of where you have run the analyzers executables.
 
 ## Project structure
 

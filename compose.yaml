@@ -1,0 +1,37 @@
+services:
+  app:
+    image: dashboard-gui:latest
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgres://postgress:postgress@db:5432/dashboard
+      - VERSION=1
+      - PUBLIC_PAGE_SIZE=30
+      - DASHBOARD_APP_PATH=/app/dashboard.exe
+      - ORIGIN=http://localhost:3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/projects
+    depends_on:
+      - db
+  db:
+    image: postgres:18
+    volumes:
+      - db:/data/postgres
+    environment:
+      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_USER=postgress
+      - POSTGRES_DB=dashboard
+      - PGDATA=/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  db:

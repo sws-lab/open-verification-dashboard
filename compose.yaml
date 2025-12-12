@@ -10,7 +10,7 @@ services:
       - DASHBOARD_APP_PATH=/app/dashboard.exe
       - ORIGIN=http://localhost:3000
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - /app/projects
     depends_on:
@@ -25,10 +25,10 @@ services:
       - POSTGRES_DB=dashboard
       - PGDATA=/data/postgres
     ports:
-      - "5432:5432"
+      - '5432:5432'
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 30s
       timeout: 10s
       retries: 5

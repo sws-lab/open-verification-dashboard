@@ -1,13 +1,16 @@
 (library
  (name dashboard)
  (wrapped true)
- (modules conflict proofObligation compareProofObligations report project utils)
+ (modules
+  conflict
+  proofObligation
+  compareProofObligations
+  report
+  project
+  utils)
  (private_modules utils)
  (preprocess
-  (pps
-    ppx_deriving.std
-    ppx_deriving_hash
-    ppx_yojson_conv))
+  (pps ppx_deriving.std ppx_deriving_hash ppx_yojson_conv))
  (libraries
   ppx_deriving
   ppx_deriving_hash

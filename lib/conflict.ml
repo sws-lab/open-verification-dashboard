@@ -1,34 +1,33 @@
-(**
-  This module defines the conflict type and provides functions to create and manipulate conflicts.
-*)
+(** This module defines the conflict type and provides functions to create and
+    manipulate conflicts. *)
 
 open ProofObligation
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module ConflictCheck = struct
   type t = {
-    kind: Kind.t;
-    messages: string;
-    range: Range.t;
-    callstack: int;
+    kind : Kind.t;
+    messages : string;
+    range : Range.t;
+    callstack : int;
   }
   [@@deriving show, yojson, ord]
 
   let pp fmt check =
-    Format.fprintf fmt "@[<hov 2>%a (%d): %a@,"
-      Kind.pp check.kind
-      check.callstack
-      Range.pp check.range;
-    if String.length check.messages > 0 then
-      Format.fprintf fmt " @,- ";
-      let words = String.split_on_char ' ' check.messages in
-      List.iter (fun word ->
-        Format.fprintf fmt "%s@;<1 0>" word
-      ) words;
-      Format.fprintf fmt "@]"
+    Format.fprintf fmt "@[<hov 2>%a (%d): %a@," Kind.pp check.kind
+      check.callstack Range.pp check.range;
+    if String.length check.messages > 0 then Format.fprintf fmt " @,- ";
+    let words = String.split_on_char ' ' check.messages in
+    List.iter (fun word -> Format.fprintf fmt "%s@;<1 0>" word) words;
+    Format.fprintf fmt "@]"
 
-  let of_check (check: Check.t) =
-    { kind = check.kind; messages = check.messages; range = check.range; callstack = check.callstack }
+  let of_check (check : Check.t) =
+    {
+      kind = check.kind;
+      messages = check.messages;
+      range = check.range;
+      callstack = check.callstack;
+    }
 end
 
 type kind =
@@ -60,34 +59,25 @@ type verdict =
 let verdict_of_yojson = Utils.string_t_of_yojson verdict_of_yojson "Verdict"
 let yojson_of_verdict = Utils.string_yojson_of_t yojson_of_verdict
 
-let join_verdict_po_kind (verdict : verdict) (po_kind: Kind.t) =
+let join_verdict_po_kind (verdict : verdict) (po_kind : Kind.t) =
   match (verdict, po_kind) with
-  | (VNone, Safe) ->
-    Safe
-  | (VNone, Warning) ->
-    Warning
-  | (VNone, Error) ->
-    Error
-  | (Safe, Safe)
-  | (SafeWarning, Safe)
-  | (SafeWarning, Warning)
-  | (Warning, Warning)
-  | (ErrorWarning, Warning)
-  | (ErrorWarning, Error)
-  | (Error, Error) ->
-    verdict
-  | (Error, Warning)
-  | (Warning, Error) ->
-    ErrorWarning
-  | (Safe, Warning)
-  | (Warning, Safe) ->
-    SafeWarning
-  | (Safe, Error)
-  | (SafeWarning, Error)
-  | (ErrorWarning, Safe)
-  | (Error, Safe) 
-  | (Unknown, _) ->
-    Unknown
+  | VNone, Safe -> Safe
+  | VNone, Warning -> Warning
+  | VNone, Error -> Error
+  | Safe, Safe
+  | SafeWarning, Safe
+  | SafeWarning, Warning
+  | Warning, Warning
+  | ErrorWarning, Warning
+  | ErrorWarning, Error
+  | Error, Error -> verdict
+  | Error, Warning | Warning, Error -> ErrorWarning
+  | Safe, Warning | Warning, Safe -> SafeWarning
+  | Safe, Error
+  | SafeWarning, Error
+  | ErrorWarning, Safe
+  | Error, Safe
+  | Unknown, _ -> Unknown
 
 let conflict_of_string s =
   match String.lowercase_ascii s with
@@ -103,68 +93,102 @@ let conflict_of_string s =
   | "error_level" -> Some ErrorLevel
   | _ -> None
 
-
 type t = {
-  kind: kind;
-  title: Category.t;
-  range: Range.t;
-  from_po1: ConflictCheck.t list;
-  verdict_po1: verdict;
-  from_po2: ConflictCheck.t list;
-  verdict_po2: verdict;
+  kind : kind;
+  title : Category.t;
+  range : Range.t;
+  from_po1 : ConflictCheck.t list;
+  verdict_po1 : verdict;
+  from_po2 : ConflictCheck.t list;
+  verdict_po2 : verdict;
 }
 [@@deriving show, yojson]
 
-let pp_kind fmt kind =
-  Format.fprintf fmt "@{<bold>@{<#f00>%a@}@}"
-    pp_kind kind
+let pp_kind fmt kind = Format.fprintf fmt "@{<bold>@{<#f00>%a@}@}" pp_kind kind
 
 let pp fmt conflict =
-  Format.fprintf fmt
-    "%a (%a):@.    %a @.    @[<v 2>" pp_kind conflict.kind Category.pp conflict.title Range.pp conflict.range;
+  Format.fprintf fmt "%a (%a):@.    %a @.    @[<v 2>" pp_kind conflict.kind
+    Category.pp conflict.title Range.pp conflict.range;
 
   let pp_two_checks fmt conflict =
-    Format.fprintf fmt "@{<#fff>ProofObligation 1 checks:@}@, @[<hov 4>%a@]@;<0 -2>"
-      (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po1;
+    Format.fprintf fmt
+      "@{<#fff>ProofObligation 1 checks:@}@, @[<hov 4>%a@]@;<0 -2>"
+      (Format.pp_print_list
+         ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
+         ConflictCheck.pp)
+      conflict.from_po1;
     Format.fprintf fmt "@{<#fff>ProofObligation 2 checks:@}@, @[<hov 4>%a@]"
-      (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po2
+      (Format.pp_print_list
+         ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
+         ConflictCheck.pp)
+      conflict.from_po2
   in
 
   match conflict.kind with
   | OnlyOneProofObligation ->
-    if List.length conflict.from_po1 > 0 then
-      Format.fprintf fmt "@{<#fff>Only ProofObligation 1 checked:@}@, @[<hov 4>%a@]"
-        (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po1
-    else
-      Format.fprintf fmt "@{<#fff>Only ProofObligation 2 checked:@}@, @[<hov 4>%a@]"
-        (Format.pp_print_list ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4)) ConflictCheck.pp) conflict.from_po2;
+      if List.length conflict.from_po1 > 0 then
+        Format.fprintf fmt
+          "@{<#fff>Only ProofObligation 1 checked:@}@, @[<hov 4>%a@]"
+          (Format.pp_print_list
+             ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
+             ConflictCheck.pp)
+          conflict.from_po1
+      else
+        Format.fprintf fmt
+          "@{<#fff>Only ProofObligation 2 checked:@}@, @[<hov 4>%a@]"
+          (Format.pp_print_list
+             ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
+             ConflictCheck.pp)
+          conflict.from_po2
   | PrecisionW1 ->
-    Format.fprintf fmt "@{<#fff>ProofObligation 1 detects safe sub ranges that ProofObligation 2 does not detect.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#fff>ProofObligation 1 detects safe sub ranges that \
+         ProofObligation 2 does not detect.@}@;\
+         <0 -2>";
+      pp_two_checks fmt conflict
   | PrecisionW2 ->
-    Format.fprintf fmt "@{<#fff>ProofObligation 2 detects safe sub ranges that ProofObligation 1 does not detect.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#fff>ProofObligation 2 detects safe sub ranges that \
+         ProofObligation 1 does not detect.@}@;\
+         <0 -2>";
+      pp_two_checks fmt conflict
   | SafetyW1 ->
-    Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the safety of the range. Proof Obligation 1 state that it is safe wile Proof Obligation 2 does not.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#fff>The two proofObligations disagree on the safety of the range. \
+         Proof Obligation 1 state that it is safe wile Proof Obligation 2 does \
+         not.@}@;\
+         <0 -2>";
+      pp_two_checks fmt conflict
   | SafetyW2 ->
-    Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the safety of the range. Proof Obligation 2 state that it is safe wile Proof Obligation 1 does not.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#fff>The two proofObligations disagree on the safety of the range. \
+         Proof Obligation 2 state that it is safe wile Proof Obligation 1 does \
+         not.@}@;\
+         <0 -2>";
+      pp_two_checks fmt conflict
   | ErrorLevel ->
-    Format.fprintf fmt "@{<#fff>The two proofObligations disagree on the error level of the range.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#fff>The two proofObligations disagree on the error level of the \
+         range.@}@;\
+         <0 -2>";
+      pp_two_checks fmt conflict
   | Unchecked ->
-    Format.fprintf fmt "@{<#fff>This has not been checked for conflicts yet.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#fff>This has not been checked for conflicts yet.@}@;<0 -2>";
+      pp_two_checks fmt conflict
   | NoConflictSafe ->
-    Format.fprintf fmt "@{<#0f0>Safe: No conflict found.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt "@{<#0f0>Safe: No conflict found.@}@;<0 -2>";
+      pp_two_checks fmt conflict
   | NoConflictWarning ->
-    Format.fprintf fmt "@{<#ff0>Warning: No conflict found, but they agree it's a warning.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#ff0>Warning: No conflict found, but they agree it's a warning.@}@;\
+         <0 -2>";
+      pp_two_checks fmt conflict
   | NoConflictError ->
-    Format.fprintf fmt "@{<#f00>Error: No conflict found, but they agree it's an error.@}@;<0 -2>";
-    pp_two_checks fmt conflict;
+      Format.fprintf fmt
+        "@{<#f00>Error: No conflict found, but they agree it's an error.@}@;\
+         <0 -2>";
+      pp_two_checks fmt conflict;
 
-  Format.fprintf fmt "@]";
-  Format.pp_print_newline fmt ()
+      Format.fprintf fmt "@]";
+      Format.pp_print_newline fmt ()

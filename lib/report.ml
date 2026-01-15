@@ -22,8 +22,8 @@ let conflicts_of_yojson = function
 
 type t = {
   conflicts: conflicts;
-  mutable po1_name: string;
-  mutable po2_name: string;
+  po1_name: string;
+  po2_name: string;
 }
 [@@deriving yojson]
 

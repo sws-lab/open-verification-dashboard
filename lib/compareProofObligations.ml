@@ -12,7 +12,9 @@ module UniqueConflict = struct
     title: ProofObligation.Category.t;
     range: ProofObligation.Range.t;
     from_po1: unit ChecksSet.t;
+    verdict_po1: Conflict.verdict;
     from_po2: unit ChecksSet.t;
+    verdict_po2: Conflict.verdict;
   }
 
   let check_of_unique_check ?new_kind (check: t) =
@@ -21,7 +23,9 @@ module UniqueConflict = struct
       range = check.range;
       title = check.title;
       from_po1 = ChecksSet.to_seq check.from_po1 |> Seq.map fst |> List.of_seq;
+      verdict_po1 = check.verdict_po1;
       from_po2 = ChecksSet.to_seq check.from_po2 |> Seq.map fst |> List.of_seq;
+      verdict_po2 = check.verdict_po2;
     }
 end
 
@@ -66,14 +70,19 @@ let conflicts_between (w1: ProofObligation.t) (w2: ProofObligation.t) =
             range = check.range;
             title = check.title;
             from_po1 = if analyzer_id = 1 then ChecksSet.singleton (ConflictCheck.of_check check) () else ChecksSet.empty;
+            verdict_po1 =  if analyzer_id = 1 then Conflict.join_verdict_po_kind Conflict.VNone check.kind else Conflict.VNone;
             from_po2 = if analyzer_id = 2 then ChecksSet.singleton (ConflictCheck.of_check check) () else ChecksSet.empty;
+            verdict_po2 = if analyzer_id = 2 then Conflict.join_verdict_po_kind Conflict.VNone check.kind else Conflict.VNone;
           }) rest
         | Some conflict ->
           if Range.compare conflict.range check.range = 0 && Category.compare conflict.title check.title = 0 then
             let from_po1 = if analyzer_id = 1 then ChecksSet.add (ConflictCheck.of_check check) () conflict.from_po1 else conflict.from_po1 in
             let from_po2 = if analyzer_id = 2 then ChecksSet.add (ConflictCheck.of_check check) () conflict.from_po2 else conflict.from_po2 in
             let new_range = Range.union conflict.range check.range in
-            build_unique_conflict (Some { conflict with from_po1; from_po2; range = new_range }) rest
+            let verdict_po1 = if analyzer_id = 1 then Conflict.join_verdict_po_kind conflict.verdict_po1 check.kind else conflict.verdict_po1 in
+            let verdict_po2 = if analyzer_id = 2 then Conflict.join_verdict_po_kind conflict.verdict_po2 check.kind else conflict.verdict_po2 in
+            build_unique_conflict (Some { 
+              conflict with from_po1; from_po2; verdict_po1; verdict_po2; range = new_range }) rest
           else
             acc, (analyzer_id, check) :: rest
     in

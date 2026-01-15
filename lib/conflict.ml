@@ -47,6 +47,48 @@ type kind =
 let kind_of_yojson = Utils.string_t_of_yojson kind_of_yojson "Kind"
 let yojson_of_kind = Utils.string_yojson_of_t yojson_of_kind
 
+type verdict =
+  | Safe [@name "safe"]
+  | SafeWarning [@name "safe_warning"]
+  | Warning [@name "warning"]
+  | ErrorWarning [@name "error_warning"]
+  | Error [@name "error"]
+  | Unknown [@name "unknown"]
+  | VNone [@name "none"]
+[@@deriving show { with_path = false }, yojson]
+
+let verdict_of_yojson = Utils.string_t_of_yojson verdict_of_yojson "Verdict"
+let yojson_of_verdict = Utils.string_yojson_of_t yojson_of_verdict
+
+let join_verdict_po_kind (verdict : verdict) (po_kind: Kind.t) =
+  match (verdict, po_kind) with
+  | (VNone, Safe) ->
+    Safe
+  | (VNone, Warning) ->
+    Warning
+  | (VNone, Error) ->
+    Error
+  | (Safe, Safe)
+  | (SafeWarning, Safe)
+  | (SafeWarning, Warning)
+  | (Warning, Warning)
+  | (ErrorWarning, Warning)
+  | (ErrorWarning, Error)
+  | (Error, Error) ->
+    verdict
+  | (Error, Warning)
+  | (Warning, Error) ->
+    ErrorWarning
+  | (Safe, Warning)
+  | (Warning, Safe) ->
+    SafeWarning
+  | (Safe, Error)
+  | (SafeWarning, Error)
+  | (ErrorWarning, Safe)
+  | (Error, Safe) 
+  | (Unknown, _) ->
+    Unknown
+
 let conflict_of_string s =
   match String.lowercase_ascii s with
   | "no_conflict_safe" -> Some NoConflictSafe
@@ -67,7 +109,9 @@ type t = {
   title: Category.t;
   range: Range.t;
   from_po1: ConflictCheck.t list;
+  verdict_po1: verdict;
   from_po2: ConflictCheck.t list;
+  verdict_po2: verdict;
 }
 [@@deriving show, yojson]
 

@@ -177,6 +177,25 @@ module Category = struct
     | "incorrect_number_of_arguments" -> Some IncorrectNumberOfArguments
     | "invalid_shift" -> Some InvalidShift
     | _ -> None
+
+  let to_string = function
+    | AssertionFailure -> "Assertion failure"
+    | InvalidMemoryAccess -> "Invalid memory access"
+    | DivisionByZero -> "Division by zero"
+    | IntegerOverflow -> "Integer overflow"
+    | InvalidPointerComparison -> "Invalid pointer comparison"
+    | InvalidPointerSubtraction -> "Invalid pointer subtraction"
+    | DoubleFree -> "Double free"
+    | NegativeArraySize -> "Negative array size"
+    | InvalidFloatingPointOperation -> "Invalid floating point operation"
+    | StubCondition -> "Stub condition"
+    | InsufficientVariadicArguments -> "Insufficient variadic arguments"
+    | InsufficientFormatArguments -> "Insufficient format arguments"
+    | InvalidTypeOfFormatArgument -> "Invalid type of format argument"
+    | FloatingpointDivisionByZero -> "Floating-point division by zero"
+    | FloatingpointOverflow -> "Floating-point overflow"
+    | IncorrectNumberOfArguments -> "Incorrect number of arguments"
+    | InvalidShift -> "Invalid shift"
 end
 
 module StackTrace = struct

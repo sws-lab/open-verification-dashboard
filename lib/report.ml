@@ -79,6 +79,7 @@ let create po1_name po2_name =
       };
   }
 
+(** Join two analyzers verdict in an optimistic way. I.e. Safe > Warning > Error *)
 let optimistic_verdict_join = function
   | Conflict.Safe, _
   | _, Conflict.Safe
@@ -92,6 +93,7 @@ let optimistic_verdict_join = function
   | Conflict.Unknown, _ | _, Conflict.Unknown -> Conflict.Unknown
   | _ -> Conflict.VNone
 
+(** Join two analyzers verdict in a pessimistic way. I.e. Error > Warning > Safe *)
 let pessimistic_verdict_join = function
   | Conflict.Error, _
   | _, Conflict.Error
@@ -132,6 +134,7 @@ let update_meta_verdict_table (table : meta_verdict_map)
       update_meta_result new_result new_verdict conflict;
       Hashtbl.add table category new_result
 
+(** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   let optimistic_verdict =
     optimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)

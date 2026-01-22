@@ -39,7 +39,12 @@ A proof obligation is a json file with the foloiwing structure:
 - `Assertion failure`
 - `Invalid memory access`
 - `Division by zero`
-- `Integer overflow`
+- `Signed integer overflow in arithmetic operator`
+- `Unsigned integer overflow in arithmetic operator`
+- `Signed integer overflow in explicit cast`
+- `Unsigned integer overflow in explicit cast`
+- `Signed integer overflow in implicit cast`
+- `Unsigned integer overflow in implicit cast`
 - `Invalid pointer comparison`
 - `Invalid pointer subtraction`
 - `Double free`

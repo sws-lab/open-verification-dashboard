@@ -138,7 +138,12 @@ module Category = struct
     | AssertionFailure [@name "Assertion failure"]
     | InvalidMemoryAccess [@name "Invalid memory access"]
     | DivisionByZero [@name "Division by zero"]
-    | IntegerOverflow [@name "Integer overflow"]
+    | SignedIntegerOverflowInArithmeticOperator [@name "Signed integer overflow in arithmetic operator"]
+    | SignedIntegerOverflowInExplicitCast [@name "Signed integer overflow in explicit cast"]
+    | SignedIntegerOverflowInImplicitCast [@name "Signed integer overflow in implicit cast"]
+    | UnsignedIntegerOverflowInArithmeticOperator [@name "Unsigned integer overflow in arithmetic operator"]
+    | UnsignedIntegerOverflowInExplicitCast [@name "Unsigned integer overflow in explicit cast"]
+    | UnsignedIntegerOverflowInImplicitCast [@name "Unsigned integer overflow in implicit cast"]
     | InvalidPointerComparison [@name "Invalid pointer comparison"]
     | InvalidPointerSubtraction [@name "Invalid pointer subtraction"]
     | DoubleFree [@name "Double free"]
@@ -162,7 +167,12 @@ module Category = struct
     | "assertion_failure" -> Some AssertionFailure
     | "invalid_memory_access" -> Some InvalidMemoryAccess
     | "division_by_zero" -> Some DivisionByZero
-    | "integer_overflow" -> Some IntegerOverflow
+    | "signed_integer_overflow_in_arithmetic_operator" -> Some SignedIntegerOverflowInArithmeticOperator
+    | "signed_integer_overflow_in_explicit_cast" -> Some SignedIntegerOverflowInExplicitCast
+    | "signed_integer_overflow_in_implicit_cast" -> Some SignedIntegerOverflowInImplicitCast
+    | "unsigned_integer_overflow_in_arithmetic_operator" -> Some UnsignedIntegerOverflowInArithmeticOperator
+    | "unsigned_integer_overflow_in_explicit_cast" -> Some UnsignedIntegerOverflowInExplicitCast
+    | "unsigned_integer_overflow_in_implicit_cast" -> Some UnsignedIntegerOverflowInImplicitCast
     | "invalid_pointer_comparison" -> Some InvalidPointerComparison
     | "invalid_pointer_subtraction" -> Some InvalidPointerSubtraction
     | "double_free" -> Some DoubleFree
@@ -182,7 +192,12 @@ module Category = struct
     | AssertionFailure -> "Assertion failure"
     | InvalidMemoryAccess -> "Invalid memory access"
     | DivisionByZero -> "Division by zero"
-    | IntegerOverflow -> "Integer overflow"
+    | SignedIntegerOverflowInArithmeticOperator -> "Signed integer overflow in arithmetic operator"
+    | SignedIntegerOverflowInExplicitCast -> "Signed integer overflow in explicit cast"
+    | SignedIntegerOverflowInImplicitCast -> "Signed integer overflow in implicit cast"
+    | UnsignedIntegerOverflowInArithmeticOperator -> "Unsigned integer overflow in arithmetic operator"
+    | UnsignedIntegerOverflowInExplicitCast -> "Unsigned integer overflow in explicit cast"
+    | UnsignedIntegerOverflowInImplicitCast -> "Unsigned integer overflow in implicit cast"
     | InvalidPointerComparison -> "Invalid pointer comparison"
     | InvalidPointerSubtraction -> "Invalid pointer subtraction"
     | DoubleFree -> "Double free"

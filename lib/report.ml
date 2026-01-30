@@ -24,6 +24,7 @@ let yojson_of_meta_verdict_answer =
   Utils.string_yojson_of_t yojson_of_meta_verdict_answer
 
 type meta_verdict = {
+  mutable result : Conflict.verdict option;
   mutable verdict : meta_verdict_answer;
   mutable conflict : bool;
 }
@@ -75,57 +76,67 @@ let create po1_name po2_name =
     po2_name;
     optimistic_result =
       {
-        global_result = { verdict = Unknown; conflict = false };
+        global_result = { verdict = Unknown; conflict = false; result = None };
         results = Hashtbl.create 10;
       };
     pessimistic_result =
       {
-        global_result = { verdict = Unknown; conflict = false };
+        global_result = { verdict = Unknown; conflict = false; result = None };
         results = Hashtbl.create 10;
       };
   }
 
-(** Join two analyzers verdict in an optimistic way (join). I.e. Safe > Warning
-    > Error *)
+(** Join two analyzers verdict in an optimistic way. *)
 let optimistic_verdict_join = function
-  | Conflict.Safe, _
-  | _, Conflict.Safe
+  | Conflict.Safe, _ | _, Conflict.Safe -> Conflict.Safe
+  | Conflict.Warning, Conflict.Error
+  | Conflict.Error, Conflict.Warning
+  | Conflict.Error, Conflict.Error -> Conflict.Error
+  | Conflict.Warning, _ | _, Conflict.Warning -> Conflict.Warning
+  | Conflict.Unknown, _ | _, Conflict.Unknown -> assert false
+  | _ -> Conflict.VNone
+
+(** Join two analyzers verdict in a pessimistic way. *)
+let pessimistic_verdict_join = function
+  | Conflict.Error, Conflict.Error -> Conflict.Error
+  | Conflict.Error, Conflict.Safe
+  | Conflict.Safe, Conflict.Error
   | Conflict.Warning, _
   | _, Conflict.Warning -> Conflict.Warning
-  | Conflict.Error, Conflict.Error -> Conflict.Error
-  | Conflict.Unknown, _ | _, Conflict.Unknown -> Conflict.Unknown
-  | _ -> Conflict.VNone
-
-(** Join two analyzers verdict in a pessimistic way (meet). I.e. Error > Warning
-    > Safe *)
-let pessimistic_verdict_join = function
-  | Conflict.Error, _ | _, Conflict.Error -> Conflict.Error
-  | Conflict.Warning, _ | _, Conflict.Warning -> Conflict.Warning
   | Conflict.Safe, Conflict.Safe -> Conflict.Safe
-  | Conflict.Unknown, _ | _, Conflict.Unknown -> Conflict.Unknown
+  | Conflict.Unknown, _ | _, Conflict.Unknown -> assert false
   | _ -> Conflict.VNone
 
-let new_meta_verdict verdict new_verdict =
-  match (verdict, new_verdict) with
-  | Unknown, Conflict.Safe -> Yes
-  | Yes, Conflict.Safe -> Yes
-  | Yes, Conflict.Warning -> Yes
-  | No, _ | _, Conflict.Error -> No
-  | _, Conflict.VNone | _, Conflict.Unknown | _, Conflict.Warning -> verdict
+let verdict_of_conflict_verdict = function
+  | Conflict.Safe -> Yes
+  | Conflict.Warning | Conflict.Error -> No
+  | Conflict.VNone | Conflict.Unknown -> Unknown
 
 let update_meta_result (result : meta_verdict) (new_verdict : Conflict.verdict)
-    (conflict : Conflict.t) =
-  result.verdict <- new_meta_verdict result.verdict new_verdict;
-  if conflict.kind = Conflict.ErrorLevel then result.conflict <- true
+    (conflict : Conflict.t)
+    (update_function : Conflict.verdict * Conflict.verdict -> Conflict.verdict)
+    =
+  if conflict.kind = Conflict.ErrorLevel then result.conflict <- true;
+  match result.result with
+  | None ->
+      result.result <- Some new_verdict;
+      result.verdict <- verdict_of_conflict_verdict new_verdict
+  | Some existing_kind ->
+      let updated_kind = update_function (existing_kind, new_verdict) in
+      result.result <- Some updated_kind;
+      result.verdict <- verdict_of_conflict_verdict updated_kind
 
 let update_meta_verdict_table (table : meta_verdict_map)
     (category : ProofObligation.Category.t) (new_verdict : Conflict.verdict)
-    (conflict : Conflict.t) =
+    (conflict : Conflict.t)
+    (update_function : Conflict.verdict * Conflict.verdict -> Conflict.verdict)
+    =
   match Hashtbl.find_opt table category with
-  | Some result -> update_meta_result result new_verdict conflict
+  | Some result ->
+      update_meta_result result new_verdict conflict update_function
   | None ->
-      let new_result = { verdict = Unknown; conflict = false } in
-      update_meta_result new_result new_verdict conflict;
+      let new_result = { verdict = Unknown; conflict = false; result = None } in
+      update_meta_result new_result new_verdict conflict update_function;
       Hashtbl.add table category new_result
 
 (** Add a conflict to the report global conflicts table *)
@@ -140,15 +151,14 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
         pessimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
       in
       update_meta_result report.optimistic_result.global_result
-        optimistic_verdict conflict;
+        optimistic_verdict conflict optimistic_verdict_join;
       update_meta_verdict_table report.optimistic_result.results conflict.title
-        optimistic_verdict conflict;
+        optimistic_verdict conflict optimistic_verdict_join;
 
       update_meta_result report.pessimistic_result.global_result
-        pessimistic_verdict conflict;
+        pessimistic_verdict conflict pessimistic_verdict_join;
       update_meta_verdict_table report.pessimistic_result.results conflict.title
-        pessimistic_verdict conflict);
-
+        pessimistic_verdict conflict pessimistic_verdict_join);
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with
   | Some existing_conflicts ->

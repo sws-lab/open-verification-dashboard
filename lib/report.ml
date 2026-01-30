@@ -17,6 +17,10 @@ type meta_verdict_answer =
   | Unknown [@name "unknown"]
 [@@deriving yojson]
 
+let meta_verdict_answer_of_yojson = Utils.string_t_of_yojson meta_verdict_answer_of_yojson "meta_verdict_answer"
+
+let yojson_of_meta_verdict_answer = Utils.string_yojson_of_t yojson_of_meta_verdict_answer
+
 type meta_verdict = {
   mutable verdict : meta_verdict_answer;
   mutable conflict : bool;

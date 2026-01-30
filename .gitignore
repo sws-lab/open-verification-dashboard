@@ -41,3 +41,4 @@ errorTests.tar.gz
 allErrorTest.tar.gz
 *.json
 reducer.sh
+joey.c

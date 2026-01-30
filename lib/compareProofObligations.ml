@@ -104,9 +104,9 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                           else ChecksSet.empty);
                        verdict_po1 =
                          (if analyzer_id = 1 then
-                            Conflict.join_verdict_po_kind Conflict.VNone
+                            Conflict.join_verdict_po_kind Conflict.Unreached
                               check.kind
-                          else Conflict.VNone);
+                          else Conflict.Unreached);
                        from_po2 =
                          (if analyzer_id = 2 then
                             ChecksSet.singleton
@@ -115,9 +115,9 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                           else ChecksSet.empty);
                        verdict_po2 =
                          (if analyzer_id = 2 then
-                            Conflict.join_verdict_po_kind Conflict.VNone
+                            Conflict.join_verdict_po_kind Conflict.Unreached
                               check.kind
-                          else Conflict.VNone);
+                          else Conflict.Unreached);
                      })
                 rest
           | Some conflict ->

@@ -17,9 +17,11 @@ type meta_verdict_answer =
   | Unknown [@name "unknown"]
 [@@deriving yojson]
 
-let meta_verdict_answer_of_yojson = Utils.string_t_of_yojson meta_verdict_answer_of_yojson "meta_verdict_answer"
+let meta_verdict_answer_of_yojson =
+  Utils.string_t_of_yojson meta_verdict_answer_of_yojson "meta_verdict_answer"
 
-let yojson_of_meta_verdict_answer = Utils.string_yojson_of_t yojson_of_meta_verdict_answer
+let yojson_of_meta_verdict_answer =
+  Utils.string_yojson_of_t yojson_of_meta_verdict_answer
 
 type meta_verdict = {
   mutable verdict : meta_verdict_answer;
@@ -83,30 +85,22 @@ let create po1_name po2_name =
       };
   }
 
-(** Join two analyzers verdict in an optimistic way. I.e. Safe > Warning > Error *)
+(** Join two analyzers verdict in an optimistic way (join). I.e. Safe > Warning
+    > Error *)
 let optimistic_verdict_join = function
   | Conflict.Safe, _
   | _, Conflict.Safe
-  | Conflict.SafeWarning, _
-  | _, Conflict.SafeWarning -> Conflict.Safe
   | Conflict.Warning, _
-  | _, Conflict.Warning
-  | _, Conflict.ErrorWarning
-  | Conflict.ErrorWarning, _ -> Conflict.Warning
+  | _, Conflict.Warning -> Conflict.Warning
   | Conflict.Error, Conflict.Error -> Conflict.Error
   | Conflict.Unknown, _ | _, Conflict.Unknown -> Conflict.Unknown
   | _ -> Conflict.VNone
 
-(** Join two analyzers verdict in a pessimistic way. I.e. Error > Warning > Safe *)
+(** Join two analyzers verdict in a pessimistic way (meet). I.e. Error > Warning
+    > Safe *)
 let pessimistic_verdict_join = function
-  | Conflict.Error, _
-  | _, Conflict.Error
-  | Conflict.ErrorWarning, _
-  | _, Conflict.ErrorWarning -> Conflict.Error
-  | Conflict.Warning, _
-  | _, Conflict.Warning
-  | _, Conflict.SafeWarning
-  | Conflict.SafeWarning, _ -> Conflict.Warning
+  | Conflict.Error, _ | _, Conflict.Error -> Conflict.Error
+  | Conflict.Warning, _ | _, Conflict.Warning -> Conflict.Warning
   | Conflict.Safe, Conflict.Safe -> Conflict.Safe
   | Conflict.Unknown, _ | _, Conflict.Unknown -> Conflict.Unknown
   | _ -> Conflict.VNone
@@ -118,10 +112,6 @@ let new_meta_verdict verdict new_verdict =
   | Yes, Conflict.Warning -> Yes
   | No, _ | _, Conflict.Error -> No
   | _, Conflict.VNone | _, Conflict.Unknown | _, Conflict.Warning -> verdict
-  | _, Conflict.SafeWarning ->
-      failwith "SafeWarning should not appear in meta verdict"
-  | _, Conflict.ErrorWarning ->
-      failwith "ErrorWarning should not appear in meta verdict"
 
 let update_meta_result (result : meta_verdict) (new_verdict : Conflict.verdict)
     (conflict : Conflict.t) =

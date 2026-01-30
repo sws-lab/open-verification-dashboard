@@ -88,6 +88,8 @@ let create po1_name po2_name =
 
 (** Join two analyzers verdict in an optimistic way. *)
 let optimistic_verdict_join = function
+  | Conflict.Safe, Conflict.Error | Conflict.Error, Conflict.Safe ->
+      Conflict.Unreached
   | Conflict.Safe, _ | _, Conflict.Safe -> Conflict.Safe
   | Conflict.Warning, Conflict.Error
   | Conflict.Error, Conflict.Warning

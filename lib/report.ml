@@ -104,8 +104,8 @@ let pessimistic_verdict_join = function
   | Conflict.Warning, _
   | _, Conflict.Warning -> Conflict.Warning
   | Conflict.Safe, Conflict.Safe -> Conflict.Safe
+  | Conflict.VNone, verdict | verdict, Conflict.VNone -> verdict
   | Conflict.Unknown, _ | _, Conflict.Unknown -> assert false
-  | _ -> Conflict.VNone
 
 let verdict_of_conflict_verdict = function
   | Conflict.Safe -> Yes
@@ -147,18 +147,17 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
       let optimistic_verdict =
         optimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
       in
-      let pessimistic_verdict =
-        pessimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
-      in
       update_meta_result report.optimistic_result.global_result
-        optimistic_verdict conflict optimistic_verdict_join;
+      optimistic_verdict conflict optimistic_verdict_join;
       update_meta_verdict_table report.optimistic_result.results conflict.title
-        optimistic_verdict conflict optimistic_verdict_join;
-
-      update_meta_result report.pessimistic_result.global_result
-        pessimistic_verdict conflict pessimistic_verdict_join;
-      update_meta_verdict_table report.pessimistic_result.results conflict.title
-        pessimistic_verdict conflict pessimistic_verdict_join);
+      optimistic_verdict conflict optimistic_verdict_join);
+  let pessimistic_verdict =
+    pessimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
+  in
+  update_meta_result report.pessimistic_result.global_result
+    pessimistic_verdict conflict pessimistic_verdict_join;
+  update_meta_verdict_table report.pessimistic_result.results conflict.title
+    pessimistic_verdict conflict pessimistic_verdict_join;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with
   | Some existing_conflicts ->

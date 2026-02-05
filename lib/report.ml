@@ -66,6 +66,7 @@ type t = {
   po2_name : string;
   optimistic_result : report_meta_verdict;
   pessimistic_result : report_meta_verdict;
+  joint_progress_matrix : int array array;
 }
 [@@deriving yojson_of]
 
@@ -84,6 +85,7 @@ let create po1_name po2_name =
         global_result = { verdict = Unknown; conflict = false; result = None };
         results = Hashtbl.create 10;
       };
+    joint_progress_matrix = Array.make_matrix 4 4 0;
   }
 
 (** Join two analyzers verdict in an optimistic way. *)
@@ -149,6 +151,18 @@ let update_meta_verdict_table (table : meta_verdict_map)
       update_meta_result new_result new_verdict conflict update_function;
       Hashtbl.add table category new_result
 
+let add_joint_verdict (report : t) (conflict : Conflict.t) =
+  let po_verdict_to_id = function
+    | Conflict.Warning -> 0
+    | Conflict.Error -> 1
+    | Conflict.Safe -> 2
+    | _ -> 3
+  in
+  let id1 = po_verdict_to_id conflict.verdict_po1 in
+  let id2 = po_verdict_to_id conflict.verdict_po2 in
+  report.joint_progress_matrix.(id1).(id2) <-
+    report.joint_progress_matrix.(id1).(id2) + 1
+
 (** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   (match conflict.kind with
@@ -158,16 +172,17 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
         optimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
       in
       update_meta_result report.optimistic_result.global_result
-      optimistic_verdict conflict severity_order_join;
+        optimistic_verdict conflict severity_order_join;
       update_meta_verdict_table report.optimistic_result.results conflict.title
-      optimistic_verdict conflict severity_order_join);
+        optimistic_verdict conflict severity_order_join);
   let pessimistic_verdict =
     pessimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
   in
-  update_meta_result report.pessimistic_result.global_result
-    pessimistic_verdict conflict severity_order_join;
+  update_meta_result report.pessimistic_result.global_result pessimistic_verdict
+    conflict severity_order_join;
   update_meta_verdict_table report.pessimistic_result.results conflict.title
     pessimistic_verdict conflict severity_order_join;
+  add_joint_verdict report conflict;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with
   | Some existing_conflicts ->

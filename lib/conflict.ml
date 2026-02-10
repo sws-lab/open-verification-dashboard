@@ -70,7 +70,7 @@ let join_verdict_po_kind (verdict : verdict) (po_kind : Kind.t) =
   | Error, Warning | Warning, Error -> Warning
   | Safe, Warning | Warning, Safe -> Warning
   | Safe, Error
-  | Error, Safe
+  | Error, Safe -> Warning
   | Unknown, _ -> Unknown
 
 let conflict_of_string s =

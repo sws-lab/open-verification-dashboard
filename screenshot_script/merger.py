@@ -24,4 +24,4 @@ for input_file in args.input_files:
   
 merged_data["files"] = list(merged_data["files"])
 with open(args.output_file, 'w') as f:
-	json.dump(merged_data, f, indent=4)
+	json.dump(merged_data, f)

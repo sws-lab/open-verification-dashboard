@@ -39,6 +39,7 @@ _opam/
 dune.lock
 errorTests.tar.gz
 allErrorTest.tar.gz
-*.json
+/*.json
+/screenshot_script/results
 reducer.sh
 joey.c

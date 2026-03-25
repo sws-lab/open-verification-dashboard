@@ -146,10 +146,10 @@ Finally, run the dashboard to compare the two proof obligations:
 
 ## Get the paper example
 
-To get the example used in the paper, run the following command:
+To get the example used in the paper, run the following command in the examples folder:
 
 ```bash
-mopsa-c ./errorTests/*.c -show-safe-checks -format=json -output ./mopsa.json
+mopsa-c ./allErrorTest/*.c -show-safe-checks -format=json -output ./mopsa.json
 goblint --ana.arrayoob true --ana.int.interval true --ana.float.interval true --ana.float.evaluate_math_functions true --ana.base.arrays.domain trivial --ana.base.arrays.nullbytes true --ana.base.strings.domain disjoint --sem.malloc.fail true --set "ana.activated[+]" memOutOfBounds --set "ana.activated[+]"  useAfterFree  --dbg.timing.enabled true --result dashboard  ./allErrorTest/*.c  --outfile ./goblint.json --ana.sv-comp.functions true
 dune exec dashboard -- --exclude-not-found true ./mopsa.json ./goblint.json --output ./report.json
 ```

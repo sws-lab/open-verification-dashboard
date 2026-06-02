@@ -150,6 +150,9 @@ mopsa-c -output mopsa.json -format=json -show-safe-checks examples/simples/overf
 goblint --outfile goblint.json --result dashboard examples/simples/overflow.c
 ```
 
+Small reference regression tests are kept under
+[examples/reference-tests](examples/reference-tests).
+
 Finally, run the dashboard to compare the two proof obligations:
 `dune exec dashboard -- --exclude-not-found true mopsa.json goblint.json`
 

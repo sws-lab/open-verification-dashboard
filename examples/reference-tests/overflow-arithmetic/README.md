@@ -13,4 +13,6 @@ Each test should be a pair of files with the same base name:
 
 Extracted from https://github.com/goblint/analyzer/pull/1909
 
+## ptr-calloc
 
+Extracted from https://github.com/goblint/analyzer/pull/1932

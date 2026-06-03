@@ -10,8 +10,4 @@
   (pps ppx_deriving.std ppx_deriving_hash ppx_yojson_conv))
  (libraries
   proofObligation
-  ppx_deriving
-  ppx_deriving_hash
-  ppx_yojson_conv
-  yojson
-  fileutils))
+  yojson))

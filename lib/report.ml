@@ -20,9 +20,9 @@ type meta_verdict = {
 let yojson_of_meta_verdict {result; conflict} =
   let verdict =
     match result with
-    | Some Conflict.Safe -> "yes"
-    | Some Conflict.Warning | Some Conflict.Error -> "no"
-    | Some Conflict.Unreached | None -> "unknown"
+    | Some Safe -> "yes"
+    | Some Warning | Some Error -> "no"
+    | Some Unreached | None -> "unknown"
   in
   `Assoc [
     ("result", [%yojson_of: Conflict.verdict option] result);
@@ -89,33 +89,6 @@ let create po1_name po2_name =
     joint_progress_matrix = Array.make_matrix 4 4 0;
   }
 
-(** Join two analyzers verdict in an optimistic way. *)
-let optimistic_verdict_join = function
-  | Conflict.Safe, Conflict.Error | Conflict.Error, Conflict.Safe ->
-      Conflict.Unreached
-  | Conflict.Safe, _ | _, Conflict.Safe -> Conflict.Safe
-  | Conflict.Warning, Conflict.Error
-  | Conflict.Error, Conflict.Warning
-  | Conflict.Error, Conflict.Error -> Conflict.Error
-  | Conflict.Warning, _ | _, Conflict.Warning -> Conflict.Warning
-  | _ -> Conflict.Unreached
-
-(** Join two analyzers verdict in a pessimistic way. *)
-let pessimistic_verdict_join = function
-  | Conflict.Error, Conflict.Error -> Conflict.Error
-  | Conflict.Safe, Conflict.Safe -> Conflict.Safe
-  | Conflict.Error, Conflict.Safe
-  | Conflict.Safe, Conflict.Error
-  | Conflict.Warning, _
-  | _, Conflict.Warning -> Conflict.Warning
-  | Conflict.Unreached, verdict | verdict, Conflict.Unreached -> verdict
-
-(* Error > Warning > Safe *)
-let severity_order_join = function
-  | Conflict.Error, _ | _, Conflict.Error -> Conflict.Error
-  | Conflict.Warning, _ | _, Conflict.Warning -> Conflict.Warning
-  | Conflict.Safe, Conflict.Safe -> Conflict.Safe
-  | Conflict.Unreached, _ | _, Conflict.Unreached -> assert false
 
 let update_meta_result (result : meta_verdict) (new_verdict : Conflict.verdict)
     (conflict : Conflict.t)
@@ -144,9 +117,9 @@ let update_meta_verdict_table (table : meta_verdict_map)
 
 let add_joint_verdict (report : t) (conflict : Conflict.t) =
   let po_verdict_to_id = function
-    | Conflict.Warning -> 0
-    | Conflict.Error -> 1
-    | Conflict.Safe -> 2
+    | Verdict.Warning -> 0
+    | Verdict.Error -> 1
+    | Verdict.Safe -> 2
     | _ -> 3
   in
   let id1 = po_verdict_to_id conflict.verdict_po1 in
@@ -160,19 +133,19 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   | Conflict.Unchecked | Conflict.OnlyOneProofObligation -> ()
   | _ ->
       let optimistic_verdict =
-        optimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
+        Verdict.optimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
       in
       update_meta_result report.optimistic_result.global_result
-        optimistic_verdict conflict severity_order_join;
+        optimistic_verdict conflict Verdict.severity_order_join;
       update_meta_verdict_table report.optimistic_result.results conflict.title
-        optimistic_verdict conflict severity_order_join);
+        optimistic_verdict conflict Verdict.severity_order_join);
   let pessimistic_verdict =
-    pessimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
+    Verdict.pessimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
   in
   update_meta_result report.pessimistic_result.global_result pessimistic_verdict
-    conflict severity_order_join;
+    conflict Verdict.severity_order_join;
   update_meta_verdict_table report.pessimistic_result.results conflict.title
-    pessimistic_verdict conflict severity_order_join;
+    pessimistic_verdict conflict Verdict.severity_order_join;
   add_joint_verdict report conflict;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with

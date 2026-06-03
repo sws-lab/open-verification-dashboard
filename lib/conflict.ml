@@ -46,30 +46,7 @@ type kind =
 let kind_of_yojson = Utils.string_t_of_yojson kind_of_yojson "Kind"
 let yojson_of_kind = Utils.string_yojson_of_t yojson_of_kind
 
-type verdict =
-  | Safe [@name "safe"]
-  | Warning [@name "warning"]
-  | Error [@name "error"]
-  | Unreached [@name "none"]
-[@@deriving show { with_path = false }, yojson]
-
-let verdict_of_yojson = Utils.string_t_of_yojson verdict_of_yojson "Verdict"
-let yojson_of_verdict = Utils.string_yojson_of_t yojson_of_verdict
-
-
-(** Join verdict where  *)
-let join_verdict_po_kind (verdict : verdict) (po_kind : Kind.t) =
-  match (verdict, po_kind) with
-  | Unreached, Safe -> Safe
-  | Unreached, Warning -> Warning
-  | Unreached, Error -> Error
-  | Safe, Safe
-  | Warning, Warning
-  | Error, Error -> verdict
-  | Error, Warning | Warning, Error -> Warning
-  | Safe, Warning | Warning, Safe -> Warning
-  | Safe, Error
-  | Error, Safe -> Warning
+type verdict = Verdict.t [@@deriving show { with_path = false }, yojson]
 
 let conflict_of_string s =
   match String.lowercase_ascii s with

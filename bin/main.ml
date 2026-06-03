@@ -1,7 +1,7 @@
 open Dashboard
 
 type args = {
-  mutable project_path : string;
+  mutable project_path : string option;
   proofObligations : ProofObligation.ProofObligation.t list;
   mutable only : string option;
   mutable output : string option;
@@ -41,7 +41,7 @@ let convert_paths ~exclude_not_found proofObligation project_path =
 let parse_args () =
   let args =
     {
-      project_path = ".";
+      project_path = None;
       (* The root directory of the project, used for resolving file paths *)
       proofObligations = [];
       (* List of proof obligations to compare, for now only two can be compared simultaneously *)
@@ -60,7 +60,7 @@ let parse_args () =
   let speclist =
     [
       ( "--project",
-        Arg.String (fun path -> args.project_path <- path),
+        Arg.String (fun path -> args.project_path <- Some path),
         "The path to the project directory if it is not the current directory"
       );
       ( "--analyze",
@@ -169,14 +169,17 @@ let () =
     exit 1);
 
   let proofObligations =
-    List.map
-      (fun (proofObligation : ProofObligation.t) ->
-        Format.printf
-          "Converting paths to project paths for proof obligation %s@."
-          proofObligation.name;
-        convert_paths ~exclude_not_found:args.exclude_not_found
-          proofObligation args.project_path)
-      args.proofObligations
+    match args.project_path with
+    | Some project_path ->
+        List.map
+          (fun (proofObligation : ProofObligation.t) ->
+            Format.printf
+              "Converting paths to project paths for proof obligation %s@."
+              proofObligation.name;
+            convert_paths ~exclude_not_found:args.exclude_not_found
+              proofObligation project_path)
+          args.proofObligations
+    | None -> args.proofObligations
   in
   let proofObligations =
     match args.only with

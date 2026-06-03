@@ -198,10 +198,6 @@ let () =
                     proofObligation.checks;
               }
             in
-            if List.length filtered_po.checks = 0 then (
-              Printf.eprintf "No checks found in proof obligations %s.\n"
-                filtered_po.name;
-              exit 1);
             filtered_po)
           proofObligations
     | None -> proofObligations

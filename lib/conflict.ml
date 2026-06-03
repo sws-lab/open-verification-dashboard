@@ -50,7 +50,6 @@ type verdict =
   | Safe [@name "safe"]
   | Warning [@name "warning"]
   | Error [@name "error"]
-  | Unknown [@name "unknown"]
   | Unreached [@name "none"]
 [@@deriving show { with_path = false }, yojson]
 
@@ -71,7 +70,6 @@ let join_verdict_po_kind (verdict : verdict) (po_kind : Kind.t) =
   | Safe, Warning | Warning, Safe -> Warning
   | Safe, Error
   | Error, Safe -> Warning
-  | Unknown, _ -> Unknown
 
 let conflict_of_string s =
   match String.lowercase_ascii s with

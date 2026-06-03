@@ -98,7 +98,6 @@ let optimistic_verdict_join = function
   | Conflict.Error, Conflict.Warning
   | Conflict.Error, Conflict.Error -> Conflict.Error
   | Conflict.Warning, _ | _, Conflict.Warning -> Conflict.Warning
-  | Conflict.Unknown, _ | _, Conflict.Unknown -> assert false
   | _ -> Conflict.Unreached
 
 (** Join two analyzers verdict in a pessimistic way. *)
@@ -110,7 +109,6 @@ let pessimistic_verdict_join = function
   | Conflict.Warning, _
   | _, Conflict.Warning -> Conflict.Warning
   | Conflict.Unreached, verdict | verdict, Conflict.Unreached -> verdict
-  | Conflict.Unknown, _ | _, Conflict.Unknown -> assert false
 
 (* Error > Warning > Safe *)
 let severity_order_join = function
@@ -118,12 +116,11 @@ let severity_order_join = function
   | Conflict.Warning, _ | _, Conflict.Warning -> Conflict.Warning
   | Conflict.Safe, Conflict.Safe -> Conflict.Safe
   | Conflict.Unreached, _ | _, Conflict.Unreached -> assert false
-  | Conflict.Unknown, _ | _, Conflict.Unknown -> assert false
 
 let verdict_of_conflict_verdict = function
   | Conflict.Safe -> Yes
   | Conflict.Warning | Conflict.Error -> No
-  | Conflict.Unreached | Conflict.Unknown -> Unknown
+  | Conflict.Unreached -> Unknown
 
 let update_meta_result (result : meta_verdict) (new_verdict : Conflict.verdict)
     (conflict : Conflict.t)

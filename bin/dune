@@ -1,4 +1,4 @@
 (executable
  (public_name dashboard)
  (name main)
- (libraries dashboard spectrum))
+ (libraries dashboard spectrum)) ; TODO: spectrum is horrible: it links in ppxlib, etc at runtime

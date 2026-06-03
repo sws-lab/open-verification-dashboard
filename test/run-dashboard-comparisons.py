@@ -79,7 +79,7 @@ def run_dashboard(
     """
 
     cmd = [
-        "dune", "exec", "dashboard", "--",
+        "_build/default/bin/main.exe",
         "--exclude-not-found", "true",
         "--project", str(project_root),
     ]

@@ -11,7 +11,6 @@ let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Status"
 let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 
 
-(** Join status where  *)
 let join_po_kind (status : t) (po_kind : Kind.t) =
   match (status, po_kind) with
   | Unreached, Safe -> Safe
@@ -25,7 +24,6 @@ let join_po_kind (status : t) (po_kind : Kind.t) =
   | Safe, Error
   | Error, Safe -> Warning
 
-(** Join two analyzers status in an optimistic way. *)
 let optimistic_join x y =
   match x, y with
   | Safe, Error | Error, Safe ->
@@ -37,7 +35,6 @@ let optimistic_join x y =
   | Warning, _ | _, Warning -> Warning
   | _ -> Unreached
 
-(** Join two analyzers status in a pessimistic way. *)
 let pessimistic_join x y =
   match x, y with
   | Error, Error -> Error
@@ -48,7 +45,6 @@ let pessimistic_join x y =
   | _, Warning -> Warning
   | Unreached, status | status, Unreached -> status
 
-(* Error > Warning > Safe *)
 let severity_join x y =
   match x, y with
   | Error, _ | _, Error -> Error

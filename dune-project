@@ -17,4 +17,5 @@
   (ppx_deriving (>= 6.0.2))
   (ppx_deriving_hash (>= 0.1.2))
   (ppx_yojson_conv (>= 0.15.1))
+  re
   (spectrum (>= 0.7.0))))

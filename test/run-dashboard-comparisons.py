@@ -67,7 +67,7 @@ def append_log(log_file: Path, message: str) -> None:
 
 def run_dashboard(
     dashboard_root: Path,
-    project_root: Path,
+    analyze_only: str,
     mopsa_json: Path,
     goblint_json: Path,
     output_file: Path,
@@ -80,8 +80,8 @@ def run_dashboard(
 
     cmd = [
         "_build/default/bin/main.exe",
-        "--exclude-not-found", "true",
-        "--project", str(project_root),
+        "--exclude-not-found", "false",
+        "--analyze", analyze_only
     ]
 
     overflow_categories = [
@@ -141,10 +141,10 @@ def main():
         help="Path to the open-verification-dashboard project root (directory containing dune-project).",
     )
     parser.add_argument(
-        "--project",
-        type=Path,
+        "--analyze",
+        type=str,
         required=True,
-        help="Path to the benchmark project root used by dashboard for source lookup.",
+        help="Analyze only files matching this glob pattern.",
     )
     parser.add_argument(
         "--out",
@@ -170,7 +170,7 @@ def main():
     mopsa_root = args.mopsa.resolve()
     goblint_root = args.goblint.resolve()
     dashboard_root = args.dashboard.resolve()
-    project_root = args.project.resolve()
+    analyze_only = args.analyze
     out_dir = args.out.resolve()
     log_file = args.log_file.resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -178,7 +178,7 @@ def main():
     print(f"Scanning Mopsa checks under:   {mopsa_root}")
     print(f"Scanning Goblint checks under: {goblint_root}")
     print(f"Dashboard root:               {dashboard_root}")
-    print(f"Project root:                 {project_root}")
+    print(f"Analyze only:                 {analyze_only}")
     print(f"Outputs go to:                {out_dir}")
     print(f"Dashboard log:                {log_file}")
 
@@ -192,7 +192,7 @@ def main():
 
         return_code = run_dashboard(
             dashboard_root=dashboard_root,
-            project_root=project_root,
+            analyze_only=analyze_only,
             mopsa_json=mopsa_checks,
             goblint_json=goblint_checks,
             output_file=out_file,

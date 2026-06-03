@@ -64,8 +64,8 @@ let parse_args () =
         "The path to the project directory if it is not the current directory"
       );
       ( "--analyze",
-        Arg.String (fun file -> args.only <- Some file),
-        "Only output conflicts for the given file" );
+        Arg.String (fun glob -> args.only <- Some glob),
+        "Only output conflicts for the files matching the given glob pattern" );
       ( "--output",
         Arg.String (fun file -> args.output <- Some file),
         "The path to the json output file" );
@@ -180,11 +180,9 @@ let () =
   in
   let proofObligations =
     match args.only with
-    | Some file ->
-        let file =
-          Project.path_to_project_relative ~warn:false args.project_path file
-        in
-        Format.printf "Filtering proof obligations for file %s@." file;
+    | Some glob ->
+        Format.printf "Filtering proof obligations for file %s@." glob;
+        let glob = Re.compile (Re.Glob.glob ~anchored:true glob) in
         List.map
           (fun (proofObligation : ProofObligation.t) ->
             let filtered_po =
@@ -193,7 +191,7 @@ let () =
                 checks =
                   List.filter
                     (fun (check : ProofObligation.Check.t) ->
-                      String.equal check.range.file file)
+                      Re.execp glob check.range.file)
                     proofObligation.checks;
               }
             in

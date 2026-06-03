@@ -7,25 +7,25 @@ type t =
   | Unreached [@name "none"]
 [@@deriving show { with_path = false }, yojson]
 
-let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Verdict"
+let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Status"
 let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 
 
-(** Join verdict where  *)
-let join_po_kind (verdict : t) (po_kind : Kind.t) =
-  match (verdict, po_kind) with
+(** Join status where  *)
+let join_po_kind (status : t) (po_kind : Kind.t) =
+  match (status, po_kind) with
   | Unreached, Safe -> Safe
   | Unreached, Warning -> Warning
   | Unreached, Error -> Error
   | Safe, Safe
   | Warning, Warning
-  | Error, Error -> verdict
+  | Error, Error -> status
   | Error, Warning | Warning, Error -> Warning
   | Safe, Warning | Warning, Safe -> Warning
   | Safe, Error
   | Error, Safe -> Warning
 
-(** Join two analyzers verdict in an optimistic way. *)
+(** Join two analyzers status in an optimistic way. *)
 let optimistic_join = function
   | Safe, Error | Error, Safe ->
       Unreached
@@ -36,7 +36,7 @@ let optimistic_join = function
   | Warning, _ | _, Warning -> Warning
   | _ -> Unreached
 
-(** Join two analyzers verdict in a pessimistic way. *)
+(** Join two analyzers status in a pessimistic way. *)
 let pessimistic_join = function
   | Error, Error -> Error
   | Safe, Safe -> Safe
@@ -44,7 +44,7 @@ let pessimistic_join = function
   | Safe, Error
   | Warning, _
   | _, Warning -> Warning
-  | Unreached, verdict | verdict, Unreached -> verdict
+  | Unreached, status | status, Unreached -> status
 
 (* Error > Warning > Safe *)
 let severity_join = function

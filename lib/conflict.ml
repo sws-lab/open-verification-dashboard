@@ -46,7 +46,7 @@ type kind =
 let kind_of_yojson = Utils.string_t_of_yojson kind_of_yojson "Kind"
 let yojson_of_kind = Utils.string_yojson_of_t yojson_of_kind
 
-type verdict = Verdict.t [@@deriving show { with_path = false }, yojson]
+type status = Status.t [@@deriving show { with_path = false }, yojson]
 
 let conflict_of_string s =
   match String.lowercase_ascii s with
@@ -67,9 +67,9 @@ type t = {
   title : Category.t;
   range : Range.t;
   from_po1 : ConflictCheck.t list;
-  verdict_po1 : verdict;
+  status_po1 : status; [@key "verdict_po1"] (* verdict is legacy name *)
   from_po2 : ConflictCheck.t list;
-  verdict_po2 : verdict;
+  status_po2 : status; [@key "verdict_po2"] (* verdict is legacy name *)
 }
 [@@deriving show, yojson]
 

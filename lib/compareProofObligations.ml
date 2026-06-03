@@ -12,9 +12,9 @@ module UniqueConflict = struct
     title : ProofObligation.Category.t;
     range : ProofObligation.Range.t;
     from_po1 : unit ChecksSet.t;
-    verdict_po1 : Conflict.verdict;
+    status_po1 : Conflict.status;
     from_po2 : unit ChecksSet.t;
-    verdict_po2 : Conflict.verdict;
+    status_po2 : Conflict.status;
   }
 
   let check_of_unique_check ?new_kind (check : t) =
@@ -24,9 +24,9 @@ module UniqueConflict = struct
         range = check.range;
         title = check.title;
         from_po1 = ChecksSet.to_seq check.from_po1 |> Seq.map fst |> List.of_seq;
-        verdict_po1 = check.verdict_po1;
+        status_po1 = check.status_po1;
         from_po2 = ChecksSet.to_seq check.from_po2 |> Seq.map fst |> List.of_seq;
-        verdict_po2 = check.verdict_po2;
+        status_po2 = check.status_po2;
       }
 end
 
@@ -102,22 +102,22 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                               (ConflictCheck.of_check check)
                               ()
                           else ChecksSet.empty);
-                       verdict_po1 =
+                       status_po1 =
                          (if analyzer_id = 1 then
-                            Verdict.join_po_kind Verdict.Unreached
+                            Status.join_po_kind Status.Unreached
                               check.kind
-                          else Verdict.Unreached);
+                          else Status.Unreached);
                        from_po2 =
                          (if analyzer_id = 2 then
                             ChecksSet.singleton
                               (ConflictCheck.of_check check)
                               ()
                           else ChecksSet.empty);
-                       verdict_po2 =
+                       status_po2 =
                          (if analyzer_id = 2 then
-                            Verdict.join_po_kind Verdict.Unreached
+                            Status.join_po_kind Status.Unreached
                               check.kind
-                          else Verdict.Unreached);
+                          else Status.Unreached);
                      })
                 rest
           | Some conflict ->
@@ -140,17 +140,17 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                   else conflict.from_po2
                 in
                 let new_range = Range.union conflict.range check.range in
-                let verdict_po1 =
+                let status_po1 =
                   if analyzer_id = 1 then
-                    Verdict.join_po_kind conflict.verdict_po1
+                    Status.join_po_kind conflict.status_po1
                       check.kind
-                  else conflict.verdict_po1
+                  else conflict.status_po1
                 in
-                let verdict_po2 =
+                let status_po2 =
                   if analyzer_id = 2 then
-                    Verdict.join_po_kind conflict.verdict_po2
+                    Status.join_po_kind conflict.status_po2
                       check.kind
-                  else conflict.verdict_po2
+                  else conflict.status_po2
                 in
                 build_unique_conflict
                   (Some
@@ -158,8 +158,8 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                        conflict with
                        from_po1;
                        from_po2;
-                       verdict_po1;
-                       verdict_po2;
+                       status_po1;
+                       status_po2;
                        range = new_range;
                      })
                   rest

@@ -40,7 +40,7 @@ module Range = struct
 
   let pp fmt range = Format.fprintf fmt "@{<bold>%a@}" pp range
 
-  (** Converts a JSON object to a Range.t. 
+  (** Converts a JSON object to a Range.t.
       This is made by hand because it can support multiple formats:
       - { "file": "path/to/file", "start": { "line": 1, "column": 0 }, "end": { "line": 2, "column": 5 } }
       - { "start": { "file": "path/to/file", "line": 1, "column": 0 }, "end": { "file": "path/to/file", "line": 2, "column": 5 } }

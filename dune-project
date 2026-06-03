@@ -24,8 +24,7 @@
   (ppx_deriving_hash (>= 0.1.2))
   (ppx_yojson_conv (>= 0.15.1))
   (fileutils (>= 0.6.4))
-  (spectrum (>= 0.7.0))
-  (sha (>= 1.14)))
+  (spectrum (>= 0.7.0)))
  (tags
   ("add topics" "to describe" your project)))
 

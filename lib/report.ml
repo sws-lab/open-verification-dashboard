@@ -12,24 +12,24 @@ let yojson_of_conflicts (h : conflicts) =
        (fun k v acc -> (k, `List (List.map Conflict.yojson_of_t v)) :: acc)
        h [])
 
-type meta_verdict_answer =
-  | Yes [@name "yes"]
-  | No [@name "no"]
-  | Unknown [@name "unknown"]
-[@@deriving yojson]
-
-let meta_verdict_answer_of_yojson =
-  Utils.string_t_of_yojson meta_verdict_answer_of_yojson "meta_verdict_answer"
-
-let yojson_of_meta_verdict_answer =
-  Utils.string_yojson_of_t yojson_of_meta_verdict_answer
-
 type meta_verdict = {
   mutable result : Conflict.verdict option;
-  mutable verdict : meta_verdict_answer;
   mutable conflict : bool;
 }
-[@@deriving yojson]
+
+let yojson_of_meta_verdict {result; conflict} =
+  let verdict =
+    match result with
+    | Some Conflict.Safe -> "yes"
+    | Some Conflict.Warning | Some Conflict.Error -> "no"
+    | Some Conflict.Unreached | None -> "unknown"
+  in
+  `Assoc [
+    ("result", [%yojson_of: Conflict.verdict option] result);
+    ("verdict", `String verdict); (* TODO: remove this redundant field, causes output diffs *)
+    ("conflict", [%yojson_of: bool] conflict);
+  ]
+
 
 type meta_verdict_map = (ProofObligation.Category.t, meta_verdict) Hashtbl.t
 
@@ -78,12 +78,12 @@ let create po1_name po2_name =
     po2_name;
     optimistic_result =
       {
-        global_result = { verdict = Unknown; conflict = false; result = None };
+        global_result = { conflict = false; result = None };
         results = Hashtbl.create 10;
       };
     pessimistic_result =
       {
-        global_result = { verdict = Unknown; conflict = false; result = None };
+        global_result = { conflict = false; result = None };
         results = Hashtbl.create 10;
       };
     joint_progress_matrix = Array.make_matrix 4 4 0;
@@ -117,11 +117,6 @@ let severity_order_join = function
   | Conflict.Safe, Conflict.Safe -> Conflict.Safe
   | Conflict.Unreached, _ | _, Conflict.Unreached -> assert false
 
-let verdict_of_conflict_verdict = function
-  | Conflict.Safe -> Yes
-  | Conflict.Warning | Conflict.Error -> No
-  | Conflict.Unreached -> Unknown
-
 let update_meta_result (result : meta_verdict) (new_verdict : Conflict.verdict)
     (conflict : Conflict.t)
     (update_function : Conflict.verdict * Conflict.verdict -> Conflict.verdict)
@@ -129,12 +124,10 @@ let update_meta_result (result : meta_verdict) (new_verdict : Conflict.verdict)
   if conflict.kind = Conflict.ErrorLevel then result.conflict <- true;
   match result.result with
   | None ->
-      result.result <- Some new_verdict;
-      result.verdict <- verdict_of_conflict_verdict new_verdict
+      result.result <- Some new_verdict
   | Some existing_kind ->
       let updated_kind = update_function (existing_kind, new_verdict) in
-      result.result <- Some updated_kind;
-      result.verdict <- verdict_of_conflict_verdict updated_kind
+      result.result <- Some updated_kind
 
 let update_meta_verdict_table (table : meta_verdict_map)
     (category : ProofObligation.Category.t) (new_verdict : Conflict.verdict)
@@ -145,7 +138,7 @@ let update_meta_verdict_table (table : meta_verdict_map)
   | Some result ->
       update_meta_result result new_verdict conflict update_function
   | None ->
-      let new_result = { verdict = Unknown; conflict = false; result = None } in
+      let new_result = { conflict = false; result = None } in
       update_meta_result new_result new_verdict conflict update_function;
       Hashtbl.add table category new_result
 

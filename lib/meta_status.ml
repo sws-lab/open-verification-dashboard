@@ -4,7 +4,7 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = {
-  mutable result : Conflict.status option;
+  mutable result : Status.t option;
   mutable conflict : bool;
 }
 
@@ -16,7 +16,7 @@ let yojson_of_t {result; conflict} =
     | Some Unreached | None -> "unknown"
   in
   `Assoc [
-    ("result", [%yojson_of: Conflict.status option] result);
+    ("result", [%yojson_of: Status.t option] result);
     ("verdict", `String verdict); (* TODO: remove this redundant field, causes output diffs *)
     ("conflict", [%yojson_of: bool] conflict);
   ]
@@ -45,11 +45,11 @@ let create () =
     results = Hashtbl.create 10;
   }
 
-let update (result : t) (new_status : Conflict.status)
-    (conflict : Conflict.t)
-    (update_function : Conflict.status * Conflict.status -> Conflict.status)
+let update (result : t) (new_status : Status.t)
+    (conflict : bool)
+    (update_function : Status.t * Status.t -> Status.t)
     =
-  if conflict.kind = Conflict.ErrorLevel then result.conflict <- true;
+  if conflict then result.conflict <- true;
   match result.result with
   | None ->
       result.result <- Some new_status
@@ -58,9 +58,9 @@ let update (result : t) (new_status : Conflict.status)
       result.result <- Some updated_kind
 
 let update_map (table : map)
-    (category : ProofObligation.Category.t) (new_status : Conflict.status)
-    (conflict : Conflict.t)
-    (update_function : Conflict.status * Conflict.status -> Conflict.status)
+    (category : ProofObligation.Category.t) (new_status : Status.t)
+    (conflict : bool)
+    (update_function : Status.t * Status.t -> Status.t)
     =
   match Hashtbl.find_opt table category with
   | Some result ->

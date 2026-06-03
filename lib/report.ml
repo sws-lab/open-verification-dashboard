@@ -58,6 +58,7 @@ let add_joint_status (report : t) (conflict : Conflict.t) =
 
 (** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
+  let meta_conflict = conflict.kind = ErrorLevel in
   (match conflict.kind with
   | Conflict.Unchecked | Conflict.OnlyOneProofObligation -> ()
   | _ ->
@@ -65,16 +66,16 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
         Status.optimistic_join (conflict.status_po1, conflict.status_po2)
       in
       Meta_status.update report.optimistic_result.global_result
-        optimistic_status conflict Status.severity_join;
+        optimistic_status meta_conflict Status.severity_join;
       Meta_status.update_map report.optimistic_result.results conflict.title
-        optimistic_status conflict Status.severity_join);
+        optimistic_status meta_conflict Status.severity_join);
   let pessimistic_status =
     Status.pessimistic_join (conflict.status_po1, conflict.status_po2)
   in
   Meta_status.update report.pessimistic_result.global_result pessimistic_status
-    conflict Status.severity_join;
+    meta_conflict Status.severity_join;
   Meta_status.update_map report.pessimistic_result.results conflict.title
-    pessimistic_status conflict Status.severity_join;
+    pessimistic_status meta_conflict Status.severity_join;
   add_joint_status report conflict;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with

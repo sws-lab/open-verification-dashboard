@@ -12,7 +12,7 @@ let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 
 
 (** Join verdict where  *)
-let join_verdict_po_kind (verdict : t) (po_kind : Kind.t) =
+let join_po_kind (verdict : t) (po_kind : Kind.t) =
   match (verdict, po_kind) with
   | Unreached, Safe -> Safe
   | Unreached, Warning -> Warning
@@ -26,7 +26,7 @@ let join_verdict_po_kind (verdict : t) (po_kind : Kind.t) =
   | Error, Safe -> Warning
 
 (** Join two analyzers verdict in an optimistic way. *)
-let optimistic_verdict_join = function
+let optimistic_join = function
   | Safe, Error | Error, Safe ->
       Unreached
   | Safe, _ | _, Safe -> Safe
@@ -37,7 +37,7 @@ let optimistic_verdict_join = function
   | _ -> Unreached
 
 (** Join two analyzers verdict in a pessimistic way. *)
-let pessimistic_verdict_join = function
+let pessimistic_join = function
   | Error, Error -> Error
   | Safe, Safe -> Safe
   | Error, Safe
@@ -47,7 +47,7 @@ let pessimistic_verdict_join = function
   | Unreached, verdict | verdict, Unreached -> verdict
 
 (* Error > Warning > Safe *)
-let severity_order_join = function
+let severity_join = function
   | Error, _ | _, Error -> Error
   | Warning, _ | _, Warning -> Warning
   | Safe, Safe -> Safe

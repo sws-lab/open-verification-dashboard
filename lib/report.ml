@@ -133,19 +133,19 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   | Conflict.Unchecked | Conflict.OnlyOneProofObligation -> ()
   | _ ->
       let optimistic_verdict =
-        Verdict.optimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
+        Verdict.optimistic_join (conflict.verdict_po1, conflict.verdict_po2)
       in
       update_meta_result report.optimistic_result.global_result
-        optimistic_verdict conflict Verdict.severity_order_join;
+        optimistic_verdict conflict Verdict.severity_join;
       update_meta_verdict_table report.optimistic_result.results conflict.title
-        optimistic_verdict conflict Verdict.severity_order_join);
+        optimistic_verdict conflict Verdict.severity_join);
   let pessimistic_verdict =
-    Verdict.pessimistic_verdict_join (conflict.verdict_po1, conflict.verdict_po2)
+    Verdict.pessimistic_join (conflict.verdict_po1, conflict.verdict_po2)
   in
   update_meta_result report.pessimistic_result.global_result pessimistic_verdict
-    conflict Verdict.severity_order_join;
+    conflict Verdict.severity_join;
   update_meta_verdict_table report.pessimistic_result.results conflict.title
-    pessimistic_verdict conflict Verdict.severity_order_join;
+    pessimistic_verdict conflict Verdict.severity_join;
   add_joint_verdict report conflict;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with

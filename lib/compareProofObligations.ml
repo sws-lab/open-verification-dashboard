@@ -104,7 +104,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                           else ChecksSet.empty);
                        verdict_po1 =
                          (if analyzer_id = 1 then
-                            Verdict.join_verdict_po_kind Verdict.Unreached
+                            Verdict.join_po_kind Verdict.Unreached
                               check.kind
                           else Verdict.Unreached);
                        from_po2 =
@@ -115,7 +115,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                           else ChecksSet.empty);
                        verdict_po2 =
                          (if analyzer_id = 2 then
-                            Verdict.join_verdict_po_kind Verdict.Unreached
+                            Verdict.join_po_kind Verdict.Unreached
                               check.kind
                           else Verdict.Unreached);
                      })
@@ -142,13 +142,13 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                 let new_range = Range.union conflict.range check.range in
                 let verdict_po1 =
                   if analyzer_id = 1 then
-                    Verdict.join_verdict_po_kind conflict.verdict_po1
+                    Verdict.join_po_kind conflict.verdict_po1
                       check.kind
                   else conflict.verdict_po1
                 in
                 let verdict_po2 =
                   if analyzer_id = 2 then
-                    Verdict.join_verdict_po_kind conflict.verdict_po2
+                    Verdict.join_po_kind conflict.verdict_po2
                       check.kind
                   else conflict.verdict_po2
                 in

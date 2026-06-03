@@ -303,30 +303,3 @@ let of_file (file : string) =
       Format.eprintf "Error extracting proofObligation from file %s: %s\n" file
         msg;
       None
-
-let convert_paths ~exclude_not_found proofObligation project_path =
-  if project_path = "" then proofObligation
-  else
-    let path_to_project_relative =
-      Project.path_to_project_relative project_path
-    in
-    let convert_file_range_path (file_range : Range.t) =
-      { file_range with file = path_to_project_relative file_range.file }
-    in
-    let open Check in
-    ProofObligation.
-      {
-        proofObligation with
-        checks =
-          List.filter_map
-            (fun check ->
-              let range = convert_file_range_path check.range in
-              if
-                exclude_not_found
-                && Project.Folder.mem Project.warned check.range.file
-                || range.start.column = -1 || range.start.line = -1
-                || range.end_.column = -1 || range.end_.line = -1
-              then None
-              else Some { check with range })
-            proofObligation.checks;
-      }

@@ -10,6 +10,34 @@ type args = {
   mutable filter_error_category : ProofObligation.Category.t list;
 }
 
+let convert_paths ~exclude_not_found proofObligation project_path =
+  let open ProofObligation in
+  if project_path = "" then proofObligation
+  else
+    let path_to_project_relative =
+      Project.path_to_project_relative project_path
+    in
+    let convert_file_range_path (file_range : Range.t) =
+      { file_range with file = path_to_project_relative file_range.file }
+    in
+    let open Check in
+    ProofObligation.
+      {
+        proofObligation with
+        checks =
+          List.filter_map
+            (fun check ->
+              let range = convert_file_range_path check.range in
+              if
+                exclude_not_found
+                && Project.Folder.mem Project.warned check.range.file
+                || range.start.column = -1 || range.start.line = -1
+                || range.end_.column = -1 || range.end_.line = -1
+              then None
+              else Some { check with range })
+            proofObligation.checks;
+      }
+
 let parse_args () =
   let args =
     {
@@ -146,7 +174,7 @@ let () =
         Format.printf
           "Converting paths to project paths for proof obligation %s@."
           proofObligation.name;
-        ProofObligation.convert_paths ~exclude_not_found:args.exclude_not_found
+        convert_paths ~exclude_not_found:args.exclude_not_found
           proofObligation args.project_path)
       args.proofObligations
   in

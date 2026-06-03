@@ -2,6 +2,7 @@
     and export the final json report. *)
 
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+module Utils = ProofObligation.Utils
 
 type conflicts = (string, Conflict.t list) Hashtbl.t
 

@@ -1,6 +1,5 @@
 (library
  (name proofObligation)
- (wrapped false) ; TODO: wrap after moving Utils out
  (libraries
   yojson)
  (preprocess

@@ -282,7 +282,7 @@ let of_file (file : string) =
       else Yojson.Safe.from_file file
     in
     let po = ProofObligation.t_of_yojson json in
-    Some { po with name = FilePath.basename @@ FilePath.chop_extension file }
+    Some { po with name = Filename.basename @@ Filename.chop_extension file }
   with
   | Yojson.Json_error msg ->
       Format.eprintf "Error parsing JSON from file %s: %s\n" file msg;

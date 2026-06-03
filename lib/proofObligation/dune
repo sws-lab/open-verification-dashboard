@@ -2,7 +2,6 @@
  (name proofObligation)
  (wrapped false) ; TODO: wrap after moving Utils out
  (libraries
-  yojson
-  fileutils) ; TODO: remove dependency
+  yojson)
  (preprocess
   (pps ppx_deriving.std ppx_deriving_hash ppx_yojson_conv)))

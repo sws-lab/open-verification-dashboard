@@ -193,7 +193,7 @@ let () =
                 checks =
                   List.filter
                     (fun (check : ProofObligation.Check.t) ->
-                      FilePath.compare check.range.file file == 0)
+                      String.equal check.range.file file)
                     proofObligation.checks;
               }
             in

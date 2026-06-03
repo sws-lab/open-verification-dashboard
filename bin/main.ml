@@ -2,7 +2,7 @@ open Dashboard
 
 type args = {
   mutable project_path : string option;
-  proofObligations : ProofObligation.ProofObligation.t list;
+  proofObligations : ProofObligation.t list;
   mutable only : string option;
   mutable output : string option;
   mutable exclude_not_found : bool;

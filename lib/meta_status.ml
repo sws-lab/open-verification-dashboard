@@ -47,20 +47,20 @@ let create () =
 
 let update (result : t) (new_status : Status.t)
     (conflict : bool)
-    (update_function : Status.t * Status.t -> Status.t)
+    (update_function : Status.t -> Status.t -> Status.t)
     =
   if conflict then result.conflict <- true;
   match result.result with
   | None ->
       result.result <- Some new_status
   | Some existing_kind ->
-      let updated_kind = update_function (existing_kind, new_status) in
+      let updated_kind = update_function existing_kind new_status in
       result.result <- Some updated_kind
 
 let update_map (table : map)
     (category : ProofObligation.Category.t) (new_status : Status.t)
     (conflict : bool)
-    (update_function : Status.t * Status.t -> Status.t)
+    (update_function : Status.t -> Status.t -> Status.t)
     =
   match Hashtbl.find_opt table category with
   | Some result ->

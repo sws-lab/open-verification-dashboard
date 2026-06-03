@@ -1,0 +1,53 @@
+(data_only_dirs
+ goblint.2026-04-19_21-30-29.files
+ mopsa.2026-04-19_21-30-30.files)
+
+(rule
+ (alias runtest)
+ (deps
+  (sandbox always)
+  (:mopsa mopsa.2026-04-19_21-30-30.files/SV-COMP26_no-overflow/array_1-1.yml/checks.json)
+  (:goblint goblint.2026-04-19_21-30-29.files/SV-COMP26_no-overflow/array_1-1.yml/checks.json))
+ (action
+  (progn
+   (ignore-outputs
+    (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/** %{mopsa} %{goblint}))
+   (diff? array_1-1.yml.comparison.json comparison.json))))
+
+(rule
+ (alias runtest)
+ (deps
+  (sandbox always)
+  (:mopsa mopsa.2026-04-19_21-30-30.files/SV-COMP26_no-overflow/ArraysOfVariableLength.yml/checks.json)
+  (:goblint goblint.2026-04-19_21-30-29.files/SV-COMP26_no-overflow/ArraysOfVariableLength.yml/checks.json))
+ (action
+  (progn
+   (with-accepted-exit-codes 3
+    (ignore-outputs
+     (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/** %{mopsa} %{goblint})))
+   (diff? ArraysOfVariableLength.yml.comparison.json comparison.json))))
+
+(rule
+ (alias runtest)
+ (deps
+  (sandbox always)
+  (:mopsa mopsa.2026-04-19_21-30-30.files/SV-COMP26_no-overflow/mbpr2.yml/checks.json)
+  (:goblint goblint.2026-04-19_21-30-29.files/SV-COMP26_no-overflow/mbpr2.yml/checks.json))
+ (action
+  (progn
+   (with-accepted-exit-codes 4
+    (ignore-outputs
+     (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/** %{mopsa} %{goblint})))
+   (diff? mbpr2.yml.comparison.json comparison.json))))
+
+(rule
+ (alias runtest)
+ (deps
+  (sandbox always)
+  (:mopsa mopsa.2026-04-19_21-30-30.files/SV-COMP26_no-overflow/nested_1.yml/checks.json)
+  (:goblint goblint.2026-04-19_21-30-29.files/SV-COMP26_no-overflow/nested_1.yml/checks.json))
+ (action
+  (progn
+   (ignore-outputs
+    (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/** %{mopsa} %{goblint}))
+   (diff? nested_1.yml.comparison.json comparison.json))))

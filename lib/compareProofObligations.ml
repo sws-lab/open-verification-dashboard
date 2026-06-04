@@ -1,6 +1,6 @@
 (** This module provides functions to compare proof obligations and identify
     conflicts. *)
-module ChecksSet = Map.Make (struct
+module ChecksSet = Set.Make (struct
   type t = Conflict.ConflictCheck.t
 
   let compare = Conflict.ConflictCheck.compare
@@ -11,9 +11,9 @@ module UniqueConflict = struct
     kind : Conflict.kind;
     title : ProofObligation.Category.t;
     range : ProofObligation.Range.t;
-    from_po1 : unit ChecksSet.t;
+    from_po1 : ChecksSet.t;
     status_po1 : Conflict.status;
-    from_po2 : unit ChecksSet.t;
+    from_po2 : ChecksSet.t;
     status_po2 : Conflict.status;
   }
 
@@ -23,9 +23,9 @@ module UniqueConflict = struct
         kind = Option.value new_kind ~default:check.kind;
         range = check.range;
         title = check.title;
-        from_po1 = ChecksSet.to_seq check.from_po1 |> Seq.map fst |> List.of_seq;
+        from_po1 = ChecksSet.to_seq check.from_po1 |> List.of_seq;
         status_po1 = check.status_po1;
-        from_po2 = ChecksSet.to_seq check.from_po2 |> Seq.map fst |> List.of_seq;
+        from_po2 = ChecksSet.to_seq check.from_po2 |> List.of_seq;
         status_po2 = check.status_po2;
       }
 end
@@ -43,11 +43,11 @@ type po_safety = {
 
 module SafeMap = Map.Make (Int)
 
-let safety_of_checks (checks : unit ChecksSet.t) : po_safety =
+let safety_of_checks (checks : ChecksSet.t) : po_safety =
   let open Conflict in
   let res =
     ChecksSet.fold
-      (fun (check : ConflictCheck.t) _
+      (fun (check : ConflictCheck.t)
            ((acc, safe_map) :
              po_safety * (int * ProofObligation.Kind.t) SafeMap.t) ->
         let highest_error_level =
@@ -96,7 +96,6 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                          (if analyzer_id = 1 then
                             ChecksSet.singleton
                               (ConflictCheck.of_check check)
-                              ()
                           else ChecksSet.empty);
                        status_po1 =
                          (if analyzer_id = 1 then
@@ -107,7 +106,6 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                          (if analyzer_id = 2 then
                             ChecksSet.singleton
                               (ConflictCheck.of_check check)
-                              ()
                           else ChecksSet.empty);
                        status_po2 =
                          (if analyzer_id = 2 then
@@ -125,14 +123,14 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
                   if analyzer_id = 1 then
                     ChecksSet.add
                       (ConflictCheck.of_check check)
-                      () conflict.from_po1
+                      conflict.from_po1
                   else conflict.from_po1
                 in
                 let from_po2 =
                   if analyzer_id = 2 then
                     ChecksSet.add
                       (ConflictCheck.of_check check)
-                      () conflict.from_po2
+                      conflict.from_po2
                   else conflict.from_po2
                 in
                 let new_range = Range.union conflict.range check.range in

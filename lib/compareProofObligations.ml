@@ -1,34 +1,6 @@
 (** This module provides functions to compare proof obligations and identify
     conflicts. *)
-module ChecksSet = Set.Make (struct
-  type t = Conflict.ConflictCheck.t
-
-  let compare = Conflict.ConflictCheck.compare
-end)
-
-module UniqueConflict = struct
-  type t = {
-    kind : Conflict.kind;
-    title : ProofObligation.Category.t;
-    range : ProofObligation.Range.t;
-    from_po1 : ChecksSet.t;
-    status_po1 : Conflict.status;
-    from_po2 : ChecksSet.t;
-    status_po2 : Conflict.status;
-  }
-
-  let check_of_unique_check ?new_kind (check : t) =
-    Conflict.
-      {
-        kind = Option.value new_kind ~default:check.kind;
-        range = check.range;
-        title = check.title;
-        from_po1 = ChecksSet.to_seq check.from_po1 |> List.of_seq;
-        status_po1 = check.status_po1;
-        from_po2 = ChecksSet.to_seq check.from_po2 |> List.of_seq;
-        status_po2 = check.status_po2;
-      }
-end
+module ChecksSet = Conflict.ChecksSet
 
 type po_safety = {
   has_safe : bool;
@@ -84,7 +56,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           | None ->
               build_unique_conflict
                 (Some
-                   UniqueConflict.
+                   Conflict.
                      {
                        kind = Conflict.Unchecked;
                        range = check.range;
@@ -213,7 +185,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
             end
           | true, true -> assert false
         in
-        UniqueConflict.check_of_unique_check ~new_kind proofObligation)
+        {proofObligation with kind = new_kind})
   in
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
 

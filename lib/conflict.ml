@@ -30,6 +30,13 @@ module ConflictCheck = struct
     }
 end
 
+module ChecksSet =
+struct
+  include Set.Make (ConflictCheck)
+  let yojson_of_t s = [%yojson_of: ConflictCheck.t list] (elements s)
+  let t_of_yojson j = of_list ([%of_yojson: ConflictCheck.t list] j)
+end
+
 type kind =
   | NoConflictSafe [@name "NoConflictSafe"]
   | NoConflictWarning [@name "NoConflictWarning"]
@@ -66,12 +73,12 @@ type t = {
   kind : kind;
   title : Category.t;
   range : Range.t;
-  from_po1 : ConflictCheck.t list;
+  from_po1 : ChecksSet.t;
   status_po1 : status; [@key "verdict_po1"] (* verdict is legacy name *)
-  from_po2 : ConflictCheck.t list;
+  from_po2 : ChecksSet.t;
   status_po2 : status; [@key "verdict_po2"] (* verdict is legacy name *)
 }
-[@@deriving show, yojson]
+[@@deriving yojson]
 
 let pp_kind fmt kind = Format.fprintf fmt "@{<bold>@{<#f00>%a@}@}" pp_kind kind
 
@@ -85,30 +92,30 @@ let pp fmt conflict =
       (Format.pp_print_list
          ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
          ConflictCheck.pp)
-      conflict.from_po1;
+      (ChecksSet.elements conflict.from_po1); (* TODO: no elements *)
     Format.fprintf fmt "@{<#fff>ProofObligation 2 checks:@}@, @[<hov 4>%a@]"
       (Format.pp_print_list
          ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
          ConflictCheck.pp)
-      conflict.from_po2
+      (ChecksSet.elements conflict.from_po2); (* TODO: no elements *)
   in
 
   match conflict.kind with
   | OnlyOneProofObligation ->
-      if List.length conflict.from_po1 > 0 then
+      if not (ChecksSet.is_empty conflict.from_po1) then
         Format.fprintf fmt
           "@{<#fff>Only ProofObligation 1 checked:@}@, @[<hov 4>%a@]"
           (Format.pp_print_list
              ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
              ConflictCheck.pp)
-          conflict.from_po1
+          (ChecksSet.elements conflict.from_po1) (* TODO: no elements *)
       else
         Format.fprintf fmt
           "@{<#fff>Only ProofObligation 2 checked:@}@, @[<hov 4>%a@]"
           (Format.pp_print_list
              ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
              ConflictCheck.pp)
-          conflict.from_po2
+          (ChecksSet.elements conflict.from_po2) (* TODO: no elements *)
   | PrecisionW1 ->
       Format.fprintf fmt
         "@{<#fff>ProofObligation 1 detects safe sub ranges that \

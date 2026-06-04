@@ -201,39 +201,34 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
             let c1_safety = safety_of_checks proofObligation.from_po1 in
             let c2_safety = safety_of_checks proofObligation.from_po2 in
             (* Order of conditions matter because there is an overlap between them *)
-            if c1_safety.safe && c2_safety.safe then
-              UniqueConflict.check_of_unique_check
-                ~new_kind:Conflict.NoConflictSafe proofObligation
-            else if c1_safety.safe && not c2_safety.safe then
-              UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW1
-                proofObligation
-            else if (not c1_safety.safe) && c2_safety.safe then
-              UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW2
-                proofObligation
-            else if c1_safety.has_safe && not c2_safety.has_safe then
-              UniqueConflict.check_of_unique_check
-                ~new_kind:Conflict.PrecisionW1 proofObligation
-            else if (not c1_safety.has_safe) && c2_safety.has_safe then
-              UniqueConflict.check_of_unique_check
-                ~new_kind:Conflict.PrecisionW2 proofObligation
-            else if
-              c1_safety.highest_error_level <> c2_safety.highest_error_level
-            then
-              UniqueConflict.check_of_unique_check ~new_kind:Conflict.ErrorLevel
-                proofObligation
-            else if
-              c1_safety.highest_error_level = Kind.Warning
-              && c2_safety.highest_error_level = Kind.Warning
-            then
-              UniqueConflict.check_of_unique_check
-                ~new_kind:Conflict.NoConflictWarning proofObligation
-            else if
-              c1_safety.highest_error_level = Kind.Error
-              && c2_safety.highest_error_level = Kind.Error
-            then
-              UniqueConflict.check_of_unique_check
-                ~new_kind:Conflict.NoConflictError proofObligation
-            else assert false
+            begin match c1_safety, c2_safety with
+              | {safe = true; _}, {safe = true; _} ->
+                UniqueConflict.check_of_unique_check
+                  ~new_kind:Conflict.NoConflictSafe proofObligation
+              | {safe = true; _}, {safe = false; _} ->
+                UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW1
+                  proofObligation
+              | {safe = false; _}, {safe = true; _} ->
+                UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW2
+                  proofObligation
+              | {has_safe = true; _}, {has_safe = false; _} ->
+                UniqueConflict.check_of_unique_check
+                  ~new_kind:Conflict.PrecisionW1 proofObligation
+              | {has_safe = false; _}, {has_safe = true; _} ->
+                UniqueConflict.check_of_unique_check
+                  ~new_kind:Conflict.PrecisionW2 proofObligation
+              | {highest_error_level = l1; _}, {highest_error_level = l2; _} when l1 <> l2 ->
+                UniqueConflict.check_of_unique_check ~new_kind:Conflict.ErrorLevel
+                  proofObligation
+              | {highest_error_level = Kind.Warning; _}, {highest_error_level = Kind.Warning; _} ->
+                UniqueConflict.check_of_unique_check
+                  ~new_kind:Conflict.NoConflictWarning proofObligation
+              | {highest_error_level = Kind.Error; _}, {highest_error_level = Kind.Error; _} ->
+                UniqueConflict.check_of_unique_check
+                  ~new_kind:Conflict.NoConflictError proofObligation
+              | _, _ ->
+                assert false
+            end
         | true, true -> assert false)
   in
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts

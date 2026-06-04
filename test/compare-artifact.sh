@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test8-no-unknown
+OUTDIR=dashboard-artifact-regression/test9-compare-match
 
 mkdir -p $OUTDIR
 

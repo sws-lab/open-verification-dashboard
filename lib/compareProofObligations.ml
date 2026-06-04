@@ -217,17 +217,17 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
               | {has_safe = false; _}, {has_safe = true; _} ->
                 UniqueConflict.check_of_unique_check
                   ~new_kind:Conflict.PrecisionW2 proofObligation
-              | {highest_error_level = l1; _}, {highest_error_level = l2; _} when l1 <> l2 ->
-                UniqueConflict.check_of_unique_check ~new_kind:Conflict.ErrorLevel
-                  proofObligation
+              | {highest_error_level = Kind.Safe; _}, {highest_error_level = Kind.Safe; _} ->
+                assert false (* should be impossible because of safe1 = safe2 = true case *)
               | {highest_error_level = Kind.Warning; _}, {highest_error_level = Kind.Warning; _} ->
                 UniqueConflict.check_of_unique_check
                   ~new_kind:Conflict.NoConflictWarning proofObligation
               | {highest_error_level = Kind.Error; _}, {highest_error_level = Kind.Error; _} ->
                 UniqueConflict.check_of_unique_check
                   ~new_kind:Conflict.NoConflictError proofObligation
-              | _, _ ->
-                assert false
+              | _, _ -> (* different highest_error_level *)
+                UniqueConflict.check_of_unique_check ~new_kind:Conflict.ErrorLevel
+                  proofObligation
             end
         | true, true -> assert false)
   in

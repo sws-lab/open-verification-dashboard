@@ -181,45 +181,39 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   in
   let conflicts =
     gather_conflicts checks (fun proofObligation ->
-        match
-          ( ChecksSet.is_empty proofObligation.from_po1,
-            ChecksSet.is_empty proofObligation.from_po2 )
-        with
-        | true, false | false, true ->
-            UniqueConflict.check_of_unique_check
-              ~new_kind:Conflict.OnlyOneProofObligation proofObligation
-        | false, false ->
+        let new_kind =
+          match
+            ( ChecksSet.is_empty proofObligation.from_po1,
+              ChecksSet.is_empty proofObligation.from_po2 )
+          with
+          | true, false | false, true ->
+            Conflict.OnlyOneProofObligation
+          | false, false ->
             let c1_safety = safety_of_checks proofObligation.from_po1 in
             let c2_safety = safety_of_checks proofObligation.from_po2 in
             (* Order of conditions matter because there is an overlap between them *)
             begin match c1_safety, c2_safety with
-              | {highest_error_level = Kind.Safe; _}, {highest_error_level = Kind.Safe; _} ->
-                UniqueConflict.check_of_unique_check
-                  ~new_kind:Conflict.NoConflictSafe proofObligation
-              | {highest_error_level = Kind.Safe; _}, {highest_error_level = Kind.(Warning | Error); _} ->
-                UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW1
-                  proofObligation
-              | {highest_error_level = Kind.(Warning | Error); _}, {highest_error_level = Kind.Safe; _} ->
-                UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW2
-                  proofObligation
+              | {highest_error_level = Safe; _}, {highest_error_level = Safe; _} ->
+                Conflict.NoConflictSafe
+              | {highest_error_level = Safe; _}, {highest_error_level = (Warning | Error); _} ->
+                Conflict.SafetyW1
+              | {highest_error_level = (Warning | Error); _}, {highest_error_level = Safe; _} ->
+                Conflict.SafetyW2
               | {has_safe = true; _}, {has_safe = false; _} ->
-                UniqueConflict.check_of_unique_check
-                  ~new_kind:Conflict.PrecisionW1 proofObligation
+                Conflict.PrecisionW1
               | {has_safe = false; _}, {has_safe = true; _} ->
-                UniqueConflict.check_of_unique_check
-                  ~new_kind:Conflict.PrecisionW2 proofObligation
-              | {highest_error_level = Kind.Warning; _}, {highest_error_level = Kind.Warning; _} ->
-                UniqueConflict.check_of_unique_check
-                  ~new_kind:Conflict.NoConflictWarning proofObligation
-              | {highest_error_level = Kind.Error; _}, {highest_error_level = Kind.Error; _} ->
-                UniqueConflict.check_of_unique_check
-                ~new_kind:Conflict.NoConflictError proofObligation
-              | {highest_error_level = Kind.Error; _}, {highest_error_level = Kind.Warning; _}
-              | {highest_error_level = Kind.Warning; _}, {highest_error_level = Kind.Error; _} ->
-                UniqueConflict.check_of_unique_check ~new_kind:Conflict.ErrorLevel
-                  proofObligation
+                Conflict.PrecisionW2
+              | {highest_error_level = Warning; _}, {highest_error_level = Warning; _} ->
+                Conflict.NoConflictWarning
+              | {highest_error_level = Error; _}, {highest_error_level = Error; _} ->
+                Conflict.NoConflictError
+              | {highest_error_level = Error; _}, {highest_error_level = Warning; _}
+              | {highest_error_level = Warning; _}, {highest_error_level = Error; _} ->
+                Conflict.ErrorLevel
             end
-        | true, true -> assert false)
+          | true, true -> assert false
+        in
+        UniqueConflict.check_of_unique_check ~new_kind proofObligation)
   in
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
 

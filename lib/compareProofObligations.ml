@@ -31,13 +31,11 @@ module UniqueConflict = struct
 end
 
 type po_safety = {
-  safe : bool;
   has_safe : bool;
   highest_error_level : ProofObligation.Kind.t;
 }
 (** Store comparison informations about a given range and category for later
     categorization.
-    - [safe]: [true] if all checks are safe, [false] otherwise.
     - [has_safe]: [true] if there is at least one safe check in all possible
       contexts, [false] otherwise.
     - [highest_error_level]: the highest error level of all checks in the range,
@@ -52,11 +50,10 @@ let safety_of_checks (checks : unit ChecksSet.t) : po_safety =
       (fun (check : ConflictCheck.t) _
            ((acc, safe_map) :
              po_safety * (int * ProofObligation.Kind.t) SafeMap.t) ->
-        let is_safe = ProofObligation.Kind.is_safe check.kind in
         let highest_error_level =
           ProofObligation.Kind.max acc.highest_error_level check.kind
         in
-        ( { safe = acc.safe && is_safe; has_safe = false; highest_error_level },
+        ( { has_safe = false; highest_error_level },
           SafeMap.update check.callstack
             (function
               | None -> Some (1, check.kind)
@@ -67,7 +64,6 @@ let safety_of_checks (checks : unit ChecksSet.t) : po_safety =
             safe_map ))
       checks
       ( {
-          safe = true;
           has_safe = false;
           highest_error_level = ProofObligation.Kind.Safe;
         },
@@ -202,13 +198,13 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
             let c2_safety = safety_of_checks proofObligation.from_po2 in
             (* Order of conditions matter because there is an overlap between them *)
             begin match c1_safety, c2_safety with
-              | {safe = true; _}, {safe = true; _} ->
+              | {highest_error_level = Kind.Safe; _}, {highest_error_level = Kind.Safe; _} ->
                 UniqueConflict.check_of_unique_check
                   ~new_kind:Conflict.NoConflictSafe proofObligation
-              | {safe = true; _}, {safe = false; _} ->
+              | {highest_error_level = Kind.Safe; _}, {highest_error_level = Kind.(Warning | Error); _} ->
                 UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW1
                   proofObligation
-              | {safe = false; _}, {safe = true; _} ->
+              | {highest_error_level = Kind.(Warning | Error); _}, {highest_error_level = Kind.Safe; _} ->
                 UniqueConflict.check_of_unique_check ~new_kind:Conflict.SafetyW2
                   proofObligation
               | {has_safe = true; _}, {has_safe = false; _} ->
@@ -217,15 +213,14 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
               | {has_safe = false; _}, {has_safe = true; _} ->
                 UniqueConflict.check_of_unique_check
                   ~new_kind:Conflict.PrecisionW2 proofObligation
-              | {highest_error_level = Kind.Safe; _}, {highest_error_level = Kind.Safe; _} ->
-                assert false (* should be impossible because of safe1 = safe2 = true case *)
               | {highest_error_level = Kind.Warning; _}, {highest_error_level = Kind.Warning; _} ->
                 UniqueConflict.check_of_unique_check
                   ~new_kind:Conflict.NoConflictWarning proofObligation
               | {highest_error_level = Kind.Error; _}, {highest_error_level = Kind.Error; _} ->
                 UniqueConflict.check_of_unique_check
-                  ~new_kind:Conflict.NoConflictError proofObligation
-              | _, _ -> (* different highest_error_level *)
+                ~new_kind:Conflict.NoConflictError proofObligation
+              | {highest_error_level = Kind.Error; _}, {highest_error_level = Kind.Warning; _}
+              | {highest_error_level = Kind.Warning; _}, {highest_error_level = Kind.Error; _} ->
                 UniqueConflict.check_of_unique_check ~new_kind:Conflict.ErrorLevel
                   proofObligation
             end

@@ -45,36 +45,33 @@ module SafeMap = Map.Make (Int)
 
 let safety_of_checks (checks : ChecksSet.t) : po_safety =
   let open Conflict in
+  let highest_error_level =
+    ChecksSet.fold
+      (fun (check : ConflictCheck.t) acc ->
+        ProofObligation.Kind.max acc check.kind)
+      checks ProofObligation.Kind.Safe
+  in
   let res =
     ChecksSet.fold
       (fun (check : ConflictCheck.t)
-           ((acc, safe_map) :
-             po_safety * (int * ProofObligation.Kind.t) SafeMap.t) ->
-        let highest_error_level =
-          ProofObligation.Kind.max acc.highest_error_level check.kind
-        in
-        ( { has_safe = false; highest_error_level },
-          SafeMap.update check.callstack
-            (function
-              | None -> Some (1, check.kind)
-              | Some (count, existing_kind) ->
-                  Some
-                    ( count + 1,
-                      ProofObligation.Kind.min existing_kind check.kind ))
-            safe_map ))
-      checks
-      ( {
-          has_safe = false;
-          highest_error_level = ProofObligation.Kind.Safe;
-        },
-        SafeMap.empty )
+           (safe_map : (int * ProofObligation.Kind.t) SafeMap.t) ->
+        SafeMap.update check.callstack
+          (function
+            | None -> Some (1, check.kind)
+            | Some (count, existing_kind) ->
+                Some
+                  ( count + 1,
+                    ProofObligation.Kind.min existing_kind check.kind ))
+          safe_map )
+      checks SafeMap.empty
   in
   let has_safe =
+    (* TODO: this is not "there is at least one safe check in all possible contexts" *)
     SafeMap.exists (fun _ (count, kind) ->
         count > 1 && ProofObligation.Kind.is_safe kind)
-    @@ snd res
+      res
   in
-  { (fst res) with has_safe }
+  { highest_error_level; has_safe }
 
 let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   let open ProofObligation in

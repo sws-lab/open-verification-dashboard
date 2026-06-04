@@ -49,91 +49,88 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   let open ProofObligation in
   let open Conflict in
   let gather_conflicts checks f =
-    let rec build_unique_conflict acc = function
-      | [] -> (acc, [])
+    let rec build_unique_conflict conflict = function
+      | [] -> (conflict, [])
       | (analyzer_id, (check : Check.t)) :: rest -> (
-          match acc with
-          | None ->
-              build_unique_conflict
-                (Some
-                   Conflict.
-                     {
-                       kind = Conflict.Unchecked;
-                       range = check.range;
-                       title = check.title;
-                       from_po1 =
-                         (if analyzer_id = 1 then
-                            ChecksSet.singleton
-                              (ConflictCheck.of_check check)
-                          else ChecksSet.empty);
-                       status_po1 =
-                         (if analyzer_id = 1 then
-                            Status.join_po_kind Status.Unreached
-                              check.kind
-                          else Status.Unreached);
-                       from_po2 =
-                         (if analyzer_id = 2 then
-                            ChecksSet.singleton
-                              (ConflictCheck.of_check check)
-                          else ChecksSet.empty);
-                       status_po2 =
-                         (if analyzer_id = 2 then
-                            Status.join_po_kind Status.Unreached
-                              check.kind
-                          else Status.Unreached);
-                     })
-                rest
-          | Some conflict ->
-              if
-                Range.compare conflict.range check.range = 0
-                && Category.compare conflict.title check.title = 0
-              then
-                let from_po1 =
-                  if analyzer_id = 1 then
-                    ChecksSet.add
-                      (ConflictCheck.of_check check)
-                      conflict.from_po1
-                  else conflict.from_po1
-                in
-                let from_po2 =
-                  if analyzer_id = 2 then
-                    ChecksSet.add
-                      (ConflictCheck.of_check check)
-                      conflict.from_po2
-                  else conflict.from_po2
-                in
-                let new_range = Range.union conflict.range check.range in
-                let status_po1 =
-                  if analyzer_id = 1 then
-                    Status.join_po_kind conflict.status_po1
-                      check.kind
-                  else conflict.status_po1
-                in
-                let status_po2 =
-                  if analyzer_id = 2 then
-                    Status.join_po_kind conflict.status_po2
-                      check.kind
-                  else conflict.status_po2
-                in
-                build_unique_conflict
-                  (Some
-                     {
-                       conflict with
-                       from_po1;
-                       from_po2;
-                       status_po1;
-                       status_po2;
-                       range = new_range;
-                     })
-                  rest
-              else (acc, (analyzer_id, check) :: rest))
+        if
+          Range.compare conflict.range check.range = 0
+          && Category.compare conflict.title check.title = 0
+        then
+          let from_po1 =
+            if analyzer_id = 1 then
+              ChecksSet.add
+                (ConflictCheck.of_check check)
+                conflict.from_po1
+            else conflict.from_po1
+          in
+          let from_po2 =
+            if analyzer_id = 2 then
+              ChecksSet.add
+                (ConflictCheck.of_check check)
+                conflict.from_po2
+            else conflict.from_po2
+          in
+          let new_range = Range.union conflict.range check.range in
+          let status_po1 =
+            if analyzer_id = 1 then
+              Status.join_po_kind conflict.status_po1
+                check.kind
+            else conflict.status_po1
+          in
+          let status_po2 =
+            if analyzer_id = 2 then
+              Status.join_po_kind conflict.status_po2
+                check.kind
+            else conflict.status_po2
+          in
+          build_unique_conflict
+            {
+              conflict with
+              from_po1;
+              from_po2;
+              status_po1;
+              status_po2;
+              range = new_range;
+            }
+            rest
+        else (conflict, (analyzer_id, check) :: rest))
     in
     let rec aux acc checks =
-      match build_unique_conflict None checks with
-      | None, [] -> acc
-      | Some conflict, [] -> f conflict :: acc
-      | Some conflict, rest -> aux (f conflict :: acc) rest
-      | None, _ :: _ -> assert false
+      match checks with
+      | [] -> acc
+      | (analyzer_id, (check : Check.t)) :: rest ->
+        (* pick first check *)
+        let conflict = Conflict.
+          {
+            kind = Conflict.Unchecked;
+            range = check.range;
+            title = check.title;
+            from_po1 =
+              (if analyzer_id = 1 then
+                ChecksSet.singleton
+                  (ConflictCheck.of_check check)
+              else ChecksSet.empty);
+            status_po1 =
+              (if analyzer_id = 1 then
+                Status.join_po_kind Status.Unreached
+                  check.kind
+              else Status.Unreached);
+            from_po2 =
+              (if analyzer_id = 2 then
+                ChecksSet.singleton
+                  (ConflictCheck.of_check check)
+              else ChecksSet.empty);
+            status_po2 =
+              (if analyzer_id = 2 then
+                Status.join_po_kind Status.Unreached
+                  check.kind
+              else Status.Unreached);
+          }
+        in
+        (* build conflict of all matching checks *)
+        let (conflict, rest') = build_unique_conflict conflict rest in
+        (* continue with unmached checks *)
+        aux (f conflict :: acc) rest'
     in
     aux [] checks
   in

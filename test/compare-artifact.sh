@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test10-filter-before
+OUTDIR=dashboard-artifact-regression/test11-meta-status-cleanup
 
 mkdir -p $OUTDIR
 

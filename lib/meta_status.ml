@@ -5,7 +5,6 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = {
   mutable result : Status.t option;
-  mutable conflict : bool;
 }
 [@@deriving yojson_of]
 
@@ -28,15 +27,13 @@ type report = {
 
 let create () =
   {
-    global_result = { conflict = false; result = None };
+    global_result = { result = None };
     results = Hashtbl.create 10;
   }
 
 let update (result : t) (new_status : Status.t)
-    (conflict : bool)
     (update_function : Status.t -> Status.t -> Status.t)
     =
-  if conflict then result.conflict <- true;
   match result.result with
   | None ->
       result.result <- Some new_status
@@ -46,13 +43,12 @@ let update (result : t) (new_status : Status.t)
 
 let update_map (table : map)
     (category : ProofObligation.Category.t) (new_status : Status.t)
-    (conflict : bool)
     (update_function : Status.t -> Status.t -> Status.t)
     =
   match Hashtbl.find_opt table category with
   | Some result ->
-      update result new_status conflict update_function
+      update result new_status update_function
   | None ->
-      let new_result = { conflict = false; result = None } in
-      update new_result new_status conflict update_function;
+      let new_result = { result = None } in
+      update new_result new_status update_function;
       Hashtbl.add table category new_result

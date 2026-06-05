@@ -26,21 +26,22 @@ let join_po_kind (status : t) (po_kind : Kind.t) =
 
 let optimistic_join x y =
   match x, y with
-  | Safe, Error | Error, Safe ->
-      Unreached
-  | Safe, _ | _, Safe -> Safe
-  | Warning, Error
-  | Error, Warning
+  | Warning, other
+  | other, Warning -> other
   | Error, Error -> Error
-  | Warning, _ | _, Warning -> Warning
-  | _ -> Unreached
+  | Safe, Safe -> Safe
+  | Error, Safe
+  | Safe, Error
+  | Unreached, _
+  | _, Unreached -> Unreached
 
 let pessimistic_join x y =
   match x, y with
+  | Unreached, other
+  | other, Unreached -> other
   | Error, Error -> Error
   | Safe, Safe -> Safe
   | Error, Safe
   | Safe, Error
   | Warning, _
   | _, Warning -> Warning
-  | Unreached, status | status, Unreached -> status

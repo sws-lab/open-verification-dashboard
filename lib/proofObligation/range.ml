@@ -4,11 +4,7 @@ type file_position = {
   line : int;
   column : int;
 }
-[@@deriving yojson_of, show, eq]
-
-let compare_file_position a b =
-  if a.line <> b.line then compare a.line b.line
-  else compare a.column b.column
+[@@deriving yojson_of, show, eq, ord]
 
 let min_file_position a b = if compare_file_position a b < 0 then a else b
 let max_file_position a b = if compare_file_position a b > 0 then a else b

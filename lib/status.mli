@@ -5,8 +5,7 @@ type t =
   | Unreached
 [@@deriving show, yojson]
 
-(** Join status where  *)
-val join_po_kind : t -> ProofObligation.Kind.t -> t
+val of_kind : ProofObligation.Kind.t -> t
 
 (** Join two analyzers status in an optimistic way. *)
 val optimistic_join : t -> t -> t

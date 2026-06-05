@@ -10,19 +10,11 @@ type t =
 let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Status"
 let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 
-
-let join_po_kind (status : t) (po_kind : Kind.t) =
-  match (status, po_kind) with
-  | Unreached, Safe -> Safe
-  | Unreached, Warning -> Warning
-  | Unreached, Error -> Error
-  | Safe, Safe
-  | Warning, Warning
-  | Error, Error -> status
-  | Error, Warning | Warning, Error -> Warning
-  | Safe, Warning | Warning, Safe -> Warning
-  | Safe, Error
-  | Error, Safe -> Warning
+let of_kind (po_kind : Kind.t) =
+  match po_kind with
+  | Safe -> Safe
+  | Warning -> Warning
+  | Error -> Error
 
 let optimistic_join x y =
   match x, y with

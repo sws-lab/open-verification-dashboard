@@ -199,18 +199,20 @@ let filter_conflicts (conflicts : Conflict.t list)
           Hashtbl.mem kind_set conflict.kind)
         conflicts
 
-let exit_code_of_conflict (conflict : Conflict.t list) =
-  List.fold_left
-    (fun acc (conflict : Conflict.t) ->
-      match conflict.kind with
-      | Conflict.NoConflictSafe -> max acc 0
-      | Conflict.NoConflictWarning -> max acc 0
-      | Conflict.NoConflictError -> max acc 0
-      | Conflict.OnlyOneProofObligation -> max acc 3
-      | Conflict.SafetyW1 -> max acc 4
-      | Conflict.SafetyW2 -> max acc 4
-      | Conflict.PrecisionW1 -> max acc 2
-      | Conflict.PrecisionW2 -> max acc 2
-      | Conflict.ErrorLevel -> max acc 2
-      | Conflict.Unchecked -> max acc 5)
-    0 conflict
+let exit_code_of_conflict (conflict : Conflict.t) =
+  match conflict.kind with
+  | Conflict.NoConflictSafe -> 0
+  | Conflict.NoConflictWarning -> 0
+  | Conflict.NoConflictError -> 0
+  | Conflict.OnlyOneProofObligation -> 3
+  | Conflict.SafetyW1 -> 4
+  | Conflict.SafetyW2 -> 4
+  | Conflict.PrecisionW1 -> 2
+  | Conflict.PrecisionW2 -> 2
+  | Conflict.ErrorLevel -> 2
+  | Conflict.Unchecked -> 5
+
+let exit_code_of_conflicts (conflicts : Conflict.t list) =
+  conflicts
+  |> List.map exit_code_of_conflict
+  |> List.fold_left Int.max 0

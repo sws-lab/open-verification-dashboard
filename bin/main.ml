@@ -235,4 +235,4 @@ let () =
       (fun conflict -> Format.printf "%a@." Conflict.pp conflict)
       conflict;
   reset_ppf ();
-  exit @@ CompareProofObligations.exit_code_of_conflict conflict
+  exit @@ CompareProofObligations.exit_code_of_conflicts conflict

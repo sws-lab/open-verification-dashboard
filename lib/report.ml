@@ -59,7 +59,7 @@ let add_joint_status (report : t) (conflict : Conflict.t) =
 (** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   (match conflict.kind with
-  | Conflict.Unchecked | Conflict.OnlyOneProofObligation -> ()
+  | CrossStatus.CoverageDisagreement -> ()
   | _ ->
       let optimistic_status =
         Status.optimistic_join conflict.status_po1 conflict.status_po2

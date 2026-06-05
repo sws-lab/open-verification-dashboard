@@ -37,40 +37,10 @@ struct
   let t_of_yojson j = of_list ([%of_yojson: ConflictCheck.t list] j)
 end
 
-type kind =
-  | NoConflictSafe [@name "NoConflictSafe"]
-  | NoConflictWarning [@name "NoConflictWarning"]
-  | NoConflictError [@name "NoConflictError"] (* TODO: untested, none in ECOOP 2026 artifact *)
-  | Unchecked [@name "Unchecked"]
-  | OnlyOneProofObligation [@name "OnlyOneProofObligation"]
-  | SafetyW1 [@name "SafetyW1"]
-  | SafetyW2 [@name "SafetyW2"]
-  | PrecisionW1 [@name "PrecisionW1"]
-  | PrecisionW2 [@name "PrecisionW2"] (* TODO: untested, none in ECOOP 2026 artifact *)
-  | ErrorLevel [@name "ErrorLevel"]
-[@@deriving show { with_path = false }, yojson]
-
-let kind_of_yojson = Utils.string_t_of_yojson kind_of_yojson "Kind"
-let yojson_of_kind = Utils.string_yojson_of_t yojson_of_kind
-
 type status = Status.t [@@deriving show { with_path = false }, yojson]
 
-let conflict_of_string s =
-  match String.lowercase_ascii s with
-  | "no_conflict_safe" -> Some NoConflictSafe
-  | "no_conflict_warning" -> Some NoConflictWarning
-  | "no_conflict_error" -> Some NoConflictError
-  | "unchecked" -> Some Unchecked
-  | "only_one_proof_obligation" -> Some OnlyOneProofObligation
-  | "safety_w1" -> Some SafetyW1
-  | "safety_w2" -> Some SafetyW2
-  | "precision_w1" -> Some PrecisionW1
-  | "precision_w2" -> Some PrecisionW2
-  | "error_level" -> Some ErrorLevel
-  | _ -> None
-
 type t = {
-  kind : kind;
+  kind : CrossStatus.t;
   title : Category.t;
   range : Range.t;
   from_po1 : ChecksSet.t;
@@ -80,7 +50,7 @@ type t = {
 }
 [@@deriving yojson]
 
-let pp_kind fmt kind = Format.fprintf fmt "@{<bold>@{<#f00>%a@}@}" pp_kind kind
+let pp_kind fmt kind = Format.fprintf fmt "@{<bold>@{<#f00>%a@}@}" CrossStatus.pp kind
 
 let pp fmt conflict =
   Format.fprintf fmt "%a (%a):@.    %a @.    @[<v 2>" pp_kind conflict.kind
@@ -101,7 +71,7 @@ let pp fmt conflict =
   in
 
   match conflict.kind with
-  | OnlyOneProofObligation ->
+  | CoverageDisagreement ->
       if not (ChecksSet.is_empty conflict.from_po1) then
         Format.fprintf fmt
           "@{<#fff>Only ProofObligation 1 checked:@}@, @[<hov 4>%a@]"
@@ -116,55 +86,26 @@ let pp fmt conflict =
              ~pp_sep:(fun fmt () -> Format.pp_print_break fmt 0 (-4))
              ConflictCheck.pp)
           (ChecksSet.elements conflict.from_po2) (* TODO: no elements *)
-  | PrecisionW1 ->
+  | Contradiction ->
       Format.fprintf fmt
-        "@{<#fff>ProofObligation 1 detects safe sub ranges that \
-         ProofObligation 2 does not detect.@}@;\
+        "@{<#fff>The two proofObligations disagree on the safety of the range.@}@;\
          <0 -2>";
       pp_two_checks fmt conflict
-  | PrecisionW2 ->
-      Format.fprintf fmt
-        "@{<#fff>ProofObligation 2 detects safe sub ranges that \
-         ProofObligation 1 does not detect.@}@;\
-         <0 -2>";
-      pp_two_checks fmt conflict
-  | SafetyW1 ->
-      Format.fprintf fmt
-        "@{<#fff>The two proofObligations disagree on the safety of the range. \
-         Proof Obligation 1 state that it is safe wile Proof Obligation 2 does \
-         not.@}@;\
-         <0 -2>";
-      pp_two_checks fmt conflict
-  | SafetyW2 ->
-      Format.fprintf fmt
-        "@{<#fff>The two proofObligations disagree on the safety of the range. \
-         Proof Obligation 2 state that it is safe wile Proof Obligation 1 does \
-         not.@}@;\
-         <0 -2>";
-      pp_two_checks fmt conflict
-  | ErrorLevel ->
+  | PrecisionAsymmetry ->
       Format.fprintf fmt
         "@{<#fff>The two proofObligations disagree on the error level of the \
          range.@}@;\
          <0 -2>";
       pp_two_checks fmt conflict
-  | Unchecked ->
-      Format.fprintf fmt
-        "@{<#fff>This has not been checked for conflicts yet.@}@;<0 -2>";
-      pp_two_checks fmt conflict
-  | NoConflictSafe ->
+  | PositiveAgreement ->
       Format.fprintf fmt "@{<#0f0>Safe: No conflict found.@}@;<0 -2>";
       pp_two_checks fmt conflict
-  | NoConflictWarning ->
+  | NegativeAgreement ->
       Format.fprintf fmt
-        "@{<#ff0>Warning: No conflict found, but they agree it's a warning.@}@;\
-         <0 -2>";
-      pp_two_checks fmt conflict
-  | NoConflictError ->
-      Format.fprintf fmt
-        "@{<#f00>Error: No conflict found, but they agree it's an error.@}@;\
+        "@{<#ff0>Warning: No conflict found, but they agree it's a warning/error.@}@;\
          <0 -2>";
       pp_two_checks fmt conflict;
 
+      (* TODO: isn't this only in the last case? *)
       Format.fprintf fmt "@]";
       Format.pp_print_newline fmt ()

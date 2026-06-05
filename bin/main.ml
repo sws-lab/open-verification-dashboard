@@ -6,7 +6,6 @@ type args = {
   mutable only : string option;
   mutable output : string option;
   mutable exclude_not_found : bool;
-  mutable filter_kind : Conflict.kind list;
   mutable filter_error_category : ProofObligation.Category.t list;
 }
 
@@ -51,8 +50,6 @@ let parse_args () =
       (* If set, the path to the json output file *)
       exclude_not_found = false;
       (* If set, exclude files with path that can't be matched against the project structure *)
-      filter_kind = [];
-      (* If set, only output conflicts of the given kind *)
       filter_error_category = [];
       (* If set, only output conflicts of the given error category *)
     }
@@ -72,31 +69,6 @@ let parse_args () =
       ( "--exclude-not-found",
         Arg.Bool (fun b -> args.exclude_not_found <- b),
         "Exclude not found files from the analysis" );
-      ( "--filter-kind",
-        Arg.String
-          (fun s ->
-            List.iter
-              (fun kind ->
-                match Conflict.conflict_of_string kind with
-                | Some k -> args.filter_kind <- k :: args.filter_kind
-                | None ->
-                    Printf.eprintf "Unknown conflict kind: %s\n" kind;
-                    exit 1)
-              (String.split_on_char ',' s)),
-        "Filter conflicts by kind, comma-separated list of kinds: \n      - "
-        ^ String.concat "\n      - "
-            [
-              "no_conflict_safe";
-              "no_conflict_warning";
-              "no_conflict_error";
-              "unchecked";
-              "only_one_proof_obligation";
-              "safety_w1";
-              "safety_w2";
-              "precision_w1";
-              "precision_w2";
-              "error_level";
-            ] );
       ( "--filter-error-category",
         Arg.String
           (fun s ->
@@ -218,9 +190,6 @@ let () =
   let po2 = List.hd (List.tl proofObligations) in
   Format.printf "Comparing proof obligations %s and %s@." po1.name po2.name;
   let conflict = CompareProofObligations.conflicts_between po1 po2 in
-  let conflict =
-    CompareProofObligations.filter_conflicts conflict args.filter_kind
-  in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in
     List.iter
@@ -234,5 +203,4 @@ let () =
     List.iter
       (fun conflict -> Format.printf "%a@." Conflict.pp conflict)
       conflict;
-  reset_ppf ();
-  exit @@ CompareProofObligations.exit_code_of_conflicts conflict
+  reset_ppf ()

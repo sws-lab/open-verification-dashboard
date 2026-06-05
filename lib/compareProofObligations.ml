@@ -102,7 +102,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
         (* pick first check *)
         let conflict = Conflict.
           {
-            kind = Conflict.Unchecked;
+            kind = CrossStatus.PositiveAgreement; (* TODO: will be recomputed at the end, so this doesn't matter, but better to avoid the dummy value altogether *)
             range = check.range;
             title = check.title;
             from_po1 =
@@ -151,68 +151,19 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   let conflicts =
     gather_conflicts checks (fun proofObligation ->
         let new_kind =
-          match
-            ( ChecksSet.is_empty proofObligation.from_po1,
-              ChecksSet.is_empty proofObligation.from_po2 )
-          with
-          | true, false | false, true ->
-            Conflict.OnlyOneProofObligation
-          | false, false ->
-            let c1_safety = safety_of_checks proofObligation.from_po1 in
-            let c2_safety = safety_of_checks proofObligation.from_po2 in
-            (* Order of conditions matter because there is an overlap between them *)
-            begin match c1_safety, c2_safety with
-              | {highest_error_level = Safe; _}, {highest_error_level = Safe; _} ->
-                Conflict.NoConflictSafe
-              | {highest_error_level = Safe; _}, {highest_error_level = (Warning | Error); _} ->
-                Conflict.SafetyW1
-              | {highest_error_level = (Warning | Error); _}, {highest_error_level = Safe; _} ->
-                Conflict.SafetyW2
-              | {has_safe = true; _}, {has_safe = false; _} ->
-                Conflict.PrecisionW1
-              | {has_safe = false; _}, {has_safe = true; _} ->
-                Conflict.PrecisionW2
-              | {highest_error_level = Warning; _}, {highest_error_level = Warning; _} ->
-                Conflict.NoConflictWarning
-              | {highest_error_level = Error; _}, {highest_error_level = Error; _} ->
-                Conflict.NoConflictError
-              | {highest_error_level = Error; _}, {highest_error_level = Warning; _}
-              | {highest_error_level = Warning; _}, {highest_error_level = Error; _} ->
-                Conflict.ErrorLevel
-            end
-          | true, true -> assert false
+          (* Table 1 from ECOOP 2026 paper. *)
+          match proofObligation.status_po1, proofObligation.status_po2 with
+          | Unreached, Unreached
+          | Safe, Safe -> CrossStatus.PositiveAgreement
+          | Warning, Warning
+          | Error, Error -> CrossStatus.NegativeAgreement
+          | Unreached, _
+          | _, Unreached -> CrossStatus.CoverageDisagreement
+          | Warning, (Safe | Error)
+          | (Safe | Error), Warning -> CrossStatus.PrecisionAsymmetry
+          | Safe, Error
+          | Error, Safe -> CrossStatus.Contradiction
         in
         {proofObligation with kind = new_kind})
   in
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
-
-let filter_conflicts (conflicts : Conflict.t list)
-    (filter_kind : Conflict.kind list) =
-  match filter_kind with
-  | [] -> conflicts
-  | _ ->
-      let kind_set =
-        Hashtbl.of_seq (List.to_seq filter_kind |> Seq.map (fun el -> (el, ())))
-      in
-      List.filter
-        (fun (conflict : Conflict.t) ->
-          Hashtbl.mem kind_set conflict.kind)
-        conflicts
-
-let exit_code_of_conflict (conflict : Conflict.t) =
-  match conflict.kind with
-  | Conflict.NoConflictSafe -> 0
-  | Conflict.NoConflictWarning -> 0
-  | Conflict.NoConflictError -> 0
-  | Conflict.OnlyOneProofObligation -> 3
-  | Conflict.SafetyW1 -> 4
-  | Conflict.SafetyW2 -> 4
-  | Conflict.PrecisionW1 -> 2
-  | Conflict.PrecisionW2 -> 2
-  | Conflict.ErrorLevel -> 2
-  | Conflict.Unchecked -> 5
-
-let exit_code_of_conflicts (conflicts : Conflict.t list) =
-  conflicts
-  |> List.map exit_code_of_conflict
-  |> List.fold_left Int.max 0

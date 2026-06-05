@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test12-cross-status
+OUTDIR=dashboard-artifact-regression/test13-no-severity-join
 
 mkdir -p $OUTDIR
 

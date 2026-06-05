@@ -65,16 +65,15 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
         Status.optimistic_join conflict.status_po1 conflict.status_po2
       in
       Meta_status.update report.optimistic_result.global_result
-        optimistic_status Status.severity_join;
+        optimistic_status;
       Meta_status.update_map report.optimistic_result.results conflict.title
-        optimistic_status Status.severity_join);
+        optimistic_status);
   let pessimistic_status =
     Status.pessimistic_join conflict.status_po1 conflict.status_po2
   in
-  Meta_status.update report.pessimistic_result.global_result pessimistic_status
-   Status.severity_join;
+  Meta_status.update report.pessimistic_result.global_result pessimistic_status;
   Meta_status.update_map report.pessimistic_result.results conflict.title
-    pessimistic_status Status.severity_join;
+    pessimistic_status;
   add_joint_status report conflict;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with

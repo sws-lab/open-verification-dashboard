@@ -44,11 +44,3 @@ let pessimistic_join x y =
   | Warning, _
   | _, Warning -> Warning
   | Unreached, status | status, Unreached -> status
-
-let severity_join x y =
-  match x, y with
-  | Error, _ | _, Error -> Error
-  | Warning, _ | _, Warning -> Warning
-  | Safe, Safe -> Safe
-  | Unreached, _ | _, Unreached -> assert false
-

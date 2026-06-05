@@ -54,3 +54,21 @@ let of_file (file : string) =
       Format.eprintf "Error extracting proofObligation from file %s: %s\n" file
         msg;
       None
+
+let filter_checks (checks : Check.t list)
+    (filter_error_category : Category.t list) =
+  match filter_error_category with
+  | [] -> checks
+  | _ ->
+      let error_category_set =
+        Hashtbl.of_seq
+          (List.to_seq filter_error_category |> Seq.map (fun el -> (el, ())))
+      in
+      List.filter
+        (fun (check : Check.t) ->
+          let error_category_match =
+            Hashtbl.length error_category_set = 0
+            || Hashtbl.mem error_category_set check.title
+          in
+          error_category_match)
+        checks

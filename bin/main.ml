@@ -202,13 +202,24 @@ let () =
           proofObligations
     | None -> proofObligations
   in
+  let proofObligations =
+    List.map
+      (fun (proofObligation : ProofObligation.t) ->
+        let filtered_po =
+          {
+            proofObligation with
+            checks = ProofObligation.filter_checks proofObligation.checks args.filter_error_category;
+          }
+        in
+        filtered_po)
+      proofObligations
+  in
   let po1 = List.hd proofObligations in
   let po2 = List.hd (List.tl proofObligations) in
   Format.printf "Comparing proof obligations %s and %s@." po1.name po2.name;
   let conflict = CompareProofObligations.conflicts_between po1 po2 in
   let conflict =
     CompareProofObligations.filter_conflicts conflict args.filter_kind
-      args.filter_error_category
   in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in

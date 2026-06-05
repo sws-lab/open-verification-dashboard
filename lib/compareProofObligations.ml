@@ -187,28 +187,19 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
 
 let filter_conflicts (conflicts : Conflict.t list)
-    (filter_kind : Conflict.kind list)
-    (filter_error_category : ProofObligation.Category.t list) =
-  match (filter_kind, filter_error_category) with
-  | [], [] -> conflicts
+    (filter_kind : Conflict.kind list) =
+  match filter_kind with
+  | [] -> conflicts
   | _ ->
       let kind_set =
         Hashtbl.of_seq (List.to_seq filter_kind |> Seq.map (fun el -> (el, ())))
-      in
-      let error_category_set =
-        Hashtbl.of_seq
-          (List.to_seq filter_error_category |> Seq.map (fun el -> (el, ())))
       in
       List.filter
         (fun (conflict : Conflict.t) ->
           let kind_match =
             Hashtbl.length kind_set = 0 || Hashtbl.mem kind_set conflict.kind
           in
-          let error_category_match =
-            Hashtbl.length error_category_set = 0
-            || Hashtbl.mem error_category_set conflict.title
-          in
-          kind_match && error_category_match)
+          kind_match)
         conflicts
 
 let exit_code_of_conflict (conflict : Conflict.t list) =

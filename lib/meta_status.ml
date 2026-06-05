@@ -7,20 +7,7 @@ type t = {
   mutable result : Status.t option;
   mutable conflict : bool;
 }
-
-let yojson_of_t {result; conflict} =
-  let verdict =
-    match result with
-    | Some Safe -> "yes"
-    | Some Warning | Some Error -> "no"
-    | Some Unreached | None -> "unknown"
-  in
-  `Assoc [
-    ("result", [%yojson_of: Status.t option] result);
-    ("verdict", `String verdict); (* TODO: remove this redundant field, causes output diffs *)
-    ("conflict", [%yojson_of: bool] conflict);
-  ]
-
+[@@deriving yojson_of]
 
 type map = (ProofObligation.Category.t, t) Hashtbl.t
 

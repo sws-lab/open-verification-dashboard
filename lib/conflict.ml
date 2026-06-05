@@ -40,13 +40,13 @@ end
 type kind =
   | NoConflictSafe [@name "NoConflictSafe"]
   | NoConflictWarning [@name "NoConflictWarning"]
-  | NoConflictError [@name "NoConflictError"]
+  | NoConflictError [@name "NoConflictError"] (* TODO: untested, none in ECOOP 2026 artifact *)
   | Unchecked [@name "Unchecked"]
   | OnlyOneProofObligation [@name "OnlyOneProofObligation"]
   | SafetyW1 [@name "SafetyW1"]
   | SafetyW2 [@name "SafetyW2"]
   | PrecisionW1 [@name "PrecisionW1"]
-  | PrecisionW2 [@name "PrecisionW2"]
+  | PrecisionW2 [@name "PrecisionW2"] (* TODO: untested, none in ECOOP 2026 artifact *)
   | ErrorLevel [@name "ErrorLevel"]
 [@@deriving show { with_path = false }, yojson]
 

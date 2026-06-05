@@ -196,10 +196,7 @@ let filter_conflicts (conflicts : Conflict.t list)
       in
       List.filter
         (fun (conflict : Conflict.t) ->
-          let kind_match =
-            Hashtbl.length kind_set = 0 || Hashtbl.mem kind_set conflict.kind
-          in
-          kind_match)
+          Hashtbl.mem kind_set conflict.kind)
         conflicts
 
 let exit_code_of_conflict (conflict : Conflict.t list) =

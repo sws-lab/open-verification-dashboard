@@ -151,18 +151,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   let conflicts =
     gather_conflicts checks (fun proofObligation ->
         let new_kind =
-          (* Table 1 from ECOOP 2026 paper. *)
-          match proofObligation.status_po1, proofObligation.status_po2 with
-          | Unreached, Unreached
-          | Safe, Safe -> CrossStatus.PositiveAgreement
-          | Warning, Warning
-          | Error, Error -> CrossStatus.NegativeAgreement
-          | Unreached, _
-          | _, Unreached -> CrossStatus.CoverageDisagreement
-          | Warning, (Safe | Error)
-          | (Safe | Error), Warning -> CrossStatus.PrecisionAsymmetry
-          | Safe, Error
-          | Error, Safe -> CrossStatus.Contradiction
+          CrossStatus.of_statuses proofObligation.status_po1 proofObligation.status_po2
         in
         {proofObligation with kind = new_kind})
   in

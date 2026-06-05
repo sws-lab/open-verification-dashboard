@@ -1,49 +1,5 @@
 (** This module provides functions to compare proof obligations and identify
     conflicts. *)
-module ChecksSet = Conflict.ChecksSet
-
-type po_safety = {
-  has_safe : bool;
-  highest_error_level : ProofObligation.Kind.t;
-}
-(** Store comparison informations about a given range and category for later
-    categorization.
-    - [has_safe]: [true] if there is at least one safe check in all possible
-      contexts, [false] otherwise.
-    - [highest_error_level]: the highest error level of all checks in the range,
-      which can be used to determine the severity of the issues. *)
-
-module SafeMap = Map.Make (Int)
-
-let safety_of_checks (checks : ChecksSet.t) : po_safety =
-  let open Conflict in
-  let highest_error_level =
-    ChecksSet.fold
-      (fun (check : ConflictCheck.t) acc ->
-        ProofObligation.Kind.max acc check.kind)
-      checks ProofObligation.Kind.Safe
-  in
-  let res =
-    ChecksSet.fold
-      (fun (check : ConflictCheck.t)
-           (safe_map : (int * ProofObligation.Kind.t) SafeMap.t) ->
-        SafeMap.update check.callstack
-          (function
-            | None -> Some (1, check.kind)
-            | Some (count, existing_kind) ->
-                Some
-                  ( count + 1,
-                    ProofObligation.Kind.min existing_kind check.kind ))
-          safe_map )
-      checks SafeMap.empty
-  in
-  let has_safe =
-    (* TODO: this is not "there is at least one safe check in all possible contexts" *)
-    SafeMap.exists (fun _ (count, kind) ->
-        count > 1 && ProofObligation.Kind.is_safe kind)
-      res
-  in
-  { highest_error_level; has_safe }
 
 let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   let open ProofObligation in

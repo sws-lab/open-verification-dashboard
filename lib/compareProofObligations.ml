@@ -29,14 +29,14 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           let new_range = Range.union conflict.range check.range in
           let status_po1 =
             if analyzer_id = 1 then
-              Status.join_po_kind conflict.status_po1
-                check.kind
+              Status.pessimistic_join conflict.status_po1
+                (Status.of_kind check.kind)
             else conflict.status_po1
           in
           let status_po2 =
             if analyzer_id = 2 then
-              Status.join_po_kind conflict.status_po2
-                check.kind
+              Status.pessimistic_join conflict.status_po2
+                (Status.of_kind check.kind)
             else conflict.status_po2
           in
           build_unique_conflict
@@ -68,8 +68,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
               else ChecksSet.empty);
             status_po1 =
               (if analyzer_id = 1 then
-                Status.join_po_kind Status.Unreached
-                  check.kind
+                Status.of_kind check.kind
               else Status.Unreached);
             from_po2 =
               (if analyzer_id = 2 then
@@ -78,8 +77,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
               else ChecksSet.empty);
             status_po2 =
               (if analyzer_id = 2 then
-                Status.join_po_kind Status.Unreached
-                  check.kind
+                Status.of_kind check.kind
               else Status.Unreached);
           }
         in

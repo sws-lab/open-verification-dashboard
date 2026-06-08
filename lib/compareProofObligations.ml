@@ -29,13 +29,13 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           let new_range = Range.union conflict.range check.range in
           let status_po1 =
             if analyzer_id = 1 then
-              Status.pessimistic_join conflict.status_po1
+              Status.join conflict.status_po1
                 (Status.of_kind check.kind)
             else conflict.status_po1
           in
           let status_po2 =
             if analyzer_id = 2 then
-              Status.pessimistic_join conflict.status_po2
+              Status.join conflict.status_po2
                 (Status.of_kind check.kind)
             else conflict.status_po2
           in

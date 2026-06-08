@@ -37,7 +37,7 @@ let update (result : t) (new_status : Status.t)
   | None ->
       result.result <- Some new_status
   | Some existing_kind ->
-      let updated_kind = Status.pessimistic_join existing_kind new_status in
+      let updated_kind = Status.join existing_kind new_status in
       result.result <- Some updated_kind
 
 let update_map (table : map)

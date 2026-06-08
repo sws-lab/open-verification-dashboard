@@ -62,14 +62,14 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   | CrossStatus.CoverageDisagreement -> ()
   | _ ->
       let optimistic_status =
-        Status.optimistic_join conflict.status_po1 conflict.status_po2
+        Status.meet conflict.status_po1 conflict.status_po2
       in
       Meta_status.update report.optimistic_result.global_result
         optimistic_status;
       Meta_status.update_map report.optimistic_result.results conflict.title
         optimistic_status);
   let pessimistic_status =
-    Status.pessimistic_join conflict.status_po1 conflict.status_po2
+    Status.join conflict.status_po1 conflict.status_po2
   in
   Meta_status.update report.pessimistic_result.global_result pessimistic_status;
   Meta_status.update_map report.pessimistic_result.results conflict.title

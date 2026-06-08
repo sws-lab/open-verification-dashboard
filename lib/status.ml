@@ -16,7 +16,7 @@ let of_kind (po_kind : Kind.t) =
   | Warning -> Warning
   | Error -> Error
 
-let optimistic_join x y =
+let meet x y =
   match x, y with
   | Warning, other
   | other, Warning -> other
@@ -27,7 +27,7 @@ let optimistic_join x y =
   | Unreached, _
   | _, Unreached -> Unreached
 
-let pessimistic_join x y =
+let join x y =
   match x, y with
   | Unreached, other
   | other, Unreached -> other

@@ -30,7 +30,7 @@ type t = {
   po2_name : string;
   optimistic_result : Meta_status.report;
   pessimistic_result : Meta_status.report;
-  joint_progress_matrix : int array array;
+  joint_progress_matrix : JointMatrix.t;
 }
 [@@deriving yojson_of]
 
@@ -41,20 +41,8 @@ let create po1_name po2_name =
     po2_name;
     optimistic_result = Meta_status.create ();
     pessimistic_result = Meta_status.create ();
-    joint_progress_matrix = Array.make_matrix 4 4 0;
+    joint_progress_matrix = JointMatrix.create ();
   }
-
-let add_joint_status (report : t) (conflict : Conflict.t) =
-  let po_status_to_id = function
-    | Status.Warning -> 0
-    | Status.Error -> 1
-    | Status.Safe -> 2
-    | _ -> 3
-  in
-  let id1 = po_status_to_id conflict.status_po1 in
-  let id2 = po_status_to_id conflict.status_po2 in
-  report.joint_progress_matrix.(id1).(id2) <-
-    report.joint_progress_matrix.(id1).(id2) + 1
 
 (** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
@@ -74,7 +62,7 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   Meta_status.update report.pessimistic_result.global_result pessimistic_status;
   Meta_status.update_map report.pessimistic_result.results conflict.title
     pessimistic_status;
-  add_joint_status report conflict;
+  JointMatrix.add report.joint_progress_matrix conflict.status_po1 conflict.status_po2;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with
   | Some existing_conflicts ->

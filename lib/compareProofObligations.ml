@@ -6,14 +6,19 @@ open ProofObligation
 module ConflictCheck = Conflict.ConflictCheck
 module ChecksSet = Conflict.ChecksSet
 
+module AnalyzerId = Int
+module AnalyzerMap = Map.Make (AnalyzerId)
+
 type pre_conflict = {
   category : Category.t;
   range : Range.t;
-  from_po1 : ChecksSet.t;
-  from_po2 : ChecksSet.t;
+  analyzer_checks : ChecksSet.t AnalyzerMap.t;
 }
 
 let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
+  let empty_analyzer_checks =
+    AnalyzerMap.of_seq (Seq.init 2 (fun i -> (i + 1, ChecksSet.empty)))
+  in
   let gather_conflicts checks f =
     let rec build_unique_conflict conflict = function
       | [] -> (conflict, [])
@@ -22,27 +27,17 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           Range.compare conflict.range check.range = 0
           && Category.compare conflict.category check.category = 0
         then
-          let from_po1 =
-            if analyzer_id = 1 then
-              ChecksSet.add
-                (ConflictCheck.of_check check)
-                conflict.from_po1
-            else conflict.from_po1
-          in
-          let from_po2 =
-            if analyzer_id = 2 then
-              ChecksSet.add
-                (ConflictCheck.of_check check)
-                conflict.from_po2
-            else conflict.from_po2
-          in
           let new_range = Range.union conflict.range check.range in
+          let conflict_check = ConflictCheck.of_check check in
+          let checks = match AnalyzerMap.find_opt analyzer_id conflict.analyzer_checks with
+            | Some checks -> ChecksSet.add conflict_check checks
+            | None -> ChecksSet.singleton conflict_check
+          in
           build_unique_conflict
             {
               conflict with
-              from_po1;
-              from_po2;
               range = new_range;
+              analyzer_checks = AnalyzerMap.add analyzer_id checks conflict.analyzer_checks;
             }
             rest
         else (conflict, (analyzer_id, check) :: rest))
@@ -56,16 +51,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           {
             range = check.range;
             category = check.category;
-            from_po1 =
-              (if analyzer_id = 1 then
-                ChecksSet.singleton
-                  (ConflictCheck.of_check check)
-              else ChecksSet.empty);
-            from_po2 =
-              (if analyzer_id = 2 then
-                ChecksSet.singleton
-                  (ConflictCheck.of_check check)
-              else ChecksSet.empty);
+            analyzer_checks = AnalyzerMap.add analyzer_id (ChecksSet.singleton (ConflictCheck.of_check check)) empty_analyzer_checks;
           }
         in
         (* build conflict of all matching checks *)
@@ -91,12 +77,12 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   in
   let conflicts =
     gather_conflicts checks (fun pc ->
-        let status_po1 =
-          ChecksSet.fold (fun c acc -> Status.join (Status.of_kind c.ConflictCheck.kind) acc) pc.from_po1 Unreached
+        let analyzer_statuses = AnalyzerMap.map (fun checks ->
+            ChecksSet.fold (fun c acc -> Status.join (Status.of_kind c.ConflictCheck.kind) acc) checks Unreached
+          ) pc.analyzer_checks
         in
-        let status_po2 =
-          ChecksSet.fold (fun c acc -> Status.join (Status.of_kind c.ConflictCheck.kind) acc) pc.from_po2 Unreached
-        in
+        let status_po1 = AnalyzerMap.find 1 analyzer_statuses in
+        let status_po2 = AnalyzerMap.find 2 analyzer_statuses in
         let kind =
           CrossStatus.of_statuses status_po1 status_po2
         in
@@ -104,9 +90,9 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           kind;
           category = pc.category;
           range = pc.range;
-          from_po1 = pc.from_po1;
+          from_po1 = AnalyzerMap.find 1 pc.analyzer_checks;
           status_po1;
-          from_po2 = pc.from_po2;
+          from_po2 = AnalyzerMap.find 2 pc.analyzer_checks;
           status_po2;
         })
   in

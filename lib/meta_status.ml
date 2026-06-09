@@ -6,11 +6,12 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 type t = {
   mutable optimistic_status : Status.t option;
   mutable pessimistic_status : Status.t option;
+  joint_matrix : JointMatrix.t;
 }
 [@@deriving yojson_of]
 
 let create () =
-  { optimistic_status = None; pessimistic_status = None }
+  { optimistic_status = None; pessimistic_status = None; joint_matrix = JointMatrix.create () }
 
 type map = (ProofObligation.Category.t, t) Hashtbl.t
 
@@ -33,7 +34,8 @@ let update (result : t) (conflict : Conflict.t) =
   let pessimistic_status =
     Status.join conflict.status_po1 conflict.status_po2
   in
-  result.pessimistic_status <- Some (Option.fold ~none:pessimistic_status ~some:(Status.join pessimistic_status) result.pessimistic_status)
+  result.pessimistic_status <- Some (Option.fold ~none:pessimistic_status ~some:(Status.join pessimistic_status) result.pessimistic_status);
+  JointMatrix.add result.joint_matrix conflict.status_po1 conflict.status_po2
 
 let update_map (table : map) (conflict : Conflict.t)
     =

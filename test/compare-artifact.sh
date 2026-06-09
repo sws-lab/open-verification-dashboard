@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test16-aggregate-coverage
+OUTDIR=dashboard-artifact-regression/test17-meta-status-refactor
 
 mkdir -p $OUTDIR
 

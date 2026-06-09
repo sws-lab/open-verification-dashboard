@@ -46,16 +46,13 @@ let create po1_name po2_name =
 
 (** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
-  (match conflict.kind with
-  | CrossStatus.CoverageDisagreement -> ()
-  | _ ->
-      let optimistic_status =
-        Status.meet conflict.status_po1 conflict.status_po2
-      in
-      Meta_status.update report.optimistic_result.global_result
-        optimistic_status;
-      Meta_status.update_map report.optimistic_result.results conflict.title
-        optimistic_status);
+  let optimistic_status =
+    Status.meet conflict.status_po1 conflict.status_po2
+  in
+  Meta_status.update report.optimistic_result.global_result
+    optimistic_status;
+  Meta_status.update_map report.optimistic_result.results conflict.title
+    optimistic_status;
   let pessimistic_status =
     Status.join conflict.status_po1 conflict.status_po2
   in

@@ -51,13 +51,13 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   in
   Meta_status.update report.optimistic_result.global_result
     optimistic_status;
-  Meta_status.update_map report.optimistic_result.results conflict.title
+  Meta_status.update_map report.optimistic_result.results conflict.category
     optimistic_status;
   let pessimistic_status =
     Status.join conflict.status_po1 conflict.status_po2
   in
   Meta_status.update report.pessimistic_result.global_result pessimistic_status;
-  Meta_status.update_map report.pessimistic_result.results conflict.title
+  Meta_status.update_map report.pessimistic_result.results conflict.category
     pessimistic_status;
   JointMatrix.add report.joint_progress_matrix conflict.status_po1 conflict.status_po2;
   let existing = Hashtbl.find_opt report.conflicts file in

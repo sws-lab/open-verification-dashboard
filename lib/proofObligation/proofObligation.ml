@@ -66,5 +66,5 @@ let filter_checks (checks : Check.t list)
       in
       List.filter
         (fun (check : Check.t) ->
-          Hashtbl.mem error_category_set check.title)
+          Hashtbl.mem error_category_set check.category)
         checks

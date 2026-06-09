@@ -41,7 +41,7 @@ type status = Status.t [@@deriving show { with_path = false }, yojson]
 
 type t = {
   kind : CrossStatus.t;
-  title : Category.t;
+  category : Category.t; [@key "title"] (* title is legacy name *)
   range : Range.t;
   from_po1 : ChecksSet.t;
   status_po1 : status; [@key "verdict_po1"] (* verdict is legacy name *)
@@ -54,7 +54,7 @@ let pp_kind fmt kind = Format.fprintf fmt "@{<bold>@{<#f00>%a@}@}" CrossStatus.p
 
 let pp fmt conflict =
   Format.fprintf fmt "%a (%a):@.    %a @.    @[<v 2>" pp_kind conflict.kind
-    Category.pp conflict.title Range.pp conflict.range;
+    Category.pp conflict.category Range.pp conflict.range;
 
   let pp_two_checks fmt conflict =
     Format.fprintf fmt

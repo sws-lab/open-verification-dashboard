@@ -10,7 +10,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
       | (analyzer_id, (check : Check.t)) :: rest -> (
         if
           Range.compare conflict.range check.range = 0
-          && Category.compare conflict.title check.title = 0
+          && Category.compare conflict.category check.category = 0
         then
           let from_po1 =
             if analyzer_id = 1 then
@@ -60,7 +60,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           {
             kind = CrossStatus.PositiveAgreement; (* TODO: will be recomputed at the end, so this doesn't matter, but better to avoid the dummy value altogether *)
             range = check.range;
-            title = check.title;
+            category = check.category;
             from_po1 =
               (if analyzer_id = 1 then
                 ChecksSet.singleton
@@ -97,7 +97,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
   let checks =
     List.sort
       (fun (_, (c1 : Check.t)) (_, (c2 : Check.t)) ->
-        let comp = Category.compare c1.title c2.title in
+        let comp = Category.compare c1.category c2.category in
         if comp <> 0 then comp
         else Range.compare_file_position c1.range.start c2.range.start)
       checks

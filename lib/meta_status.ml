@@ -4,9 +4,13 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = {
-  mutable result : Status.t option;
+  mutable optimistic_status : Status.t option;
+  mutable pessimistic_status : Status.t option;
 }
 [@@deriving yojson_of]
+
+let create () =
+  { optimistic_status = None; pessimistic_status = None }
 
 type map = (ProofObligation.Category.t, t) Hashtbl.t
 
@@ -19,34 +23,24 @@ let yojson_of_map (h : map) =
          (key, value) :: acc)
        h [])
 
-type report = {
-  global_result : t;
-  results : map;
-}
-[@@deriving yojson_of]
+let create_map () = Hashtbl.create 10
 
-let create () =
-  {
-    global_result = { result = None };
-    results = Hashtbl.create 10;
-  }
+let update (result : t) (conflict : Conflict.t) =
+  let optimistic_status =
+    Status.meet conflict.status_po1 conflict.status_po2
+  in
+  result.optimistic_status <- Some (Option.fold ~none:optimistic_status ~some:(Status.join optimistic_status) result.optimistic_status);
+  let pessimistic_status =
+    Status.join conflict.status_po1 conflict.status_po2
+  in
+  result.pessimistic_status <- Some (Option.fold ~none:pessimistic_status ~some:(Status.join pessimistic_status) result.pessimistic_status)
 
-let update (result : t) (new_status : Status.t)
+let update_map (table : map) (conflict : Conflict.t)
     =
-  match result.result with
-  | None ->
-      result.result <- Some new_status
-  | Some existing_kind ->
-      let updated_kind = Status.join existing_kind new_status in
-      result.result <- Some updated_kind
-
-let update_map (table : map)
-    (category : ProofObligation.Category.t) (new_status : Status.t)
-    =
-  match Hashtbl.find_opt table category with
+  match Hashtbl.find_opt table conflict.category with
   | Some result ->
-      update result new_status
+      update result conflict
   | None ->
-      let new_result = { result = None } in
-      update new_result new_status;
-      Hashtbl.add table category new_result
+      let new_result = create () in
+      update new_result conflict;
+      Hashtbl.add table conflict.category new_result

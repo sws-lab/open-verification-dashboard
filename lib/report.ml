@@ -28,8 +28,8 @@ type t = {
   conflicts : conflicts;
   po1_name : string;
   po2_name : string;
-  optimistic_result : Meta_status.report;
-  pessimistic_result : Meta_status.report;
+  global_result : Meta_status.t;
+  category_results : Meta_status.map;
   joint_progress_matrix : JointMatrix.t;
 }
 [@@deriving yojson_of]
@@ -39,26 +39,15 @@ let create po1_name po2_name =
     conflicts = Hashtbl.create 16;
     po1_name;
     po2_name;
-    optimistic_result = Meta_status.create ();
-    pessimistic_result = Meta_status.create ();
+    global_result = Meta_status.create ();
+    category_results = Meta_status.create_map ();
     joint_progress_matrix = JointMatrix.create ();
   }
 
 (** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
-  let optimistic_status =
-    Status.meet conflict.status_po1 conflict.status_po2
-  in
-  Meta_status.update report.optimistic_result.global_result
-    optimistic_status;
-  Meta_status.update_map report.optimistic_result.results conflict.category
-    optimistic_status;
-  let pessimistic_status =
-    Status.join conflict.status_po1 conflict.status_po2
-  in
-  Meta_status.update report.pessimistic_result.global_result pessimistic_status;
-  Meta_status.update_map report.pessimistic_result.results conflict.category
-    pessimistic_status;
+  Meta_status.update report.global_result conflict;
+  Meta_status.update_map report.category_results conflict;
   JointMatrix.add report.joint_progress_matrix conflict.status_po1 conflict.status_po2;
   let existing = Hashtbl.find_opt report.conflicts file in
   match existing with

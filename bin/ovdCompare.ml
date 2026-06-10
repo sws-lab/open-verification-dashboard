@@ -36,7 +36,8 @@ let compare ~checks_files ~filter_category ~filter_path ~format =
           (fun (conflict : Conflict.t) ->
             Report.add_conflict report conflict.range.file conflict)
           conflict;
-        Report.yojson_of_t report |> Yojson.Safe.to_channel stdout
+        Report.yojson_of_t report |> Yojson.Safe.to_channel ~suf:"\n" stdout;
+        flush stdout
       | `Pretty ->
         List.iter
           (fun conflict -> Format.printf "%a@." Conflict.pp conflict)

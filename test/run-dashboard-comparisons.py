@@ -79,41 +79,41 @@ def run_dashboard(
     """
 
     cmd = [
-        "_build/default/bin/main.exe",
-        "--exclude-not-found", "false",
-        "--analyze", analyze_only
+        "_build/default/bin/ovd.exe",
+        "compare",
+        "--format", "json",
+        "--filter-path", analyze_only
     ]
 
     overflow_categories = [
-        "signed_integer_overflow_in_arithmetic_operator",
-        "unsigned_integer_overflow_in_arithmetic_operator",
+        "Signed integer overflow in arithmetic operator",
+        "Unsigned integer overflow in arithmetic operator",
     ]
 
     for cat in overflow_categories:
-        cmd.extend(["--filter-error-category", cat])
+        cmd.extend(["--filter-category", cat])
 
     cmd.extend([
         str(mopsa_json),
-        str(goblint_json),
-        "--output", str(output_file),
+        str(goblint_json)
     ])
 
-
-    if log_file is not None:
-        with log_file.open("a", encoding="utf-8") as log:
-            log.write(f"[RUN] {' '.join(cmd)} (cwd={dashboard_root})\n")
-            log.flush()
-            completed = subprocess.run(
-                cmd,
-                cwd=dashboard_root,
-                check=False,
-                stdout=log,
-                stderr=subprocess.STDOUT,
-                text=True,
-            )
-    else:
-        print("[RUN]", " ".join(cmd), f"(cwd={dashboard_root})")
-        completed = subprocess.run(cmd, cwd=dashboard_root, check=False)
+    with output_file.open("w", encoding="utf-8") as out:
+        if log_file is not None:
+            with log_file.open("a", encoding="utf-8") as log:
+                log.write(f"[RUN] {' '.join(cmd)} (cwd={dashboard_root})\n")
+                log.flush()
+                completed = subprocess.run(
+                    cmd,
+                    cwd=dashboard_root,
+                    check=False,
+                    stdout=out,
+                    stderr=log,
+                    text=True,
+                )
+        else:
+            print("[RUN]", " ".join(cmd), f"(cwd={dashboard_root})")
+            completed = subprocess.run(cmd, cwd=dashboard_root, check=False, stdout=out)
 
     return completed.returncode
 
@@ -210,6 +210,7 @@ def main():
                 log_file,
                 f"[ERROR] dashboard execution failed for {rel_task_dir} with return code {return_code}: {status}",
             )
+            out_file.unlink()
 
         if args.progress_every > 0 and (idx % args.progress_every == 0 or idx == total_tasks):
             percentage = (idx / total_tasks) * 100 if total_tasks else 100.0

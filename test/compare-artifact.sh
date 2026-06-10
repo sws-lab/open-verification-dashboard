@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test17-meta-status-refactor
+OUTDIR=dashboard-artifact-regression/test18-ovd-compare
 
 mkdir -p $OUTDIR
 

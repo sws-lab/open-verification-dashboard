@@ -51,5 +51,5 @@ let add_conflict (report : t) (file : string) (conflict : Conflict.t) =
   | Some existing_conflicts ->
       Hashtbl.replace report.conflicts file (conflict :: existing_conflicts)
   | None ->
-      Format.printf "Writing conflicts for file %s@." file;
+      Format.eprintf "Writing conflicts for file %s@." file;
       Hashtbl.add report.conflicts file [ conflict ]

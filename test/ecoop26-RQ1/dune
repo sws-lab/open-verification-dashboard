@@ -53,3 +53,16 @@
     (ignore-stderr
      (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint})))
    (diff? NoConversion.yml.comparison.json comparison.json))))
+
+(rule
+ (alias runtest)
+ (deps
+  (sandbox always)
+  (:mopsa mopsa.2026-02-10_20-41-53.files/SV-COMP26_no-overflow/bresenham-ll_valuebound1.yml/checks.json)
+  (:goblint goblint.2026-02-12_16-35-44.files/SV-COMP26_no-overflow/bresenham-ll_valuebound1.yml/checks.json))
+ (action
+  (progn
+   (with-stdout-to comparison.json
+    (ignore-stderr
+     (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint})))
+   (diff? bresenham-ll_valuebound1.yml.comparison.json comparison.json))))

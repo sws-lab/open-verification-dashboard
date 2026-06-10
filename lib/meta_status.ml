@@ -7,11 +7,15 @@ type t = {
   mutable optimistic_status : Status.t option;
   mutable pessimistic_status : Status.t option;
   joint_matrix : JointMatrix.t;
+  mutable selectivity1 : float option;
+  mutable selectivity2 : float option;
+  mutable joint_selectivity : float option;
+  mutable alignment : float option;
 }
 [@@deriving yojson_of]
 
 let create () =
-  { optimistic_status = None; pessimistic_status = None; joint_matrix = JointMatrix.create () }
+  { optimistic_status = None; pessimistic_status = None; joint_matrix = JointMatrix.create (); selectivity1 = None; selectivity2 = None; joint_selectivity = None; alignment = None }
 
 type map = (ProofObligation.Category.t, t) Hashtbl.t
 
@@ -35,7 +39,12 @@ let update (result : t) (conflict : Conflict.t) =
     Status.join conflict.status_po1 conflict.status_po2
   in
   result.pessimistic_status <- Some (Option.fold ~none:pessimistic_status ~some:(Status.join pessimistic_status) result.pessimistic_status);
-  JointMatrix.add result.joint_matrix conflict.status_po1 conflict.status_po2
+  JointMatrix.add result.joint_matrix conflict.status_po1 conflict.status_po2;
+  (* TODO: don't recompute each time *)
+  result.selectivity1 <- JointMatrix.selectivity1 result.joint_matrix;
+  result.selectivity2 <- JointMatrix.selectivity2 result.joint_matrix;
+  result.joint_selectivity <- JointMatrix.joint_selectivity result.joint_matrix;
+  result.alignment <- JointMatrix.alignment result.joint_matrix
 
 let update_map (table : map) (conflict : Conflict.t)
     =

@@ -10,8 +10,9 @@
   (:goblint goblint.2026-02-12_16-35-44.files/SV-COMP26_no-overflow/AdditionIntMin.yml/checks.json))
  (action
   (progn
-   (ignore-outputs
-    (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint}))
+   (with-stdout-to comparison.json
+    (ignore-stderr
+     (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint})))
    (diff? AdditionIntMin.yml.comparison.json comparison.json))))
 
 (rule
@@ -22,8 +23,9 @@
   (:goblint goblint.2026-02-12_16-35-44.files/SV-COMP26_no-overflow/20051113-1.yml/checks.json))
  (action
   (progn
-   (ignore-outputs
-    (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint}))
+   (with-stdout-to comparison.json
+    (ignore-stderr
+     (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint})))
    (diff? 20051113-1.yml.comparison.json comparison.json))))
 
 (rule
@@ -34,8 +36,9 @@
   (:goblint goblint.2026-02-12_16-35-44.files/SV-COMP26_no-overflow/a.08.yml/checks.json))
  (action
   (progn
-   (ignore-outputs
-    (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint}))
+   (with-stdout-to comparison.json
+    (ignore-stderr
+     (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint})))
    (diff? a.08.yml.comparison.json comparison.json))))
 
 (rule
@@ -46,6 +49,7 @@
   (:goblint goblint.2026-02-12_16-35-44.files/SV-COMP26_no-overflow/NoConversion.yml/checks.json))
  (action
   (progn
-   (ignore-outputs
-    (run dashboard --output comparison.json --filter-error-category signed_integer_overflow_in_arithmetic_operator --filter-error-category unsigned_integer_overflow_in_arithmetic_operator --analyze /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint}))
+   (with-stdout-to comparison.json
+    (ignore-stderr
+     (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/sv-benchmarks/c/** %{mopsa} %{goblint})))
    (diff? NoConversion.yml.comparison.json comparison.json))))

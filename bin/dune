@@ -1,9 +1,18 @@
-(executables
- (public_names ovd dashboard)
- (names ovd main)
+(executable
+ (public_name ovd)
+ (modules :standard \ main)
+ (libraries
+  dashboard
+  spectrum ; TODO: spectrum is horrible: it links in ppxlib, etc at runtime
+  re
+  cmdliner))
+
+(executable
+ (public_name dashboard)
+ (name main)
+ (modules main)
  (libraries
   dashboard
   project
   spectrum ; TODO: spectrum is horrible: it links in ppxlib, etc at runtime
-  re
-  cmdliner))
+  re))

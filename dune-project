@@ -19,4 +19,5 @@
   (ppx_yojson_conv (>= 0.15.1))
   re
   cmdliner
+  globlon
   (spectrum (>= 0.7.0))))

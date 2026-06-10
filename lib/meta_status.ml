@@ -12,10 +12,23 @@ type t = {
   mutable joint_selectivity : float option;
   mutable alignment : float option;
 }
-[@@deriving yojson_of]
+[@@deriving yojson]
 
 let create () =
   { optimistic_status = None; pessimistic_status = None; joint_matrix = JointMatrix.create (); selectivity1 = None; selectivity2 = None; joint_selectivity = None; alignment = None }
+
+let merge ms1 ms2 =
+  let joint_matrix = JointMatrix.merge ms1.joint_matrix ms2.joint_matrix in
+  {
+    joint_matrix;
+    optimistic_status = None; (* TODO *)
+    pessimistic_status = None; (* TODO *)
+  (* TODO: don't recompute each time *)
+    selectivity1 = JointMatrix.selectivity1 joint_matrix;
+    selectivity2 = JointMatrix.selectivity2 joint_matrix;
+    joint_selectivity = JointMatrix.joint_selectivity joint_matrix;
+    alignment = JointMatrix.alignment joint_matrix
+  }
 
 type map = (ProofObligation.Category.t, t) Hashtbl.t
 
@@ -28,7 +41,29 @@ let yojson_of_map (h : map) =
          (key, value) :: acc)
        h [])
 
+let map_of_yojson: Yojson.Safe.t -> map = function
+  | `Assoc l ->
+    List.to_seq l
+    |> Seq.map (fun (k, v) -> (ProofObligation.Category.t_of_yojson (`String k), t_of_yojson v))
+    |> Hashtbl.of_seq
+  | _ -> failwith "map_of_yojson"
+
 let create_map () = Hashtbl.create 10
+
+let merge_map map1 map2 =
+  let h = Hashtbl.create (Hashtbl.length map1 + Hashtbl.length map2) in
+  let f =
+    Hashtbl.iter (fun k v ->
+        let v0 = match Hashtbl.find_opt h k with
+          | Some v0 -> v0
+          | None -> create ()
+        in
+        Hashtbl.replace h k (merge v0 v)
+      )
+  in
+  f map1;
+  f map2;
+  h
 
 let update (result : t) (conflict : Conflict.t) =
   let optimistic_status =

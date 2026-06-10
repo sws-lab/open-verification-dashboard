@@ -2,6 +2,7 @@ open Cmdliner
 
 let cmds = [
   OvdCompare.cmd;
+  OvdSummarize.cmd;
 ]
 
 let cmd =

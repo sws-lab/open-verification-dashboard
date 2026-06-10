@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test18-ovd-compare
+OUTDIR=dashboard-artifact-regression/test19-metrics
 
 mkdir -p $OUTDIR
 

@@ -1,6 +1,6 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
-type t = int array array [@@deriving yojson_of]
+type t = int array array [@@deriving yojson]
 
 let create () = Array.make_matrix 4 4 0
 
@@ -14,6 +14,9 @@ let add (matrix : t) status_po1 status_po2 =
   let id1 = po_status_to_id status_po1 in
   let id2 = po_status_to_id status_po2 in
   matrix.(id1).(id2) <- matrix.(id1).(id2) + 1
+
+let merge m1 m2 =
+  Array.map2 (Array.map2 (+)) m1 m2
 
 let selectivity ~warning ~error ~safe =
   let reachable = warning + error + safe in

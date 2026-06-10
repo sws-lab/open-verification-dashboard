@@ -5,7 +5,10 @@
   dashboard
   spectrum ; TODO: spectrum is horrible: it links in ppxlib, etc at runtime
   re
-  cmdliner))
+  globlon
+  cmdliner)
+ (preprocess
+  (pps ppx_deriving.std ppx_deriving_hash ppx_yojson_conv)))
 
 (executable
  (public_name dashboard)

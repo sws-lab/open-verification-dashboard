@@ -1,7 +1,8 @@
-type t [@@deriving yojson_of]
+type t [@@deriving yojson]
 
 val create: unit -> t
 val add: t -> Status.t -> Status.t -> unit
+val merge: t -> t -> t
 
 val selectivity1: t -> float option
 val selectivity2: t -> float option

@@ -57,7 +57,7 @@ let checks_files =
 let filter_category =
   let module Category = ProofObligation.Category in
   let enum =
-    List.init Category.max (fun i ->
+    List.init (Category.max + 1) (fun i ->
         let category = Option.get (Category.of_enum i) in
         (Category.to_string category, category)
       )

@@ -31,8 +31,8 @@ let summarize ~comparison_files ~format:_: (int, string) result =
     Yojson.Safe.to_channel ~suf:"\n" stdout (yojson_of_t summary);
     flush stdout;
     Ok 0
-  with Ppx_yojson_conv_lib.Yojson_conv.Of_yojson_error (_e, j) ->
-    Error (Yojson.Safe.to_string j)
+  with Ppx_yojson_conv_lib.Yojson_conv.Of_yojson_error (e, j) ->
+    Error (Printexc.to_string e ^ Yojson.Safe.to_string j)
 
 
 open Cmdliner

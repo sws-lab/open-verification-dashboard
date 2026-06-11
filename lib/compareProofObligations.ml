@@ -72,8 +72,10 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
       (fun (_, (c1 : Check.t)) (_, (c2 : Check.t)) ->
         let comp = Category.compare c1.category c2.category in
         if comp <> 0 then comp
-          (* TODO: BUG: doesn't compare filenames first, causes problems with uname (still?) *)
-        else Range.compare_file_position c1.range.start c2.range.start)
+        else
+          let comp = String.compare c1.range.file c2.range.file in
+          if comp <> 0 then comp
+          else Range.compare_file_position c1.range.start c2.range.start)
       checks
   in
   let conflicts =

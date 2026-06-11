@@ -2,6 +2,8 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = int array array [@@deriving yojson]
 
+let statuses = Status.[|Warning; Error; Safe; Unreached|]
+
 let create () = Array.make_matrix 4 4 0
 
 let add (matrix : t) status_po1 status_po2 =
@@ -17,6 +19,22 @@ let add (matrix : t) status_po1 status_po2 =
 
 let merge m1 m2 =
   Array.map2 (Array.map2 (+)) m1 m2
+
+let status join m =
+  (* for loops because there's no Array.fold_left2 *)
+  let r = ref None in
+  for i = 0 to 3 do
+    for j = 0 to 3 do
+      if m.(i).(j) > 0 then (
+        let status = join statuses.(i) statuses.(j) in
+        r := Some (Option.fold ~none:status ~some:(Status.join status) !r)
+      )
+    done
+  done;
+  !r
+
+let optimistic_status = status Status.meet
+let pessimistic_status = status Status.join
 
 let selectivity ~warning ~error ~safe =
   let reachable = warning + error + safe in

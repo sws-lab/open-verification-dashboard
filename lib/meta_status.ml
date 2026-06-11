@@ -21,9 +21,9 @@ let merge ms1 ms2 =
   let joint_matrix = JointMatrix.merge ms1.joint_matrix ms2.joint_matrix in
   {
     joint_matrix;
-    optimistic_status = None; (* TODO *)
-    pessimistic_status = None; (* TODO *)
-  (* TODO: don't recompute each time *)
+    (* TODO: don't recompute each time *)
+    optimistic_status = JointMatrix.optimistic_status joint_matrix;
+    pessimistic_status = JointMatrix.pessimistic_status joint_matrix;
     selectivity1 = JointMatrix.selectivity1 joint_matrix;
     selectivity2 = JointMatrix.selectivity2 joint_matrix;
     joint_selectivity = JointMatrix.joint_selectivity joint_matrix;
@@ -66,16 +66,10 @@ let merge_map map1 map2 =
   h
 
 let update (result : t) (conflict : Conflict.t) =
-  let optimistic_status =
-    Status.meet conflict.status_po1 conflict.status_po2
-  in
-  result.optimistic_status <- Some (Option.fold ~none:optimistic_status ~some:(Status.join optimistic_status) result.optimistic_status);
-  let pessimistic_status =
-    Status.join conflict.status_po1 conflict.status_po2
-  in
-  result.pessimistic_status <- Some (Option.fold ~none:pessimistic_status ~some:(Status.join pessimistic_status) result.pessimistic_status);
   JointMatrix.add result.joint_matrix conflict.status_po1 conflict.status_po2;
   (* TODO: don't recompute each time *)
+  result.optimistic_status <- JointMatrix.optimistic_status result.joint_matrix;
+  result.pessimistic_status <- JointMatrix.pessimistic_status result.joint_matrix;
   result.selectivity1 <- JointMatrix.selectivity1 result.joint_matrix;
   result.selectivity2 <- JointMatrix.selectivity2 result.joint_matrix;
   result.joint_selectivity <- JointMatrix.joint_selectivity result.joint_matrix;

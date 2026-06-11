@@ -24,7 +24,7 @@ type t = {
   start : file_position;
   end_ : file_position; [@key "end"]
 }
-[@@deriving yojson_of, eq]
+[@@deriving yojson_of, eq, ord]
 
 let pp fmt range =
   Format.fprintf fmt "%s:%d.%d-%d.%d" range.file range.start.line
@@ -79,8 +79,8 @@ let overlap a b =
         (min_file_position a.end_ b.end_)
       <= 0 (* TODO: should end-to-end touching be overlapping? *)
 
-let compare a b =
-  if a.file <> b.file then compare a.file b.file
+let compare_overlap a b =
+  if a.file <> b.file then String.compare a.file b.file
   else if overlap a b then 0
   else if compare_file_position a.end_ b.start < 0 then -1
   else if compare_file_position a.start b.end_ > 0 then 1

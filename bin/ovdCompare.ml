@@ -29,6 +29,16 @@ let compare ~checks_files ~filter_category ~filter_path ~format =
     let po1 = load_checks checks_file1 in
     let po2 = load_checks checks_file2 in
     let conflict = CompareProofObligations.conflicts_between po1 po2 in
+
+    (* Check that no checks were lost. *)
+    let conflict_checks_count =
+      List.fold_left (fun acc (conflict: Conflict.t) ->
+          acc + CompareProofObligations.ChecksSet.cardinal conflict.from_po1 + CompareProofObligations.ChecksSet.cardinal conflict.from_po2
+        ) 0 conflict
+    in
+    (* TODO: This fails if the original lists contain duplicates. *)
+    assert (conflict_checks_count = List.length po1.checks + List.length po2.checks);
+
     begin match format with
       | `Json ->
         let report = Report.create po1.name po2.name in

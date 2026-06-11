@@ -12,7 +12,7 @@ module AnalyzerMap = Map.Make (AnalyzerId)
 type pre_conflict = {
   category : Category.t;
   range : Range.t;
-  analyzer_checks : ChecksSet.t AnalyzerMap.t; (* TODO: BUG: overlap-based Range.compare in ChecksSet swallows some elements. *)
+  analyzer_checks : ChecksSet.t AnalyzerMap.t;
 }
 
 let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
@@ -24,7 +24,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
       | [] -> (conflict, [])
       | (analyzer_id, (check : Check.t)) :: rest -> (
         if
-          Range.compare conflict.range check.range = 0
+          Range.overlap conflict.range check.range
           && Category.compare conflict.category check.category = 0
         then
           let new_range = Range.union conflict.range check.range in
@@ -99,4 +99,4 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
           status_po2;
         })
   in
-  List.sort Conflict.(fun c1 c2 -> Range.compare c1.range c2.range) conflicts
+  List.sort Conflict.(fun c1 c2 -> Range.compare_overlap c1.range c2.range) conflicts

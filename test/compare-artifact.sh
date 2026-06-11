@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test20-sort-filename
+OUTDIR=dashboard-artifact-regression/test21-range-compare
 
 mkdir -p $OUTDIR
 

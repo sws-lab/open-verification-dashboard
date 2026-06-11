@@ -4,13 +4,13 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = {
-  mutable optimistic_status : Status.t option;
-  mutable pessimistic_status : Status.t option;
+  mutable optimistic_status : Status.t option; [@default None]
+  mutable pessimistic_status : Status.t option; [@default None]
   joint_matrix : JointMatrix.t;
-  mutable selectivity1 : float option;
-  mutable selectivity2 : float option;
-  mutable joint_selectivity : float option;
-  mutable alignment : float option;
+  mutable selectivity1 : float option; [@default None]
+  mutable selectivity2 : float option; [@default None]
+  mutable joint_selectivity : float option; [@default None]
+  mutable alignment : float option; [@default None]
 }
 [@@deriving yojson]
 

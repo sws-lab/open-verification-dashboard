@@ -12,7 +12,7 @@ module AnalyzerMap = Map.Make (AnalyzerId)
 type pre_conflict = {
   category : Category.t;
   range : Range.t;
-  analyzer_checks : ChecksSet.t AnalyzerMap.t;
+  analyzer_checks : ChecksSet.t AnalyzerMap.t; (* TODO: BUG: overlap-based Range.compare in ChecksSet swallows some elements. *)
 }
 
 let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
@@ -72,6 +72,7 @@ let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
       (fun (_, (c1 : Check.t)) (_, (c2 : Check.t)) ->
         let comp = Category.compare c1.category c2.category in
         if comp <> 0 then comp
+          (* TODO: BUG: doesn't compare filenames first, causes problems with uname (still?) *)
         else Range.compare_file_position c1.range.start c2.range.start)
       checks
   in

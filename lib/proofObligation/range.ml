@@ -77,7 +77,7 @@ let overlap a b =
   && compare_file_position
         (max_file_position a.start b.start)
         (min_file_position a.end_ b.end_)
-      <= 0
+      <= 0 (* TODO: should end-to-end touching be overlapping? *)
 
 let compare a b =
   if a.file <> b.file then compare a.file b.file

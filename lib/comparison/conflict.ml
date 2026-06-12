@@ -2,7 +2,6 @@
     manipulate conflicts. *)
 
 open Ovd_checks
-module ComparisonStatus = Status
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module ConflictCheck = struct
@@ -38,16 +37,14 @@ struct
   let t_of_yojson j = of_list ([%of_yojson: ConflictCheck.t list] j)
 end
 
-type status = ComparisonStatus.t [@@deriving show { with_path = false }, yojson]
-
 type t = {
   kind : CrossStatus.t;
   category : Category.t; [@key "title"] (* title is legacy name *)
   range : Range.t;
   from_po1 : ChecksSet.t;
-  status_po1 : status; [@key "verdict_po1"] (* verdict is legacy name *)
+  status_po1 : Status.t; [@key "verdict_po1"] (* verdict is legacy name *)
   from_po2 : ChecksSet.t;
-  status_po2 : status; [@key "verdict_po2"] (* verdict is legacy name *)
+  status_po2 : Status.t; [@key "verdict_po2"] (* verdict is legacy name *)
 }
 [@@deriving yojson]
 

@@ -53,6 +53,8 @@ struct
 
   let t_of_yojson = OvdYojson.string_t_of_yojson t_of_yojson "Status"
   let yojson_of_t = OvdYojson.string_yojson_of_t yojson_of_t
+
+  let join = join (* this is unused but very neatly reuses the general join, which due to its particular structure has a nice polymorphic type *)
 end
 
 let of_reachable (status: Reachable.t) = (status :> t)

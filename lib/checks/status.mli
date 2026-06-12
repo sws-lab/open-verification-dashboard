@@ -21,6 +21,9 @@ sig
     | `Error
   ]
   [@@deriving show, yojson, ord]
+
+  (** Join two analyzers status in a pessimistic way. *)
+  val join : t -> t -> t
 end
 
 

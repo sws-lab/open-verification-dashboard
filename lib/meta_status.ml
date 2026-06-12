@@ -3,12 +3,9 @@
 
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
-type t = {
-  joint_matrix : JointMatrix.t;
-}
-[@@deriving of_yojson] [@@yojson.allow_extra_fields]
+include JointMatrix
 
-let yojson_of_t {joint_matrix} =
+let yojson_of_t joint_matrix =
   `Assoc [
     ("optimistic_status", [%yojson_of: Status.t option] (JointMatrix.optimistic_status joint_matrix));
     ("pessimistic_status", [%yojson_of: Status.t option] (JointMatrix.pessimistic_status joint_matrix));
@@ -19,16 +16,9 @@ let yojson_of_t {joint_matrix} =
     ("alignment", [%yojson_of: float option] (JointMatrix.alignment joint_matrix));
   ]
 
-let create () =
-  { joint_matrix = JointMatrix.create () }
+let t_of_yojson j =
+  JointMatrix.t_of_yojson (Yojson.Safe.Util.member "joint_matrix" j)
 
-let add_conflict (result : t) (conflict : Conflict.t) =
-  JointMatrix.add_conflict result.joint_matrix conflict
-
-let merge ms1 ms2 =
-  {
-    joint_matrix = JointMatrix.merge ms1.joint_matrix ms2.joint_matrix;
-  }
 
 module CategoryMap =
 struct

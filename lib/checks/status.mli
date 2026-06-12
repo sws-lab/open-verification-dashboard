@@ -1,5 +1,6 @@
-type t =
-  | Safe
-  | Warning
-  | Error
+type t = [
+  | `Safe
+  | `Warning
+  | `Error
+]
 [@@deriving show, yojson, ord]

@@ -13,9 +13,9 @@ let yojson_of_t = OvdYojson.string_yojson_of_t yojson_of_t
 
 let of_status (po_status : Status.t) =
   match po_status with
-  | Safe -> Safe
-  | Warning -> Warning
-  | Error -> Error
+  | `Safe -> Safe
+  | `Warning -> Warning
+  | `Error -> Error
 
 let meet x y =
   match x, y with

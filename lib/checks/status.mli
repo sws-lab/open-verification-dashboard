@@ -1,3 +1,18 @@
+type t = [
+  | `Safe
+  | `Warning
+  | `Error
+  | `Unreached
+]
+[@@deriving show, yojson]
+
+(** Join two analyzers status in an optimistic way. *)
+val meet : t -> t -> t
+
+(** Join two analyzers status in a pessimistic way. *)
+val join : t -> t -> t
+
+
 module Reachable:
 sig
   type t = [
@@ -9,18 +24,4 @@ sig
 end
 
 
-type t = [
-  | `Safe
-  | `Warning
-  | `Error
-  | `Unreached
-]
-[@@deriving show, yojson]
-
-val of_status : Reachable.t -> t
-
-(** Join two analyzers status in an optimistic way. *)
-val meet : t -> t -> t
-
-(** Join two analyzers status in a pessimistic way. *)
-val join : t -> t -> t
+val of_reachable : Reachable.t -> t

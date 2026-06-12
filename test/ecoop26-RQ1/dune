@@ -92,3 +92,14 @@
     (ignore-stderr
      (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i %{mopsa} %{goblint}))) ; doesn't include Mopsa's patched file
    (diff? uname-1.yml.comparison-2.json comparison.json))))
+
+(rule
+ (alias runtest)
+ (deps
+  (sandbox always)
+  (glob_files *.comparison.json))
+ (action
+  (progn
+   (with-stdout-to tmp.json
+    (run ovd summarize *.comparison.json))
+   (diff? summary.json tmp.json))))

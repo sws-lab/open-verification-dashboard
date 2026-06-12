@@ -53,3 +53,14 @@
     (ignore-stderr
      (run ovd compare --format json --filter-category "Signed integer overflow in arithmetic operator" --filter-category "Unsigned integer overflow in arithmetic operator" --filter-path /home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/** %{mopsa} %{goblint})))
    (diff? nested_1.yml.comparison.json comparison.json))))
+
+(rule
+ (alias runtest)
+ (deps
+  (sandbox always)
+  (glob_files *.comparison.json))
+ (action
+  (progn
+   (with-stdout-to tmp.json
+    (run ovd summarize *.comparison.json))
+   (diff? summary.json tmp.json))))

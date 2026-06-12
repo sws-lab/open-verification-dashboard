@@ -6,7 +6,7 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 type t = {
   joint_matrix : JointMatrix.t;
 }
-[@@deriving of_yojson]
+[@@deriving of_yojson] [@@yojson.allow_extra_fields]
 
 let yojson_of_t {joint_matrix} =
   `Assoc [

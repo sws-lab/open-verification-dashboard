@@ -1,35 +1,21 @@
-type t = (string, Conflict.t list) Hashtbl.t
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
-let create () = Hashtbl.create 16
+module Filename =
+struct
+  include String
+  let of_string = Fun.id
+  let to_string = Fun.id
+  let hash: t -> int = Hashtbl.hash
+  let of_conflict conflict = conflict.Conflict.range.file
+end
 
-let yojson_of_t (h : t) =
-  `Assoc
-    (Hashtbl.fold
-       (fun k v acc -> (k, `List (List.map Conflict.yojson_of_t v)) :: acc)
-       h [])
+module Conflicts =
+struct
+  type t = Conflict.t list ref [@@deriving yojson]
+  let create () = ref []
+  let add_conflict l conflict =
+    l := conflict :: !l
+  let merge l1 l2 = ref (!l1 @ !l2)
+end
 
-let t_of_yojson = function
-  | `Assoc l ->
-      let tbl = Hashtbl.create 10 in
-      List.iter
-        (function
-          | (k : string), `List v ->
-              let conflicts = List.map Conflict.t_of_yojson v in
-              Hashtbl.add tbl k conflicts
-          | _ -> failwith "Expected a string key and a list of conflicts")
-        l;
-      tbl
-  | _ -> failwith "Expected an associative list for conflicts"
-
-(** Add a conflict to the report global conflicts table *)
-let add_conflict (conflicts : t) (conflict : Conflict.t) =
-  let file = conflict.range.file in
-  let existing = Hashtbl.find_opt conflicts file in
-  match existing with
-  | Some existing_conflicts ->
-      Hashtbl.replace conflicts file (conflict :: existing_conflicts)
-  | None ->
-      Format.eprintf "Writing conflicts for file %s@." file;
-      Hashtbl.add conflicts file [ conflict ]
-
-let merge _ _ = failwith "TODO?"
+include ConflictAggregator.MakeGrouped (Filename) (Conflicts)

@@ -1,3 +1,1 @@
-include ConflictAggregator.YojsonS
-
-val create: unit -> t
+include ConflictAggregator.GroupS

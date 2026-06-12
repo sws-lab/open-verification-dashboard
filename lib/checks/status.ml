@@ -4,9 +4,9 @@ type t =
   | Error [@name "error"]
 [@@deriving yojson, show { with_path = false }, ord]
 
-let pp fmt kind =
+let pp fmt status =
   Format.fprintf fmt
-    (match kind with
+    (match status with
     | Safe -> "@{<green>safe"
     | Warning -> "@{<yellow>warning"
     | Error -> "@{<red>error");

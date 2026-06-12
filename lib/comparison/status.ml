@@ -10,8 +10,8 @@ type t =
 let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Status"
 let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 
-let of_kind (po_kind : Status.t) =
-  match po_kind with
+let of_status (po_status : Status.t) =
+  match po_status with
   | Safe -> Safe
   | Warning -> Warning
   | Error -> Error

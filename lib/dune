@@ -1,6 +1,5 @@
 (library
  (name dashboard)
- (modules_without_implementation conflictAggregator)
  (preprocess
   (pps ppx_deriving.std ppx_deriving_hash ppx_yojson_conv))
  (libraries

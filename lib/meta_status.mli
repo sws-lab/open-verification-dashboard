@@ -1,11 +1,3 @@
-include ConflictAggregator.YojsonS
+include ConflictAggregator.GroupS
 
-val create : unit -> t
-
-
-module CategoryMap:
-sig
-  include ConflictAggregator.YojsonS
-
-  val create : unit -> t
-end
+module CategoryMap: ConflictAggregator.GroupS

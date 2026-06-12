@@ -23,6 +23,9 @@ type t =
   | InvalidShift [@name "Invalid shift"]
 [@@deriving yojson, show { with_path = false }, ord, enum]
 
+let equal: t -> t -> bool = (=)
+let hash: t -> int = Hashtbl.hash
+
 let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Category"
 let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
 

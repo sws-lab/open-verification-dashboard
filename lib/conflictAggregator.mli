@@ -12,3 +12,22 @@ sig
 
   include S with type t := t
 end
+
+
+module type ConflictGroup =
+sig
+  include Hashtbl.HashedType
+
+  val to_string: t -> string
+  val of_string: string -> t
+
+  val of_conflict: Conflict.t -> t
+end
+
+module type GroupS =
+sig
+  include YojsonS
+  val create: unit -> t
+end
+
+module MakeGrouped (_: ConflictGroup) (_: GroupS): GroupS

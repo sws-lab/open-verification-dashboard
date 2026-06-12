@@ -1,8 +1,8 @@
 (** This module provides functions to compare proof obligations and identify
     conflicts. *)
 
-module ComparisonStatus = Status
 open Ovd_checks
+module ComparisonStatus = Status
 
 module ConflictCheck = Conflict.ConflictCheck
 module ChecksSet = Conflict.ChecksSet

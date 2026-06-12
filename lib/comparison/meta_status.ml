@@ -1,6 +1,7 @@
 (** This module defines the report structure and provides functions to create
     and export the final json report. *)
 
+open Ovd_checks
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module Meta_status =

@@ -1,8 +1,8 @@
 (** This module defines the conflict type and provides functions to create and
     manipulate conflicts. *)
 
-module ComparisonStatus = Status
 open Ovd_checks
+module ComparisonStatus = Status
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module ConflictCheck = struct

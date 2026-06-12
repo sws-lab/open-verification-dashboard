@@ -2,20 +2,20 @@ open Dashboard
 
 type t = {
   global_result : Meta_status.t;
-  category_results : Meta_status.map;
+  category_results : Meta_status.CategoryMap.t;
 }
 [@@deriving yojson] [@@yojson.allow_extra_fields]
 
 let create () =
   {
     global_result = Meta_status.create ();
-    category_results = Meta_status.create_map ();
+    category_results = Meta_status.CategoryMap.create ();
   }
 
 let merge r1 r2 =
   {
     global_result = Meta_status.merge r1.global_result r2.global_result;
-    category_results = Meta_status.merge_map r1.category_results r2.category_results;
+    category_results = Meta_status.CategoryMap.merge r1.category_results r2.category_results;
   }
 
 let summarize ~comparison_files ~format:_: (int, string) result =

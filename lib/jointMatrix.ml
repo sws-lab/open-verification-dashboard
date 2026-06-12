@@ -20,6 +20,9 @@ let add (matrix : t) status_po1 status_po2 =
 let merge m1 m2 =
   Array.map2 (Array.map2 (+)) m1 m2
 
+let add_conflict m (conflict: Conflict.t) =
+  add m conflict.status_po1 conflict.status_po2
+
 let status join m =
   (* for loops because there's no Array.fold_left2 *)
   let r = ref None in

@@ -8,21 +8,21 @@ type t = {
   po1_name : string;
   po2_name : string;
   global_result : Meta_status.t;
-  category_results : Meta_status.map;
+  category_results : Meta_status.CategoryMap.t;
 }
 [@@deriving yojson_of]
 
 let create po1_name po2_name =
   {
-    conflicts = Hashtbl.create 16;
+    conflicts = FileConflicts.create ();
     po1_name;
     po2_name;
     global_result = Meta_status.create ();
-    category_results = Meta_status.create_map ();
+    category_results = Meta_status.CategoryMap.create ();
   }
 
 (** Add a conflict to the report global conflicts table *)
 let add_conflict (report : t) (conflict : Conflict.t) =
   FileConflicts.add_conflict report.conflicts conflict;
-  Meta_status.update report.global_result conflict;
-  Meta_status.update_map report.category_results conflict
+  Meta_status.add_conflict report.global_result conflict;
+  Meta_status.CategoryMap.add_conflict report.category_results conflict

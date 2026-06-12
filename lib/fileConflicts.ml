@@ -1,5 +1,7 @@
 type t = (string, Conflict.t list) Hashtbl.t
 
+let create () = Hashtbl.create 16
+
 let yojson_of_t (h : t) =
   `Assoc
     (Hashtbl.fold

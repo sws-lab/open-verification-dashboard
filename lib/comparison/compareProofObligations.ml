@@ -1,6 +1,7 @@
 (** This module provides functions to compare proof obligations and identify
     conflicts. *)
 
+module ComparisonStatus = Status
 open Ovd_checks
 
 module ConflictCheck = Conflict.ConflictCheck
@@ -81,7 +82,7 @@ let conflicts_between (w1 : ChecksFile.t) (w2 : ChecksFile.t) =
   let conflicts =
     gather_conflicts checks (fun pc ->
         let analyzer_statuses = AnalyzerMap.map (fun checks ->
-            ChecksSet.fold (fun c acc -> Status.join (Status.of_kind c.ConflictCheck.kind) acc) checks Unreached
+            ChecksSet.fold (fun c acc -> ComparisonStatus.join (ComparisonStatus.of_kind c.ConflictCheck.kind) acc) checks Unreached
           ) pc.analyzer_checks
         in
         let status_po1 = AnalyzerMap.find 1 analyzer_statuses in

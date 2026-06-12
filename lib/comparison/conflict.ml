@@ -1,12 +1,13 @@
 (** This module defines the conflict type and provides functions to create and
     manipulate conflicts. *)
 
+module ComparisonStatus = Status
 open Ovd_checks
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module ConflictCheck = struct
   type t = {
-    kind : Kind.t;
+    kind : Status.t; [@key "kind"] (* kind is legacy name *)
     messages : string;
     range : Range.t;
     callstack : StackTrace.t;
@@ -14,7 +15,7 @@ module ConflictCheck = struct
   [@@deriving show, yojson, ord]
 
   let pp fmt check =
-    Format.fprintf fmt "@[<hov 2>%a (%a): %a@," Kind.pp check.kind
+    Format.fprintf fmt "@[<hov 2>%a (%a): %a@," Status.pp check.kind
       StackTrace.pp check.callstack Range.pp check.range;
     if String.length check.messages > 0 then Format.fprintf fmt " @,- ";
     let words = String.split_on_char ' ' check.messages in
@@ -37,7 +38,7 @@ struct
   let t_of_yojson j = of_list ([%of_yojson: ConflictCheck.t list] j)
 end
 
-type status = Status.t [@@deriving show { with_path = false }, yojson]
+type status = ComparisonStatus.t [@@deriving show { with_path = false }, yojson]
 
 type t = {
   kind : CrossStatus.t;

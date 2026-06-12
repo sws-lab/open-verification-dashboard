@@ -12,5 +12,5 @@ let pp fmt kind =
     | Error -> "@{<red>error");
   Format.fprintf fmt "@}"
 
-let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Kind"
+let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Status"
 let yojson_of_t = Utils.string_yojson_of_t yojson_of_t

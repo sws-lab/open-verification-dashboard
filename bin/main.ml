@@ -1,4 +1,4 @@
-open Dashboard
+open Ovd_comparison
 
 type args = {
   mutable project_path : string option;

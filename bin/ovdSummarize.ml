@@ -1,4 +1,4 @@
-open Dashboard
+open Ovd_comparison
 
 type t = {
   global_result : Meta_status.t;

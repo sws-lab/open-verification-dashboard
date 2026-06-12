@@ -2,7 +2,7 @@
  (public_name ovd)
  (modules :standard \ main)
  (libraries
-  dashboard
+  ovd_comparison
   spectrum ; TODO: spectrum is horrible: it links in ppxlib, etc at runtime
   re
   globlon
@@ -15,7 +15,7 @@
  (name main)
  (modules main)
  (libraries
-  dashboard
+  ovd_comparison
   project
   spectrum ; TODO: spectrum is horrible: it links in ppxlib, etc at runtime
   re))

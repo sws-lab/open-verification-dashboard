@@ -1,4 +1,4 @@
-open Dashboard
+open Ovd_comparison
 
 let compare ~checks_files ~filter_category ~filter_path ~format =
   let reset_ppf = Spectrum.prepare_ppf Format.std_formatter in

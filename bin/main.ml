@@ -192,11 +192,7 @@ let () =
   let conflict = CompareProofObligations.conflicts_between po1 po2 in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in
-    List.iter
-      (fun (conflict : Conflict.t) ->
-        Report.add_conflict report conflict.range.file conflict)
-      conflict;
-
+    List.iter (Report.add_conflict report) conflict;
     Report.yojson_of_t report |> Yojson.Safe.to_file (Option.get args.output);
     Format.printf "Report written to %s@." (Option.get args.output))
   else

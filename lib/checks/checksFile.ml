@@ -7,7 +7,6 @@ module Range = Range
 module Category = Category
 module StackTrace = StackTrace
 module Check = Check
-module Utils = Utils
 
 type t = {
   name : string; [@default ""]

@@ -1,3 +1,4 @@
+open Ovd_common
 open Ovd_checks
 
 type t =
@@ -7,8 +8,8 @@ type t =
   | Unreached [@name "none"]
 [@@deriving show { with_path = false }, yojson]
 
-let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Status"
-let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
+let t_of_yojson = OvdYojson.string_t_of_yojson t_of_yojson "Status"
+let yojson_of_t = OvdYojson.string_yojson_of_t yojson_of_t
 
 let of_status (po_status : Status.t) =
   match po_status with

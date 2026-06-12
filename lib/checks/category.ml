@@ -1,3 +1,5 @@
+open Ovd_common
+
 type t =
   | AssertionFailure [@name "Assertion failure"]
   | InvalidMemoryAccess [@name "Invalid memory access"]
@@ -26,8 +28,8 @@ type t =
 let equal: t -> t -> bool = (=)
 let hash: t -> int = Hashtbl.hash
 
-let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Category"
-let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
+let t_of_yojson = OvdYojson.string_t_of_yojson t_of_yojson "Category"
+let yojson_of_t = OvdYojson.string_yojson_of_t yojson_of_t
 
 let of_string s =
   match String.lowercase_ascii s with

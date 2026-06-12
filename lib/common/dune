@@ -1,0 +1,4 @@
+(library
+ (name ovd_common)
+ (libraries
+  yojson))

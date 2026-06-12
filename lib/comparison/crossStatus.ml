@@ -1,3 +1,5 @@
+open Ovd_common
+
 type t =
   | PositiveAgreement
   | NegativeAgreement
@@ -6,8 +8,8 @@ type t =
   | Contradiction
 [@@deriving show { with_path = false }, yojson]
 
-let t_of_yojson = Ovd_checks.Utils.string_t_of_yojson t_of_yojson "CrossStatus"
-let yojson_of_t = Ovd_checks.Utils.string_yojson_of_t yojson_of_t
+let t_of_yojson = OvdYojson.string_t_of_yojson t_of_yojson "CrossStatus"
+let yojson_of_t = OvdYojson.string_yojson_of_t yojson_of_t
 
 let of_statuses (status1: Status.t) (status2: Status.t) =
   (* Table 1 from ECOOP 2026 paper. *)

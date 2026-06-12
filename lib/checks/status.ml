@@ -1,3 +1,5 @@
+open Ovd_common
+
 type t =
   | Safe [@name "safe"]
   | Warning [@name "warning"]
@@ -12,5 +14,5 @@ let pp fmt status =
     | Error -> "@{<red>error");
   Format.fprintf fmt "@}"
 
-let t_of_yojson = Utils.string_t_of_yojson t_of_yojson "Status"
-let yojson_of_t = Utils.string_yojson_of_t yojson_of_t
+let t_of_yojson = OvdYojson.string_t_of_yojson t_of_yojson "Status"
+let yojson_of_t = OvdYojson.string_yojson_of_t yojson_of_t

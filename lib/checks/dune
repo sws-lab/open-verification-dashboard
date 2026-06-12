@@ -1,6 +1,7 @@
 (library
  (name ovd_checks)
  (libraries
+  ovd_common
   yojson)
  (preprocess
   (pps ppx_deriving.std ppx_deriving_hash ppx_yojson_conv)))

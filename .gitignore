@@ -43,3 +43,6 @@ allErrorTest.tar.gz
 /screenshot_script/results
 reducer.sh
 joey.c
+
+test/dashboard-artifact-data
+test/dashboard-artifact-regression/

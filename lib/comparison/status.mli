@@ -1,8 +1,9 @@
-type t =
-  | Safe
-  | Warning
-  | Error
-  | Unreached
+type t = [
+  | `Safe
+  | `Warning
+  | `Error
+  | `Unreached
+]
 [@@deriving show, yojson]
 
 val of_status : Ovd_checks.Status.t -> t

@@ -2,6 +2,8 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = int [@@deriving yojson_of, ord]
 
+let default = 0
+
 let pp fmt stack_trace = Format.fprintf fmt "Stack trace: %d" stack_trace
 
 module StackSet = Hashtbl.Make (struct

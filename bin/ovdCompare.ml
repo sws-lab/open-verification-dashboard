@@ -10,19 +10,19 @@ let compare ~checks_files ~filter_category ~filter_path ~format =
     Error "More than two proofObligation files are not supported for comparison (TODO)."
   | [checks_file1; checks_file2] ->
     let load_checks checks_file =
-      let checks_file = Option.get (ProofObligation.of_file checks_file) in (* TODO: no Option.get *)
+      let checks_file = Option.get (Ovd_checks.ProofObligation.of_file checks_file) in (* TODO: no Option.get *)
       let checks =
         match filter_path with
         | Some glob ->
           let glob = Re.compile (Re.Glob.glob ~anchored:true glob) in
           List.filter
-            (fun (check : ProofObligation.Check.t) ->
+            (fun (check : Ovd_checks.Check.t) ->
               Re.execp glob check.range.file)
             checks_file.checks
         | None -> checks_file.checks
       in
       let checks =
-        ProofObligation.filter_checks checks filter_category
+        Ovd_checks.ProofObligation.filter_checks checks filter_category
       in
       {checks_file with checks}
     in
@@ -62,7 +62,7 @@ let checks_files =
   Arg.(value & pos_left 2 non_dir_file [] & info [] ~doc)
 
 let filter_category =
-  let module Category = ProofObligation.Category in
+  let module Category = Ovd_checks.Category in
   let enum =
     List.init (Category.max + 1) (fun i ->
         let category = Option.get (Category.of_enum i) in

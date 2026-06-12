@@ -27,8 +27,8 @@ include Meta_status
 
 module Category =
 struct
-  include ProofObligation.Category
-  let of_string k = ProofObligation.Category.t_of_yojson (`String k) (* TODO: less roundabout way *)
+  include Ovd_checks.Category
+  let of_string k = t_of_yojson (`String k) (* TODO: less roundabout way *)
   let of_conflict conflict = conflict.Conflict.category
 end
 

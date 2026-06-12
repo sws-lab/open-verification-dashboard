@@ -1,7 +1,7 @@
 (** This module provides functions to compare proof obligations and identify
     conflicts. *)
 
-open ProofObligation
+open Ovd_checks
 
 module ConflictCheck = Conflict.ConflictCheck
 module ChecksSet = Conflict.ChecksSet

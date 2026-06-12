@@ -1,7 +1,7 @@
 (** This module defines the conflict type and provides functions to create and
     manipulate conflicts. *)
 
-open ProofObligation
+open Ovd_checks
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module ConflictCheck = struct

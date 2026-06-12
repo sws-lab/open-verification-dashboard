@@ -1,5 +1,5 @@
 (library
- (name proofObligation)
+ (name ovd_checks)
  (libraries
   yojson)
  (preprocess

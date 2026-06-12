@@ -2,15 +2,15 @@ open Dashboard
 
 type args = {
   mutable project_path : string option;
-  proofObligations : ProofObligation.t list;
+  proofObligations : Ovd_checks.ProofObligation.t list;
   mutable only : string option;
   mutable output : string option;
   mutable exclude_not_found : bool;
-  mutable filter_error_category : ProofObligation.Category.t list;
+  mutable filter_error_category : Ovd_checks.Category.t list;
 }
 
 let convert_paths ~exclude_not_found proofObligation project_path =
-  let open ProofObligation in
+  let open Ovd_checks in
   if project_path = "" then proofObligation
   else
     let path_to_project_relative =
@@ -74,7 +74,7 @@ let parse_args () =
           (fun s ->
             List.iter
               (fun category ->
-                match ProofObligation.Category.of_string category with
+                match Ovd_checks.Category.of_string category with
                 | Some c ->
                     args.filter_error_category <-
                       c :: args.filter_error_category
@@ -116,7 +116,7 @@ let parse_args () =
   in
   let input_files = ref [] in
   let add_file file =
-    let proofObligation = ProofObligation.of_file file in
+    let proofObligation = Ovd_checks.ProofObligation.of_file file in
     match proofObligation with
     | Some proofObligation -> input_files := proofObligation :: !input_files
     | None ->
@@ -144,7 +144,7 @@ let () =
     match args.project_path with
     | Some project_path ->
         List.map
-          (fun (proofObligation : ProofObligation.t) ->
+          (fun (proofObligation : Ovd_checks.ProofObligation.t) ->
             Format.printf
               "Converting paths to project paths for proof obligation %s@."
               proofObligation.name;
@@ -159,13 +159,13 @@ let () =
         Format.printf "Filtering proof obligations for file %s@." glob;
         let glob = Re.compile (Re.Glob.glob ~anchored:true glob) in
         List.map
-          (fun (proofObligation : ProofObligation.t) ->
+          (fun (proofObligation : Ovd_checks.ProofObligation.t) ->
             let filtered_po =
               {
                 proofObligation with
                 checks =
                   List.filter
-                    (fun (check : ProofObligation.Check.t) ->
+                    (fun (check : Ovd_checks.Check.t) ->
                       Re.execp glob check.range.file)
                     proofObligation.checks;
               }
@@ -176,11 +176,11 @@ let () =
   in
   let proofObligations =
     List.map
-      (fun (proofObligation : ProofObligation.t) ->
+      (fun (proofObligation : Ovd_checks.ProofObligation.t) ->
         let filtered_po =
           {
             proofObligation with
-            checks = ProofObligation.filter_checks proofObligation.checks args.filter_error_category;
+            checks = Ovd_checks.ProofObligation.filter_checks proofObligation.checks args.filter_error_category;
           }
         in
         filtered_po)

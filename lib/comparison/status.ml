@@ -1,4 +1,4 @@
-open ProofObligation
+open Ovd_checks
 
 type t =
   | Safe [@name "safe"]

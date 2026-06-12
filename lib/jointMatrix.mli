@@ -2,7 +2,6 @@ include ConflictAggregator.YojsonS
 
 val create: unit -> t
 val add: t -> Status.t -> Status.t -> unit
-val merge: t -> t -> t
 
 val optimistic_status: t -> Status.t option
 val pessimistic_status: t -> Status.t option

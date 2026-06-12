@@ -3,6 +3,7 @@ sig
   type t
 
   val add_conflict: t -> Conflict.t -> unit
+  val merge: t -> t -> t
 end
 
 module type YojsonS =

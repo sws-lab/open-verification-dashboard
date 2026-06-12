@@ -31,3 +31,5 @@ let add_conflict (conflicts : t) (conflict : Conflict.t) =
   | None ->
       Format.eprintf "Writing conflicts for file %s@." file;
       Hashtbl.add conflicts file [ conflict ]
+
+let merge _ _ = failwith "TODO?"

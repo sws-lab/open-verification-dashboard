@@ -26,3 +26,5 @@ let add_conflict (report : t) (conflict : Conflict.t) =
   FileConflicts.add_conflict report.conflicts conflict;
   Meta_status.add_conflict report.global_result conflict;
   Meta_status.CategoryMap.add_conflict report.category_results conflict
+
+let merge _ _ = failwith "TODO?"

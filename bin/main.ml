@@ -14,7 +14,7 @@ let convert_paths ~exclude_not_found proofObligation project_path =
   if project_path = "" then proofObligation
   else
     let path_to_project_relative =
-      Project.path_to_project_relative project_path
+      Ovd_project.path_to_project_relative project_path
     in
     let convert_file_range_path (file_range : Range.t) =
       { file_range with file = path_to_project_relative file_range.file }
@@ -29,7 +29,7 @@ let convert_paths ~exclude_not_found proofObligation project_path =
               let range = convert_file_range_path check.range in
               if
                 exclude_not_found
-                && Project.Folder.mem Project.warned check.range.file
+                && Ovd_project.Folder.mem Ovd_project.warned check.range.file
                 || range.start.column = -1 || range.start.line = -1
                 || range.end_.column = -1 || range.end_.line = -1
               then None

@@ -4,40 +4,30 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = {
-  mutable optimistic_status : Status.t option; [@default None]
-  mutable pessimistic_status : Status.t option; [@default None]
   joint_matrix : JointMatrix.t;
-  mutable selectivity1 : float option; [@default None]
-  mutable selectivity2 : float option; [@default None]
-  mutable joint_selectivity : float option; [@default None]
-  mutable alignment : float option; [@default None]
 }
-[@@deriving yojson]
+[@@deriving of_yojson]
+
+let yojson_of_t {joint_matrix} =
+  `Assoc [
+    ("optimistic_status", [%yojson_of: Status.t option] (JointMatrix.optimistic_status joint_matrix));
+    ("pessimistic_status", [%yojson_of: Status.t option] (JointMatrix.pessimistic_status joint_matrix));
+    ("joint_matrix", JointMatrix.yojson_of_t joint_matrix);
+    ("selectivity1", [%yojson_of: float option] (JointMatrix.selectivity1 joint_matrix));
+    ("selectivity2", [%yojson_of: float option] (JointMatrix.selectivity2 joint_matrix));
+    ("joint_selectivity", [%yojson_of: float option] (JointMatrix.joint_selectivity joint_matrix));
+    ("alignment", [%yojson_of: float option] (JointMatrix.alignment joint_matrix));
+  ]
 
 let create () =
-  { optimistic_status = None; pessimistic_status = None; joint_matrix = JointMatrix.create (); selectivity1 = None; selectivity2 = None; joint_selectivity = None; alignment = None }
+  { joint_matrix = JointMatrix.create () }
 
 let add_conflict (result : t) (conflict : Conflict.t) =
-  JointMatrix.add_conflict result.joint_matrix conflict;
-  (* TODO: don't recompute each time *)
-  result.optimistic_status <- JointMatrix.optimistic_status result.joint_matrix;
-  result.pessimistic_status <- JointMatrix.pessimistic_status result.joint_matrix;
-  result.selectivity1 <- JointMatrix.selectivity1 result.joint_matrix;
-  result.selectivity2 <- JointMatrix.selectivity2 result.joint_matrix;
-  result.joint_selectivity <- JointMatrix.joint_selectivity result.joint_matrix;
-  result.alignment <- JointMatrix.alignment result.joint_matrix
+  JointMatrix.add_conflict result.joint_matrix conflict
 
 let merge ms1 ms2 =
-  let joint_matrix = JointMatrix.merge ms1.joint_matrix ms2.joint_matrix in
   {
-    joint_matrix;
-    (* TODO: don't recompute each time *)
-    optimistic_status = JointMatrix.optimistic_status joint_matrix;
-    pessimistic_status = JointMatrix.pessimistic_status joint_matrix;
-    selectivity1 = JointMatrix.selectivity1 joint_matrix;
-    selectivity2 = JointMatrix.selectivity2 joint_matrix;
-    joint_selectivity = JointMatrix.joint_selectivity joint_matrix;
-    alignment = JointMatrix.alignment joint_matrix
+    joint_matrix = JointMatrix.merge ms1.joint_matrix ms2.joint_matrix;
   }
 
 module CategoryMap =

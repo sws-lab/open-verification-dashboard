@@ -1,6 +1,9 @@
-type t = [
-  | `Safe
-  | `Warning
-  | `Error
-]
-[@@deriving show, yojson, ord]
+module Reachable:
+sig
+  type t = [
+    | `Safe
+    | `Warning
+    | `Error
+  ]
+  [@@deriving show, yojson, ord]
+end

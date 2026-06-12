@@ -7,7 +7,7 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module ConflictCheck = struct
   type t = {
-    status : Status.t; [@key "kind"] (* kind is legacy name *)
+    status : Status.Reachable.t; [@key "kind"] (* kind is legacy name *)
     messages : string;
     range : Range.t;
     callstack : StackTrace.t;
@@ -15,7 +15,7 @@ module ConflictCheck = struct
   [@@deriving show, yojson, ord]
 
   let pp fmt check =
-    Format.fprintf fmt "@[<hov 2>%a (%a): %a@," Status.pp check.status
+    Format.fprintf fmt "@[<hov 2>%a (%a): %a@," Status.Reachable.pp check.status
       StackTrace.pp check.callstack Range.pp check.range;
     if String.length check.messages > 0 then Format.fprintf fmt " @,- ";
     let words = String.split_on_char ' ' check.messages in

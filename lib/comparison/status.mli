@@ -6,7 +6,7 @@ type t = [
 ]
 [@@deriving show, yojson]
 
-val of_status : Ovd_checks.Status.t -> t
+val of_status : Ovd_checks.Status.Reachable.t -> t
 
 (** Join two analyzers status in an optimistic way. *)
 val meet : t -> t -> t

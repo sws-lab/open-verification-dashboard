@@ -15,7 +15,7 @@ type pre_conflict = {
   analyzer_checks : ChecksSet.t AnalyzerMap.t;
 }
 
-let conflicts_between (w1 : ProofObligation.t) (w2 : ProofObligation.t) =
+let conflicts_between (w1 : ChecksFile.t) (w2 : ChecksFile.t) =
   let empty_analyzer_checks =
     AnalyzerMap.of_seq (Seq.init 2 (fun i -> (i + 1, ChecksSet.empty)))
   in

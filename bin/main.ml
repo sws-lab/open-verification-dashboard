@@ -2,7 +2,7 @@ open Dashboard
 
 type args = {
   mutable project_path : string option;
-  proofObligations : Ovd_checks.ProofObligation.t list;
+  proofObligations : Ovd_checks.ChecksFile.t list;
   mutable only : string option;
   mutable output : string option;
   mutable exclude_not_found : bool;
@@ -20,7 +20,7 @@ let convert_paths ~exclude_not_found proofObligation project_path =
       { file_range with file = path_to_project_relative file_range.file }
     in
     let open Check in
-    ProofObligation.
+    ChecksFile.
       {
         proofObligation with
         checks =
@@ -116,7 +116,7 @@ let parse_args () =
   in
   let input_files = ref [] in
   let add_file file =
-    let proofObligation = Ovd_checks.ProofObligation.of_file file in
+    let proofObligation = Ovd_checks.ChecksFile.of_file file in
     match proofObligation with
     | Some proofObligation -> input_files := proofObligation :: !input_files
     | None ->
@@ -144,7 +144,7 @@ let () =
     match args.project_path with
     | Some project_path ->
         List.map
-          (fun (proofObligation : Ovd_checks.ProofObligation.t) ->
+          (fun (proofObligation : Ovd_checks.ChecksFile.t) ->
             Format.printf
               "Converting paths to project paths for proof obligation %s@."
               proofObligation.name;
@@ -159,7 +159,7 @@ let () =
         Format.printf "Filtering proof obligations for file %s@." glob;
         let glob = Re.compile (Re.Glob.glob ~anchored:true glob) in
         List.map
-          (fun (proofObligation : Ovd_checks.ProofObligation.t) ->
+          (fun (proofObligation : Ovd_checks.ChecksFile.t) ->
             let filtered_po =
               {
                 proofObligation with
@@ -176,11 +176,11 @@ let () =
   in
   let proofObligations =
     List.map
-      (fun (proofObligation : Ovd_checks.ProofObligation.t) ->
+      (fun (proofObligation : Ovd_checks.ChecksFile.t) ->
         let filtered_po =
           {
             proofObligation with
-            checks = Ovd_checks.ProofObligation.filter_checks proofObligation.checks args.filter_error_category;
+            checks = Ovd_checks.ChecksFile.filter_checks proofObligation.checks args.filter_error_category;
           }
         in
         filtered_po)

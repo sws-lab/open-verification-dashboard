@@ -189,7 +189,7 @@ let () =
   let po1 = List.hd proofObligations in
   let po2 = List.hd (List.tl proofObligations) in
   Format.printf "Comparing proof obligations %s and %s@." po1.name po2.name;
-  let conflict = CompareProofObligations.compare po1.checks po2.checks in
+  let conflict = OverlapComparison.compare po1.checks po2.checks in
   if args.output <> None then (
     let report = Report.create po1.name po2.name in
     List.iter (Report.add_conflict report) conflict;

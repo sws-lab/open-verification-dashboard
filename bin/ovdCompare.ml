@@ -28,7 +28,7 @@ let compare ~checks_files ~filter_category ~filter_path ~format =
     in
     let po1 = load_checks checks_file1 in
     let po2 = load_checks checks_file2 in
-    let conflict = CompareProofObligations.compare po1.checks po2.checks in
+    let conflict = OverlapComparison.compare po1.checks po2.checks in
 
     (* Check that no checks were lost. *)
     let conflict_checks_count =

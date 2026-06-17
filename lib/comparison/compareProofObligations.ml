@@ -19,7 +19,7 @@ let conflicts_between (w1 : ChecksFile.t) (w2 : ChecksFile.t) =
   let empty_analyzer_checks =
     AnalyzerMap.of_seq (Seq.init 2 (fun i -> (i + 1, ChecksSet.empty)))
   in
-  let gather_conflicts checks f =
+  let gather_conflicts checks =
     let rec build_unique_conflict conflict = function
       | [] -> (conflict, [])
       | (analyzer_id, (check : Check.t)) :: rest -> (
@@ -57,7 +57,7 @@ let conflicts_between (w1 : ChecksFile.t) (w2 : ChecksFile.t) =
         (* build conflict of all matching checks *)
         let (conflict, rest') = build_unique_conflict conflict rest in
         (* continue with unmached checks *)
-        aux (f conflict :: acc) rest'
+        aux (conflict :: acc) rest'
     in
     aux [] checks
   in
@@ -78,8 +78,9 @@ let conflicts_between (w1 : ChecksFile.t) (w2 : ChecksFile.t) =
           else Range.compare_file_position c1.range.start c2.range.start)
       checks
   in
+  let conflicts = gather_conflicts checks in
   let conflicts =
-    gather_conflicts checks (fun pc ->
+    List.map (fun pc ->
         let analyzer_statuses = AnalyzerMap.map (fun checks ->
             ChecksSet.fold (fun c acc -> Status.join (Status.of_reachable c.ConflictCheck.status) acc) checks `Unreached
           ) pc.analyzer_checks
@@ -97,6 +98,6 @@ let conflicts_between (w1 : ChecksFile.t) (w2 : ChecksFile.t) =
           status_po1;
           from_po2 = AnalyzerMap.find 2 pc.analyzer_checks;
           status_po2;
-        })
+        }) conflicts
   in
   List.sort Conflict.(fun c1 c2 -> Range.compare_overlap c1.range c2.range) conflicts

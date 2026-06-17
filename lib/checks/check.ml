@@ -5,13 +5,13 @@ type t = {
   category : Category.t; [@key "title"] (* title is legacy name *)
   messages : string;
   range : Range.t;
-  callstack : StackTrace.t; [@default StackTrace.default]
+  callstack : StackTrace.t option; [@yojson.option]
 }
 [@@deriving yojson, show, ord] [@@yojson.allow_extra_fields]
 
 let pp fmt check =
-  Format.fprintf fmt "@[<hov 2>%a (%a): %a at %a@," Status.Reachable.pp check.status
-    StackTrace.pp check.callstack Category.pp check.category Range.pp check.range;
+  Format.fprintf fmt "@[<hov 2>%a%a: %a at %a@," Status.Reachable.pp check.status
+    (Format.pp_print_option (fun fmt -> Format.fprintf fmt " (%a)" StackTrace.pp)) check.callstack Category.pp check.category Range.pp check.range;
   if String.length check.messages > 0 then Format.fprintf fmt " @,- ";
   let words = String.split_on_char ' ' check.messages in
   List.iter (fun word -> Format.fprintf fmt "%s@;<1 0>" word) words;

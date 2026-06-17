@@ -18,7 +18,23 @@
               "start": { "line": 333, "column": 19 },
               "end": { "line": 333, "column": 21 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "error",
@@ -28,7 +44,23 @@
               "start": { "line": 333, "column": 9 },
               "end": { "line": 333, "column": 27 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "error",
@@ -38,7 +70,23 @@
               "start": { "line": 333, "column": 10 },
               "end": { "line": 333, "column": 21 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -50,8 +98,7 @@
               "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
               "start": { "line": 333, "column": 5 },
               "end": { "line": 333, "column": 27 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -73,7 +120,23 @@
               "start": { "line": 332, "column": 14 },
               "end": { "line": 332, "column": 25 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -83,7 +146,23 @@
               "start": { "line": 332, "column": 14 },
               "end": { "line": 332, "column": 29 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
+                    "line": 331,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -95,8 +174,7 @@
               "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
               "start": { "line": 332, "column": 5 },
               "end": { "line": 332, "column": 29 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -105,8 +183,7 @@
               "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/AdditionIntMin.i",
               "start": { "line": 332, "column": 5 },
               "end": { "line": 332, "column": 29 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"

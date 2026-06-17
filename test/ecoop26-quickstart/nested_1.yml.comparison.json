@@ -18,7 +18,23 @@
               "start": { "line": 19, "column": 19 },
               "end": { "line": 19, "column": 22 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/loop-simple/nested_1.c",
+                    "line": 15,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/loop-simple/nested_1.c",
+                    "line": 15,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -30,8 +46,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/loop-simple/nested_1.c",
               "start": { "line": 19, "column": 17 },
               "end": { "line": 19, "column": 22 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"

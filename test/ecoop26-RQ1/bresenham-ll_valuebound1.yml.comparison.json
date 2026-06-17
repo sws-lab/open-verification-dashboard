@@ -18,7 +18,23 @@
               "start": { "line": 50, "column": 22 },
               "end": { "line": 50, "column": 26 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -28,7 +44,23 @@
               "start": { "line": 50, "column": 40 },
               "end": { "line": 50, "column": 55 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -38,7 +70,23 @@
               "start": { "line": 50, "column": 22 },
               "end": { "line": 50, "column": 65 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -48,7 +96,23 @@
               "start": { "line": 50, "column": 22 },
               "end": { "line": 50, "column": 59 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -58,7 +122,23 @@
               "start": { "line": 50, "column": 22 },
               "end": { "line": 50, "column": 55 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -68,7 +148,23 @@
               "start": { "line": 50, "column": 22 },
               "end": { "line": 50, "column": 37 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -78,7 +174,23 @@
               "start": { "line": 50, "column": 22 },
               "end": { "line": 50, "column": 33 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -88,7 +200,23 @@
               "start": { "line": 50, "column": 29 },
               "end": { "line": 50, "column": 33 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -98,7 +226,23 @@
               "start": { "line": 50, "column": 62 },
               "end": { "line": 50, "column": 65 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -110,8 +254,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 50, "column": 4 },
               "end": { "line": 50, "column": 71 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "warning",
@@ -120,8 +263,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 50, "column": 4 },
               "end": { "line": 50, "column": 71 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "warning",
@@ -130,8 +272,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 50, "column": 4 },
               "end": { "line": 50, "column": 71 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "warning",
@@ -140,8 +281,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 50, "column": 4 },
               "end": { "line": 50, "column": 71 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -163,7 +303,23 @@
               "start": { "line": 49, "column": 9 },
               "end": { "line": 49, "column": 24 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -175,8 +331,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 49, "column": 4 },
               "end": { "line": 49, "column": 24 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -198,7 +353,23 @@
               "start": { "line": 48, "column": 9 },
               "end": { "line": 48, "column": 24 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -210,8 +381,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 48, "column": 4 },
               "end": { "line": 48, "column": 24 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -233,7 +403,23 @@
               "start": { "line": 46, "column": 8 },
               "end": { "line": 46, "column": 11 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -245,8 +431,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 46, "column": 8 },
               "end": { "line": 46, "column": 11 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -268,7 +453,23 @@
               "start": { "line": 44, "column": 12 },
               "end": { "line": 44, "column": 15 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -280,8 +481,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 44, "column": 12 },
               "end": { "line": 44, "column": 15 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -303,7 +503,23 @@
               "start": { "line": 43, "column": 20 },
               "end": { "line": 43, "column": 43 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -313,7 +529,23 @@
               "start": { "line": 43, "column": 25 },
               "end": { "line": 43, "column": 42 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -323,7 +555,23 @@
               "start": { "line": 43, "column": 16 },
               "end": { "line": 43, "column": 43 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -335,8 +583,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 43, "column": 12 },
               "end": { "line": 43, "column": 43 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -345,8 +592,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 43, "column": 12 },
               "end": { "line": 43, "column": 43 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -355,8 +601,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 43, "column": 12 },
               "end": { "line": 43, "column": 43 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -378,7 +623,23 @@
               "start": { "line": 41, "column": 16 },
               "end": { "line": 41, "column": 37 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -388,7 +649,23 @@
               "start": { "line": 41, "column": 20 },
               "end": { "line": 41, "column": 37 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -400,8 +677,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 41, "column": 12 },
               "end": { "line": 41, "column": 37 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -423,7 +699,23 @@
               "start": { "line": 35, "column": 38 },
               "end": { "line": 35, "column": 53 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -433,7 +725,23 @@
               "start": { "line": 35, "column": 20 },
               "end": { "line": 35, "column": 57 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -443,7 +751,23 @@
               "start": { "line": 35, "column": 20 },
               "end": { "line": 35, "column": 53 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -453,7 +777,23 @@
               "start": { "line": 35, "column": 20 },
               "end": { "line": 35, "column": 35 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -463,7 +803,23 @@
               "start": { "line": 35, "column": 20 },
               "end": { "line": 35, "column": 31 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -473,7 +829,23 @@
               "start": { "line": 35, "column": 27 },
               "end": { "line": 35, "column": 31 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "warning",
@@ -483,7 +855,23 @@
               "start": { "line": 35, "column": 20 },
               "end": { "line": 35, "column": 24 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -495,8 +883,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 35, "column": 1 },
               "end": { "line": 35, "column": 63 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "warning",
@@ -505,8 +892,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 35, "column": 1 },
               "end": { "line": 35, "column": 63 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "warning",
@@ -515,8 +901,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 35, "column": 1 },
               "end": { "line": 35, "column": 63 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -538,7 +923,23 @@
               "start": { "line": 34, "column": 13 },
               "end": { "line": 34, "column": 28 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -550,8 +951,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 34, "column": 8 },
               "end": { "line": 34, "column": 28 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -573,7 +973,23 @@
               "start": { "line": 33, "column": 13 },
               "end": { "line": 33, "column": 28 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -585,8 +1001,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 33, "column": 8 },
               "end": { "line": 33, "column": 28 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -608,7 +1023,23 @@
               "start": { "line": 28, "column": 8 },
               "end": { "line": 28, "column": 31 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -618,7 +1049,23 @@
               "start": { "line": 28, "column": 9 },
               "end": { "line": 28, "column": 26 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+                    "line": 21,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -630,8 +1077,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 28, "column": 4 },
               "end": { "line": 28, "column": 31 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -640,8 +1086,7 @@
               "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
               "start": { "line": 28, "column": 4 },
               "end": { "line": 28, "column": 31 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"

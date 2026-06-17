@@ -18,7 +18,23 @@
               "start": { "line": 25, "column": 22 },
               "end": { "line": 25, "column": 25 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -30,8 +46,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
               "start": { "line": 25, "column": 20 },
               "end": { "line": 25, "column": 25 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -53,7 +68,23 @@
               "start": { "line": 22, "column": 22 },
               "end": { "line": 22, "column": 25 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -65,8 +96,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
               "start": { "line": 22, "column": 20 },
               "end": { "line": 22, "column": 25 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -88,7 +118,38 @@
               "start": { "line": 14, "column": 26 },
               "end": { "line": 14, "column": 29 }
             },
-            "callstack": 3
+            "callstack": [
+              {
+                "function": "foo",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 23,
+                    "column": 9
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 23,
+                    "column": 21
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -100,8 +161,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
               "start": { "line": 14, "column": 24 },
               "end": { "line": 14, "column": 29 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -123,7 +183,38 @@
               "start": { "line": 13, "column": 4 },
               "end": { "line": 13, "column": 12 }
             },
-            "callstack": 3
+            "callstack": [
+              {
+                "function": "foo",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 23,
+                    "column": 9
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 23,
+                    "column": 21
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/ldv-memsafety/ArraysOfVariableLength.c",
+                    "line": 20,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",

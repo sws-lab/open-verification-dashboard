@@ -18,7 +18,23 @@
               "start": { "line": 13, "column": 12 },
               "end": { "line": 13, "column": 17 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/termination-restricted-15/a.08.c",
+                    "line": 5,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/termination-restricted-15/a.08.c",
+                    "line": 5,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -30,8 +46,7 @@
               "file": "/home/holterka/sv-benchmarks/c/termination-restricted-15/a.08.c",
               "start": { "line": 13, "column": 8 },
               "end": { "line": 13, "column": 17 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -53,7 +68,23 @@
               "start": { "line": 12, "column": 12 },
               "end": { "line": 12, "column": 17 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/termination-restricted-15/a.08.c",
+                    "line": 5,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/termination-restricted-15/a.08.c",
+                    "line": 5,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -65,8 +96,7 @@
               "file": "/home/holterka/sv-benchmarks/c/termination-restricted-15/a.08.c",
               "start": { "line": 12, "column": 8 },
               "end": { "line": 12, "column": 17 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"

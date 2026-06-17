@@ -18,7 +18,23 @@
               "start": { "line": 53, "column": 28 },
               "end": { "line": 53, "column": 31 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -30,8 +46,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 53, "column": 26 },
               "end": { "line": 53, "column": 31 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -53,7 +68,23 @@
               "start": { "line": 50, "column": 12 },
               "end": { "line": 50, "column": 15 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -63,7 +94,23 @@
               "start": { "line": 50, "column": 12 },
               "end": { "line": 50, "column": 19 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -73,7 +120,23 @@
               "start": { "line": 50, "column": 32 },
               "end": { "line": 50, "column": 35 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -83,7 +146,23 @@
               "start": { "line": 50, "column": 32 },
               "end": { "line": 50, "column": 39 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -95,8 +174,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 50, "column": 3 },
               "end": { "line": 50, "column": 40 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -105,8 +183,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 50, "column": 3 },
               "end": { "line": 50, "column": 40 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -128,7 +205,23 @@
               "start": { "line": 48, "column": 13 },
               "end": { "line": 48, "column": 16 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -138,7 +231,23 @@
               "start": { "line": 48, "column": 13 },
               "end": { "line": 48, "column": 20 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -150,8 +259,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 48, "column": 4 },
               "end": { "line": 48, "column": 25 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -160,8 +268,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 48, "column": 4 },
               "end": { "line": 48, "column": 25 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -183,7 +290,23 @@
               "start": { "line": 44, "column": 13 },
               "end": { "line": 44, "column": 16 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -193,7 +316,23 @@
               "start": { "line": 44, "column": 13 },
               "end": { "line": 44, "column": 20 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -217,7 +356,23 @@
               "start": { "line": 40, "column": 18 },
               "end": { "line": 40, "column": 29 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -227,7 +382,23 @@
               "start": { "line": 40, "column": 31 },
               "end": { "line": 40, "column": 34 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -239,8 +410,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 40, "column": 11 },
               "end": { "line": 40, "column": 29 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "warning",
@@ -249,8 +419,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 40, "column": 29 },
               "end": { "line": 40, "column": 34 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -272,7 +441,23 @@
               "start": { "line": 37, "column": 12 },
               "end": { "line": 37, "column": 15 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -282,7 +467,23 @@
               "start": { "line": 37, "column": 12 },
               "end": { "line": 37, "column": 19 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -292,7 +493,23 @@
               "start": { "line": 37, "column": 32 },
               "end": { "line": 37, "column": 35 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -302,7 +519,23 @@
               "start": { "line": 37, "column": 32 },
               "end": { "line": 37, "column": 39 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -314,8 +547,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 37, "column": 3 },
               "end": { "line": 37, "column": 40 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -324,8 +556,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 37, "column": 3 },
               "end": { "line": 37, "column": 40 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -347,7 +578,23 @@
               "start": { "line": 35, "column": 13 },
               "end": { "line": 35, "column": 16 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -357,7 +604,23 @@
               "start": { "line": 35, "column": 13 },
               "end": { "line": 35, "column": 20 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -381,7 +644,23 @@
               "start": { "line": 31, "column": 13 },
               "end": { "line": 31, "column": 16 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -391,7 +670,23 @@
               "start": { "line": 31, "column": 13 },
               "end": { "line": 31, "column": 20 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -403,8 +698,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 31, "column": 4 },
               "end": { "line": 31, "column": 33 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -413,8 +707,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 31, "column": 4 },
               "end": { "line": 31, "column": 33 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -436,7 +729,23 @@
               "start": { "line": 27, "column": 18 },
               "end": { "line": 27, "column": 29 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -446,7 +755,23 @@
               "start": { "line": 27, "column": 31 },
               "end": { "line": 27, "column": 34 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -458,8 +783,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 27, "column": 11 },
               "end": { "line": 27, "column": 29 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "warning",
@@ -468,8 +792,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 27, "column": 29 },
               "end": { "line": 27, "column": 34 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -491,7 +814,23 @@
               "start": { "line": 26, "column": 22 },
               "end": { "line": 26, "column": 35 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -503,8 +842,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 26, "column": 2 },
               "end": { "line": 26, "column": 41 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -526,7 +864,23 @@
               "start": { "line": 24, "column": 5 },
               "end": { "line": 24, "column": 18 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -538,8 +892,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
               "start": { "line": 24, "column": 5 },
               "end": { "line": 24, "column": 23 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -561,7 +914,23 @@
               "start": { "line": 20, "column": 2 },
               "end": { "line": 20, "column": 25 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/array-tiling/mbpr2.c",
+                    "line": 13,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",

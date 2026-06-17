@@ -18,7 +18,23 @@
               "start": { "line": 586, "column": 17 },
               "end": { "line": 586, "column": 26 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -28,7 +44,23 @@
               "start": { "line": 586, "column": 17 },
               "end": { "line": 586, "column": 42 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -40,8 +72,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 586, "column": 6 },
               "end": { "line": 586, "column": 42 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -63,7 +94,23 @@
               "start": { "line": 584, "column": 16 },
               "end": { "line": 584, "column": 25 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -75,8 +122,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 584, "column": 6 },
               "end": { "line": 584, "column": 42 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -98,7 +144,23 @@
               "start": { "line": 584, "column": 16 },
               "end": { "line": 584, "column": 42 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -110,8 +172,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 584, "column": 6 },
               "end": { "line": 584, "column": 42 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -133,7 +194,38 @@
               "start": { "line": 576, "column": 15 },
               "end": { "line": 576, "column": 44 }
             },
-            "callstack": 5
+            "callstack": [
+              {
+                "function": "memset",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 576,
+                    "column": 2
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 576,
+                    "column": 45
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -143,7 +235,38 @@
               "start": { "line": 576, "column": 29 },
               "end": { "line": 576, "column": 44 }
             },
-            "callstack": 5
+            "callstack": [
+              {
+                "function": "memset",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 576,
+                    "column": 2
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 576,
+                    "column": 45
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -155,8 +278,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 576, "column": 2 },
               "end": { "line": 576, "column": 45 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -165,8 +287,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 576, "column": 2 },
               "end": { "line": 576, "column": 45 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -188,7 +309,38 @@
               "start": { "line": 575, "column": 23 },
               "end": { "line": 575, "column": 55 }
             },
-            "callstack": 6
+            "callstack": [
+              {
+                "function": "malloc",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 575,
+                    "column": 15
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 575,
+                    "column": 56
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           },
           {
             "kind": "safe",
@@ -198,7 +350,38 @@
               "start": { "line": 575, "column": 38 },
               "end": { "line": 575, "column": 55 }
             },
-            "callstack": 6
+            "callstack": [
+              {
+                "function": "malloc",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 575,
+                    "column": 15
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 575,
+                    "column": 56
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -210,8 +393,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 575, "column": 10 },
               "end": { "line": 575, "column": 56 }
-            },
-            "callstack": 0
+            }
           },
           {
             "kind": "safe",
@@ -220,8 +402,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 575, "column": 10 },
               "end": { "line": 575, "column": 56 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -243,7 +424,38 @@
               "start": { "line": 567, "column": 8 },
               "end": { "line": 567, "column": 41 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "Sum2",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 586,
+                    "column": 6
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 586,
+                    "column": 13
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -255,8 +467,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 567, "column": 8 },
               "end": { "line": 567, "column": 41 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -278,7 +489,38 @@
               "start": { "line": 566, "column": 35 },
               "end": { "line": 566, "column": 38 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "Sum2",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 586,
+                    "column": 6
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 586,
+                    "column": 13
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -290,8 +532,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 566, "column": 33 },
               "end": { "line": 566, "column": 38 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"
@@ -313,7 +554,38 @@
               "start": { "line": 557, "column": 8 },
               "end": { "line": 557, "column": 40 }
             },
-            "callstack": 3
+            "callstack": [
+              {
+                "function": "Sum",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 584,
+                    "column": 6
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 584,
+                    "column": 12
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "warning",
@@ -325,8 +597,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 557, "column": 8 },
               "end": { "line": 557, "column": 40 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"
@@ -348,7 +619,38 @@
               "start": { "line": 556, "column": 35 },
               "end": { "line": 556, "column": 38 }
             },
-            "callstack": 3
+            "callstack": [
+              {
+                "function": "Sum",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 584,
+                    "column": 6
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 584,
+                    "column": 12
+                  }
+                }
+              },
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
+                    "line": 574,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -360,8 +662,7 @@
               "file": "/home/holterka/sv-benchmarks/c/memsafety/20051113-1.i",
               "start": { "line": 556, "column": 33 },
               "end": { "line": 556, "column": 38 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"

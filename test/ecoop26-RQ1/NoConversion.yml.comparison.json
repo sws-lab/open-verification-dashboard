@@ -18,7 +18,23 @@
               "start": { "line": 332, "column": 10 },
               "end": { "line": 332, "column": 24 }
             },
-            "callstack": 1
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/NoConversion.i",
+                    "line": 331,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/NoConversion.i",
+                    "line": 331,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "error",
@@ -30,8 +46,7 @@
               "file": "/home/holterka/sv-benchmarks/c/signedintegeroverflow-regression/NoConversion.i",
               "start": { "line": 332, "column": 6 },
               "end": { "line": 332, "column": 24 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "warning"

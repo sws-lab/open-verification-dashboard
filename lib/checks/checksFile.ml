@@ -15,10 +15,6 @@ type t = {
 }
 [@@deriving yojson, ord] [@@yojson.allow_extra_fields]
 
-let t_of_yojson =
-  StackTrace.reset ();
-  t_of_yojson
-
 (** Reads a proof obligation from a file, parsing it as JSON. If the file is
     ["stdin"], it reads from standard input, one json object per line. Returns
     an option type, which is None if there was an error. *)

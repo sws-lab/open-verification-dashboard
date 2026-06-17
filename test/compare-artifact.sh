@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test22-pretty-yojson
+OUTDIR=dashboard-artifact-regression/test23-callstack-json
 
 mkdir -p $OUTDIR
 

@@ -18,7 +18,23 @@
               "start": { "line": 16, "column": 24 },
               "end": { "line": 16, "column": 27 }
             },
-            "callstack": 2
+            "callstack": [
+              {
+                "function": "main",
+                "range": {
+                  "start": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/loop-acceleration/array_1-1.c",
+                    "line": 12,
+                    "column": 4
+                  },
+                  "end": {
+                    "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/loop-acceleration/array_1-1.c",
+                    "line": 12,
+                    "column": 8
+                  }
+                }
+              }
+            ]
           }
         ],
         "verdict_po1": "safe",
@@ -30,8 +46,7 @@
               "file": "/home/holterka/dashboard/dashboard-artifact-data/sv-benchmarks-nooverflow/c/loop-acceleration/array_1-1.c",
               "start": { "line": 16, "column": 22 },
               "end": { "line": 16, "column": 27 }
-            },
-            "callstack": 0
+            }
           }
         ],
         "verdict_po2": "safe"

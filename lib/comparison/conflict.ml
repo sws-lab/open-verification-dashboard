@@ -9,13 +9,13 @@ module ConflictCheck = struct
     status : Status.Reachable.t; [@key "kind"] (* kind is legacy name *)
     messages : string;
     range : Range.t;
-    callstack : StackTrace.t;
+    callstack : StackTrace.t option; [@yojson.option]
   }
   [@@deriving show, yojson, ord]
 
   let pp fmt check =
-    Format.fprintf fmt "@[<hov 2>%a (%a): %a@," Status.Reachable.pp check.status
-      StackTrace.pp check.callstack Range.pp check.range;
+    Format.fprintf fmt "@[<hov 2>%a%a: %a@," Status.Reachable.pp check.status
+      (Format.pp_print_option (fun fmt -> Format.fprintf fmt " (%a)" StackTrace.pp)) check.callstack Range.pp check.range;
     if String.length check.messages > 0 then Format.fprintf fmt " @,- ";
     let words = String.split_on_char ' ' check.messages in
     List.iter (fun word -> Format.fprintf fmt "%s@;<1 0>" word) words;

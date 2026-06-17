@@ -7,14 +7,6 @@ open Comparison
 module ConflictCheck = Conflict.ConflictCheck
 module ChecksSet = Conflict.ChecksSet
 
-module AnalyzerId = Int
-module AnalyzerMap = Map.Make (AnalyzerId)
-
-type pre_conflict = {
-  category : Category.t;
-  range : Range.t;
-  analyzer_checks : ChecksSet.t AnalyzerMap.t;
-}
 
 let compare checks1 checks2 =
   let checks_of_file i (checks: Check.t list) =
@@ -34,7 +26,7 @@ let compare checks1 checks2 =
     AnalyzerMap.of_seq (Seq.init 2 (fun i -> (i + 1, ChecksSet.empty)))
   in
   let gather_conflicts checks =
-    let rec build_unique_conflict conflict = function
+    let rec build_unique_conflict (conflict: PreConflict.t) = function
       | [] -> (conflict, [])
       | (analyzer_id, (check : Check.t)) :: rest -> (
         if Range.overlap conflict.range check.range then
@@ -59,7 +51,7 @@ let compare checks1 checks2 =
       | (analyzer_id, (check : Check.t)) :: rest ->
         (* pick first check *)
         let conflict =
-          {
+          PreConflict.{
             range = check.range;
             category = check.category;
             analyzer_checks = AnalyzerMap.add analyzer_id (ChecksSet.singleton (ConflictCheck.of_check check)) empty_analyzer_checks;
@@ -75,25 +67,7 @@ let compare checks1 checks2 =
   let conflicts = CategoryFileMap.map gather_conflicts checks in
 
   let conflicts =
-    CategoryFileMap.map (List.map (fun pc ->
-        let analyzer_statuses = AnalyzerMap.map (fun checks ->
-            ChecksSet.fold (fun c acc -> Status.join (Status.of_reachable c.ConflictCheck.status) acc) checks `Unreached
-          ) pc.analyzer_checks
-        in
-        let status_po1 = AnalyzerMap.find 1 analyzer_statuses in
-        let status_po2 = AnalyzerMap.find 2 analyzer_statuses in
-        let kind =
-          CrossStatus.of_statuses status_po1 status_po2
-        in
-        Conflict.{
-          kind;
-          category = pc.category;
-          range = pc.range;
-          from_po1 = AnalyzerMap.find 1 pc.analyzer_checks;
-          status_po1;
-          from_po2 = AnalyzerMap.find 2 pc.analyzer_checks;
-          status_po2;
-        })) conflicts
+    CategoryFileMap.map (List.map PreConflict.to_conflict) conflicts
   in
   let conflicts =
     CategoryFileMap.to_rev_seq conflicts (* rev to maintain cram test order *)

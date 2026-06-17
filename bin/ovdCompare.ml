@@ -28,12 +28,12 @@ let compare ~checks_files ~filter_category ~filter_path ~format =
     in
     let po1 = load_checks checks_file1 in
     let po2 = load_checks checks_file2 in
-    let conflict = CompareProofObligations.conflicts_between po1 po2 in
+    let conflict = CompareProofObligations.compare po1.checks po2.checks in
 
     (* Check that no checks were lost. *)
     let conflict_checks_count =
       List.fold_left (fun acc (conflict: Conflict.t) ->
-          acc + CompareProofObligations.ChecksSet.cardinal conflict.from_po1 + CompareProofObligations.ChecksSet.cardinal conflict.from_po2
+          acc + Conflict.ChecksSet.cardinal conflict.from_po1 + Conflict.ChecksSet.cardinal conflict.from_po2
         ) 0 conflict
     in
     (* TODO: This fails if the original lists contain duplicates. *)

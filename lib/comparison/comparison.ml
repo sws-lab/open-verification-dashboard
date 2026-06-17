@@ -18,3 +18,7 @@ struct
 end
 
 
+module type S =
+sig
+  val compare: Check.t list -> Check.t list -> Conflict.t list
+end

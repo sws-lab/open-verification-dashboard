@@ -16,13 +16,13 @@ type pre_conflict = {
   analyzer_checks : ChecksSet.t AnalyzerMap.t;
 }
 
-let conflicts_between (w1 : ChecksFile.t) (w2 : ChecksFile.t) =
-  let checks_of_file i (checks_file: ChecksFile.t) =
-    CategoryFileMap.of_checks checks_file.checks
+let compare checks1 checks2 =
+  let checks_of_file i (checks: Check.t list) =
+    CategoryFileMap.of_checks checks
     |> CategoryFileMap.map (List.map (fun check -> (i, check)))
   in
-  let checks1 = checks_of_file 1 w1 in
-  let checks2 = checks_of_file 2 w2 in
+  let checks1 = checks_of_file 1 checks1 in
+  let checks2 = checks_of_file 2 checks2 in
   let checks = CategoryFileMap.union (fun _ checks1 checks2 -> Some (List.rev_append checks1 checks2)) checks1 checks2 in (* rev to maintain cram test order *)
   let checks =
     CategoryFileMap.map (List.sort (fun (_, (c1 : Check.t)) (_, (c2 : Check.t)) ->

@@ -77,13 +77,13 @@ let overlap a b =
   && compare_file_position
         (max_file_position a.start b.start)
         (min_file_position a.end_ b.end_)
-      <= 0 (* TODO: should end-to-end touching be overlapping? *)
+      < 0
 
 let compare_overlap a b =
   if a.file <> b.file then String.compare a.file b.file
   else if overlap a b then 0
-  else if compare_file_position a.end_ b.start < 0 then -1
-  else if compare_file_position a.start b.end_ > 0 then 1
+  else if compare_file_position a.end_ b.start <= 0 then -1
+  else if compare_file_position a.start b.end_ >= 0 then 1
   else (
     Format.eprintf "Ranges are not comparable: %a and %a\n" pp a pp b;
     exit 1)

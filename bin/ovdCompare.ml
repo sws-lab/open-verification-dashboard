@@ -1,6 +1,6 @@
 open Ovd_comparison
 
-let compare ~checks_files ~filter_category ~filter_path ~format =
+let compare ~checks_files ~filter_category ~filter_path ~match_range ~format =
   let reset_ppf = Spectrum.prepare_ppf Format.std_formatter in
   match checks_files with
   | []
@@ -28,7 +28,11 @@ let compare ~checks_files ~filter_category ~filter_path ~format =
     in
     let po1 = load_checks checks_file1 in
     let po2 = load_checks checks_file2 in
-    let conflict = OverlapComparison.compare po1.checks po2.checks in
+    let conflict =
+      match match_range with
+      | `Overlap -> OverlapComparison.compare po1.checks po2.checks
+      | `Direct -> DirectComparison.compare po1.checks po2.checks
+    in
 
     (* Check that no checks were lost. *)
     let conflict_checks_count =
@@ -78,6 +82,16 @@ let filter_path =
   let doc = "Filter checks to given paths (by glob pattern)." in
   Arg.(value & opt (some string) None & info ["filter-path"] ~doc ~docv:"GLOB")
 
+let match_range =
+  let enum =  [
+      ("overlap", `Overlap);
+      ("direct", `Direct);
+    ]
+  in
+  let doc = Format.sprintf "Match check ranges, %s." (Arg.doc_alts_enum enum) in
+  let format = Arg.enum ~docv:"MATCH" enum in
+  Arg.(value & opt format `Overlap & info ["match-range"] ~doc)
+
 let format =
   let enum =  [
       ("pretty", `Pretty);
@@ -91,5 +105,5 @@ let format =
 let cmd =
   let doc = "Compare OVD checks files." in
   Cmd.make (Cmd.info "compare" ~doc) @@
-  let+ checks_files and+ filter_category and+ filter_path and+ format in
-  compare ~checks_files ~filter_category ~filter_path ~format
+  let+ checks_files and+ filter_category and+ filter_path and+ match_range and+ format in
+  compare ~checks_files ~filter_category ~filter_path ~match_range ~format

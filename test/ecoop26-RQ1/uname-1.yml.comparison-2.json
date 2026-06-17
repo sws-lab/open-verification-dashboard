@@ -1,1 +1,1853 @@
-{"conflicts":{"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i":[{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3093,"column":21},"end":{"line":3093,"column":26}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3093,"column":21},"end":{"line":3093,"column":26}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3089,"column":21},"end":{"line":3089,"column":26}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3089,"column":21},"end":{"line":3089,"column":26}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3084,"column":21},"end":{"line":3084,"column":26}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3084,"column":21},"end":{"line":3084,"column":26}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3082,"column":7},"end":{"line":3082,"column":49}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3082,"column":7},"end":{"line":3082,"column":49}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3082,"column":7},"end":{"line":3082,"column":49}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3082,"column":7},"end":{"line":3082,"column":49}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3081,"column":7},"end":{"line":3081,"column":44}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3081,"column":7},"end":{"line":3081,"column":44}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3081,"column":7},"end":{"line":3081,"column":44}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3081,"column":7},"end":{"line":3081,"column":44}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3074,"column":19},"end":{"line":3074,"column":24}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3074,"column":19},"end":{"line":3074,"column":24}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3067,"column":2},"end":{"line":3067,"column":58}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3067,"column":2},"end":{"line":3067,"column":58}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3046,"column":9},"end":{"line":3046,"column":15}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3046,"column":9},"end":{"line":3046,"column":15}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3036,"column":5},"end":{"line":3036,"column":67}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3036,"column":5},"end":{"line":3036,"column":67}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3036,"column":5},"end":{"line":3036,"column":67}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3036,"column":5},"end":{"line":3036,"column":67}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3034,"column":6},"end":{"line":3034,"column":14}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3034,"column":6},"end":{"line":3034,"column":14}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3027,"column":11},"end":{"line":3027,"column":13}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3027,"column":11},"end":{"line":3027,"column":13}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3023,"column":6},"end":{"line":3023,"column":17}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3023,"column":6},"end":{"line":3023,"column":17}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3007,"column":8},"end":{"line":3007,"column":9}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3007,"column":8},"end":{"line":3007,"column":9}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3006,"column":1},"end":{"line":3006,"column":49}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3006,"column":1},"end":{"line":3006,"column":49}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3005,"column":2},"end":{"line":3005,"column":47}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3005,"column":2},"end":{"line":3005,"column":47}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3004,"column":48},"end":{"line":3004,"column":53}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3004,"column":48},"end":{"line":3004,"column":53}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3004,"column":10},"end":{"line":3004,"column":53}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3004,"column":10},"end":{"line":3004,"column":15}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3004,"column":15},"end":{"line":3004,"column":48}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3004,"column":48},"end":{"line":3004,"column":53}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3003,"column":1},"end":{"line":3003,"column":43}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3003,"column":1},"end":{"line":3003,"column":43}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3002,"column":2},"end":{"line":3002,"column":44}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3002,"column":2},"end":{"line":3002,"column":44}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3001,"column":45},"end":{"line":3001,"column":50}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3001,"column":45},"end":{"line":3001,"column":50}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3001,"column":10},"end":{"line":3001,"column":50}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3001,"column":10},"end":{"line":3001,"column":15}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3001,"column":15},"end":{"line":3001,"column":45}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3001,"column":45},"end":{"line":3001,"column":50}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3000,"column":1},"end":{"line":3000,"column":43}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":3000,"column":1},"end":{"line":3000,"column":43}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2999,"column":2},"end":{"line":2999,"column":44}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2999,"column":2},"end":{"line":2999,"column":44}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2998,"column":45},"end":{"line":2998,"column":50}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2998,"column":45},"end":{"line":2998,"column":50}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2998,"column":10},"end":{"line":2998,"column":50}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2998,"column":10},"end":{"line":2998,"column":15}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2998,"column":15},"end":{"line":2998,"column":45}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2998,"column":45},"end":{"line":2998,"column":50}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2997,"column":1},"end":{"line":2997,"column":43}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2997,"column":1},"end":{"line":2997,"column":43}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2996,"column":2},"end":{"line":2996,"column":44}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2996,"column":2},"end":{"line":2996,"column":44}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2995,"column":45},"end":{"line":2995,"column":50}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2995,"column":45},"end":{"line":2995,"column":50}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2995,"column":10},"end":{"line":2995,"column":50}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2995,"column":10},"end":{"line":2995,"column":15}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2995,"column":15},"end":{"line":2995,"column":45}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2995,"column":45},"end":{"line":2995,"column":50}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2994,"column":1},"end":{"line":2994,"column":45}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2994,"column":1},"end":{"line":2994,"column":45}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2993,"column":2},"end":{"line":2993,"column":45}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2993,"column":2},"end":{"line":2993,"column":45}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2992,"column":46},"end":{"line":2992,"column":51}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2992,"column":46},"end":{"line":2992,"column":51}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2992,"column":10},"end":{"line":2992,"column":51}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2992,"column":10},"end":{"line":2992,"column":15}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2992,"column":15},"end":{"line":2992,"column":46}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2992,"column":46},"end":{"line":2992,"column":51}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2991,"column":1},"end":{"line":2991,"column":43}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2991,"column":1},"end":{"line":2991,"column":43}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2989,"column":45},"end":{"line":2989,"column":50}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2989,"column":45},"end":{"line":2989,"column":50}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2989,"column":15},"end":{"line":2989,"column":45}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2989,"column":15},"end":{"line":2989,"column":45}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2987,"column":9},"end":{"line":2987,"column":11}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2987,"column":9},"end":{"line":2987,"column":11}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2922,"column":4},"end":{"line":2922,"column":103}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2922,"column":4},"end":{"line":2922,"column":103}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2921,"column":18},"end":{"line":2921,"column":72}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2921,"column":18},"end":{"line":2921,"column":72}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2841,"column":4},"end":{"line":2841,"column":42}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2841,"column":4},"end":{"line":2841,"column":42}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2798,"column":9},"end":{"line":2798,"column":37}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2798,"column":9},"end":{"line":2798,"column":37}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2777,"column":4},"end":{"line":2777,"column":24}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2777,"column":4},"end":{"line":2777,"column":24}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2740,"column":6},"end":{"line":2740,"column":45}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2740,"column":6},"end":{"line":2740,"column":45}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2726,"column":7},"end":{"line":2726,"column":14}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2726,"column":7},"end":{"line":2726,"column":14}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2509,"column":8},"end":{"line":2509,"column":17}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2509,"column":8},"end":{"line":2509,"column":17}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2491,"column":6},"end":{"line":2491,"column":16}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2491,"column":6},"end":{"line":2491,"column":16}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2484,"column":6},"end":{"line":2484,"column":87}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2484,"column":6},"end":{"line":2484,"column":87}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2478,"column":6},"end":{"line":2478,"column":24}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2478,"column":6},"end":{"line":2478,"column":24}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2475,"column":4},"end":{"line":2475,"column":32}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2475,"column":4},"end":{"line":2475,"column":32}},"callstack":0},{"kind":"warning","messages":"Signed integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2475,"column":4},"end":{"line":2475,"column":32}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2473,"column":4},"end":{"line":2473,"column":86}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2473,"column":4},"end":{"line":2473,"column":86}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2471,"column":4},"end":{"line":2471,"column":103}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2471,"column":4},"end":{"line":2471,"column":103}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2468,"column":6},"end":{"line":2468,"column":24}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2468,"column":6},"end":{"line":2468,"column":24}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2467,"column":6},"end":{"line":2467,"column":87}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2467,"column":6},"end":{"line":2467,"column":87}},"callstack":0},{"kind":"warning","messages":"Signed integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2467,"column":6},"end":{"line":2467,"column":87}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2467,"column":6},"end":{"line":2467,"column":87}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2467,"column":6},"end":{"line":2467,"column":87}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2435,"column":31},"end":{"line":2435,"column":42}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2435,"column":31},"end":{"line":2435,"column":42}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2418,"column":64},"end":{"line":2418,"column":81}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2418,"column":64},"end":{"line":2418,"column":81}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2415,"column":13},"end":{"line":2415,"column":25}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in unary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2415,"column":13},"end":{"line":2415,"column":25}},"callstack":0}],"verdict_po2":"safe"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2394,"column":4},"end":{"line":2394,"column":22}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2394,"column":4},"end":{"line":2394,"column":22}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2385,"column":22},"end":{"line":2385,"column":57}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2385,"column":22},"end":{"line":2385,"column":57}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2351,"column":4},"end":{"line":2351,"column":28}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2351,"column":4},"end":{"line":2351,"column":28}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2335,"column":4},"end":{"line":2335,"column":53}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2335,"column":4},"end":{"line":2335,"column":53}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2334,"column":4},"end":{"line":2334,"column":53}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2334,"column":4},"end":{"line":2334,"column":53}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2332,"column":4},"end":{"line":2332,"column":28}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2332,"column":4},"end":{"line":2332,"column":28}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2324,"column":4},"end":{"line":2324,"column":19}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2324,"column":4},"end":{"line":2324,"column":19}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2316,"column":2},"end":{"line":2316,"column":115}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2316,"column":2},"end":{"line":2316,"column":115}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2301,"column":2},"end":{"line":2301,"column":73}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"warning","messages":"Unsigned integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2301,"column":2},"end":{"line":2301,"column":73}},"callstack":0}],"verdict_po2":"warning"},{"kind":"CoverageDisagreement","title":"Unsigned integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2280,"column":11},"end":{"line":2280,"column":45}},"from_po1":[],"verdict_po1":"none","from_po2":[{"kind":"safe","messages":"No unsigned integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2280,"column":11},"end":{"line":2280,"column":45}},"callstack":0},{"kind":"safe","messages":"No unsigned integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i","start":{"line":2280,"column":11},"end":{"line":2280,"column":45}},"callstack":0}],"verdict_po2":"safe"}]},"po1_name":"checks","po2_name":"checks","global_result":{"optimistic_status":"none","pessimistic_status":"warning","joint_matrix":[[0,0,0,0],[0,0,0,0],[0,0,0,0],[21,0,49,0]],"selectivity1":null,"selectivity2":0.7,"joint_selectivity":null,"alignment":0.0},"category_results":{"Signed integer overflow in arithmetic operator":{"optimistic_status":"none","pessimistic_status":"warning","joint_matrix":[[0,0,0,0],[0,0,0,0],[0,0,0,0],[11,0,27,0]],"selectivity1":null,"selectivity2":0.7105263157894737,"joint_selectivity":null,"alignment":0.0},"Unsigned integer overflow in arithmetic operator":{"optimistic_status":"none","pessimistic_status":"warning","joint_matrix":[[0,0,0,0],[0,0,0,0],[0,0,0,0],[10,0,22,0]],"selectivity1":null,"selectivity2":0.6875,"joint_selectivity":null,"alignment":0.0}}}
+{
+  "conflicts": {
+    "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i": [
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3093, "column": 21 },
+          "end": { "line": 3093, "column": 26 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3093, "column": 21 },
+              "end": { "line": 3093, "column": 26 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3089, "column": 21 },
+          "end": { "line": 3089, "column": 26 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3089, "column": 21 },
+              "end": { "line": 3089, "column": 26 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3084, "column": 21 },
+          "end": { "line": 3084, "column": 26 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3084, "column": 21 },
+              "end": { "line": 3084, "column": 26 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3082, "column": 7 },
+          "end": { "line": 3082, "column": 49 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3082, "column": 7 },
+              "end": { "line": 3082, "column": 49 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3082, "column": 7 },
+          "end": { "line": 3082, "column": 49 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3082, "column": 7 },
+              "end": { "line": 3082, "column": 49 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3081, "column": 7 },
+          "end": { "line": 3081, "column": 44 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3081, "column": 7 },
+              "end": { "line": 3081, "column": 44 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3081, "column": 7 },
+          "end": { "line": 3081, "column": 44 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3081, "column": 7 },
+              "end": { "line": 3081, "column": 44 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3074, "column": 19 },
+          "end": { "line": 3074, "column": 24 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3074, "column": 19 },
+              "end": { "line": 3074, "column": 24 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3067, "column": 2 },
+          "end": { "line": 3067, "column": 58 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3067, "column": 2 },
+              "end": { "line": 3067, "column": 58 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3046, "column": 9 },
+          "end": { "line": 3046, "column": 15 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3046, "column": 9 },
+              "end": { "line": 3046, "column": 15 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3036, "column": 5 },
+          "end": { "line": 3036, "column": 67 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3036, "column": 5 },
+              "end": { "line": 3036, "column": 67 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3036, "column": 5 },
+          "end": { "line": 3036, "column": 67 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3036, "column": 5 },
+              "end": { "line": 3036, "column": 67 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3034, "column": 6 },
+          "end": { "line": 3034, "column": 14 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3034, "column": 6 },
+              "end": { "line": 3034, "column": 14 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3027, "column": 11 },
+          "end": { "line": 3027, "column": 13 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3027, "column": 11 },
+              "end": { "line": 3027, "column": 13 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3023, "column": 6 },
+          "end": { "line": 3023, "column": 17 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3023, "column": 6 },
+              "end": { "line": 3023, "column": 17 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3007, "column": 8 },
+          "end": { "line": 3007, "column": 9 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3007, "column": 8 },
+              "end": { "line": 3007, "column": 9 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3006, "column": 1 },
+          "end": { "line": 3006, "column": 49 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3006, "column": 1 },
+              "end": { "line": 3006, "column": 49 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3005, "column": 2 },
+          "end": { "line": 3005, "column": 47 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3005, "column": 2 },
+              "end": { "line": 3005, "column": 47 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3004, "column": 48 },
+          "end": { "line": 3004, "column": 53 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3004, "column": 48 },
+              "end": { "line": 3004, "column": 53 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3004, "column": 10 },
+          "end": { "line": 3004, "column": 53 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3004, "column": 10 },
+              "end": { "line": 3004, "column": 15 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3004, "column": 15 },
+              "end": { "line": 3004, "column": 48 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3004, "column": 48 },
+              "end": { "line": 3004, "column": 53 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3003, "column": 1 },
+          "end": { "line": 3003, "column": 43 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3003, "column": 1 },
+              "end": { "line": 3003, "column": 43 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3002, "column": 2 },
+          "end": { "line": 3002, "column": 44 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3002, "column": 2 },
+              "end": { "line": 3002, "column": 44 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3001, "column": 45 },
+          "end": { "line": 3001, "column": 50 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3001, "column": 45 },
+              "end": { "line": 3001, "column": 50 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3001, "column": 10 },
+          "end": { "line": 3001, "column": 50 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3001, "column": 10 },
+              "end": { "line": 3001, "column": 15 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3001, "column": 15 },
+              "end": { "line": 3001, "column": 45 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3001, "column": 45 },
+              "end": { "line": 3001, "column": 50 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 3000, "column": 1 },
+          "end": { "line": 3000, "column": 43 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 3000, "column": 1 },
+              "end": { "line": 3000, "column": 43 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2999, "column": 2 },
+          "end": { "line": 2999, "column": 44 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2999, "column": 2 },
+              "end": { "line": 2999, "column": 44 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2998, "column": 45 },
+          "end": { "line": 2998, "column": 50 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2998, "column": 45 },
+              "end": { "line": 2998, "column": 50 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2998, "column": 10 },
+          "end": { "line": 2998, "column": 50 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2998, "column": 10 },
+              "end": { "line": 2998, "column": 15 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2998, "column": 15 },
+              "end": { "line": 2998, "column": 45 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2998, "column": 45 },
+              "end": { "line": 2998, "column": 50 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2997, "column": 1 },
+          "end": { "line": 2997, "column": 43 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2997, "column": 1 },
+              "end": { "line": 2997, "column": 43 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2996, "column": 2 },
+          "end": { "line": 2996, "column": 44 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2996, "column": 2 },
+              "end": { "line": 2996, "column": 44 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2995, "column": 45 },
+          "end": { "line": 2995, "column": 50 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2995, "column": 45 },
+              "end": { "line": 2995, "column": 50 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2995, "column": 10 },
+          "end": { "line": 2995, "column": 50 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2995, "column": 10 },
+              "end": { "line": 2995, "column": 15 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2995, "column": 15 },
+              "end": { "line": 2995, "column": 45 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2995, "column": 45 },
+              "end": { "line": 2995, "column": 50 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2994, "column": 1 },
+          "end": { "line": 2994, "column": 45 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2994, "column": 1 },
+              "end": { "line": 2994, "column": 45 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2993, "column": 2 },
+          "end": { "line": 2993, "column": 45 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2993, "column": 2 },
+              "end": { "line": 2993, "column": 45 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2992, "column": 46 },
+          "end": { "line": 2992, "column": 51 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2992, "column": 46 },
+              "end": { "line": 2992, "column": 51 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2992, "column": 10 },
+          "end": { "line": 2992, "column": 51 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2992, "column": 10 },
+              "end": { "line": 2992, "column": 15 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2992, "column": 15 },
+              "end": { "line": 2992, "column": 46 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2992, "column": 46 },
+              "end": { "line": 2992, "column": 51 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2991, "column": 1 },
+          "end": { "line": 2991, "column": 43 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2991, "column": 1 },
+              "end": { "line": 2991, "column": 43 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2989, "column": 45 },
+          "end": { "line": 2989, "column": 50 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2989, "column": 45 },
+              "end": { "line": 2989, "column": 50 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2989, "column": 15 },
+          "end": { "line": 2989, "column": 45 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2989, "column": 15 },
+              "end": { "line": 2989, "column": 45 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2987, "column": 9 },
+          "end": { "line": 2987, "column": 11 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2987, "column": 9 },
+              "end": { "line": 2987, "column": 11 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2922, "column": 4 },
+          "end": { "line": 2922, "column": 103 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2922, "column": 4 },
+              "end": { "line": 2922, "column": 103 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2921, "column": 18 },
+          "end": { "line": 2921, "column": 72 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2921, "column": 18 },
+              "end": { "line": 2921, "column": 72 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2841, "column": 4 },
+          "end": { "line": 2841, "column": 42 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2841, "column": 4 },
+              "end": { "line": 2841, "column": 42 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2798, "column": 9 },
+          "end": { "line": 2798, "column": 37 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2798, "column": 9 },
+              "end": { "line": 2798, "column": 37 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2777, "column": 4 },
+          "end": { "line": 2777, "column": 24 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2777, "column": 4 },
+              "end": { "line": 2777, "column": 24 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2740, "column": 6 },
+          "end": { "line": 2740, "column": 45 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2740, "column": 6 },
+              "end": { "line": 2740, "column": 45 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2726, "column": 7 },
+          "end": { "line": 2726, "column": 14 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2726, "column": 7 },
+              "end": { "line": 2726, "column": 14 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2509, "column": 8 },
+          "end": { "line": 2509, "column": 17 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2509, "column": 8 },
+              "end": { "line": 2509, "column": 17 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2491, "column": 6 },
+          "end": { "line": 2491, "column": 16 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2491, "column": 6 },
+              "end": { "line": 2491, "column": 16 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2484, "column": 6 },
+          "end": { "line": 2484, "column": 87 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2484, "column": 6 },
+              "end": { "line": 2484, "column": 87 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2478, "column": 6 },
+          "end": { "line": 2478, "column": 24 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2478, "column": 6 },
+              "end": { "line": 2478, "column": 24 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2475, "column": 4 },
+          "end": { "line": 2475, "column": 32 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2475, "column": 4 },
+              "end": { "line": 2475, "column": 32 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2475, "column": 4 },
+              "end": { "line": 2475, "column": 32 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2473, "column": 4 },
+          "end": { "line": 2473, "column": 86 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2473, "column": 4 },
+              "end": { "line": 2473, "column": 86 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2471, "column": 4 },
+          "end": { "line": 2471, "column": 103 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2471, "column": 4 },
+              "end": { "line": 2471, "column": 103 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2468, "column": 6 },
+          "end": { "line": 2468, "column": 24 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2468, "column": 6 },
+              "end": { "line": 2468, "column": 24 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2467, "column": 6 },
+          "end": { "line": 2467, "column": 87 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2467, "column": 6 },
+              "end": { "line": 2467, "column": 87 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2467, "column": 6 },
+              "end": { "line": 2467, "column": 87 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2467, "column": 6 },
+          "end": { "line": 2467, "column": 87 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2467, "column": 6 },
+              "end": { "line": 2467, "column": 87 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2435, "column": 31 },
+          "end": { "line": 2435, "column": 42 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2435, "column": 31 },
+              "end": { "line": 2435, "column": 42 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2418, "column": 64 },
+          "end": { "line": 2418, "column": 81 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2418, "column": 64 },
+              "end": { "line": 2418, "column": 81 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2415, "column": 13 },
+          "end": { "line": 2415, "column": 25 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in unary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2415, "column": 13 },
+              "end": { "line": 2415, "column": 25 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2394, "column": 4 },
+          "end": { "line": 2394, "column": 22 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2394, "column": 4 },
+              "end": { "line": 2394, "column": 22 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2385, "column": 22 },
+          "end": { "line": 2385, "column": 57 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2385, "column": 22 },
+              "end": { "line": 2385, "column": 57 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2351, "column": 4 },
+          "end": { "line": 2351, "column": 28 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2351, "column": 4 },
+              "end": { "line": 2351, "column": 28 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2335, "column": 4 },
+          "end": { "line": 2335, "column": 53 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2335, "column": 4 },
+              "end": { "line": 2335, "column": 53 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2334, "column": 4 },
+          "end": { "line": 2334, "column": 53 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2334, "column": 4 },
+              "end": { "line": 2334, "column": 53 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2332, "column": 4 },
+          "end": { "line": 2332, "column": 28 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2332, "column": 4 },
+              "end": { "line": 2332, "column": 28 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2324, "column": 4 },
+          "end": { "line": 2324, "column": 19 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2324, "column": 4 },
+              "end": { "line": 2324, "column": 19 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2316, "column": 2 },
+          "end": { "line": 2316, "column": 115 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2316, "column": 2 },
+              "end": { "line": 2316, "column": 115 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2301, "column": 2 },
+          "end": { "line": 2301, "column": 73 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Unsigned integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2301, "column": 2 },
+              "end": { "line": 2301, "column": 73 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "CoverageDisagreement",
+        "title": "Unsigned integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+          "start": { "line": 2280, "column": 11 },
+          "end": { "line": 2280, "column": 45 }
+        },
+        "from_po1": [],
+        "verdict_po1": "none",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2280, "column": 11 },
+              "end": { "line": 2280, "column": 45 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No unsigned integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/busybox-1.22.0/uname-1.i",
+              "start": { "line": 2280, "column": 11 },
+              "end": { "line": 2280, "column": 45 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      }
+    ]
+  },
+  "po1_name": "checks",
+  "po2_name": "checks",
+  "global_result": {
+    "optimistic_status": "none",
+    "pessimistic_status": "warning",
+    "joint_matrix": [
+      [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 21, 0, 49, 0 ]
+    ],
+    "selectivity1": null,
+    "selectivity2": 0.7,
+    "joint_selectivity": null,
+    "alignment": 0.0
+  },
+  "category_results": {
+    "Signed integer overflow in arithmetic operator": {
+      "optimistic_status": "none",
+      "pessimistic_status": "warning",
+      "joint_matrix": [
+        [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 11, 0, 27, 0 ]
+      ],
+      "selectivity1": null,
+      "selectivity2": 0.7105263157894737,
+      "joint_selectivity": null,
+      "alignment": 0.0
+    },
+    "Unsigned integer overflow in arithmetic operator": {
+      "optimistic_status": "none",
+      "pessimistic_status": "warning",
+      "joint_matrix": [
+        [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 10, 0, 22, 0 ]
+      ],
+      "selectivity1": null,
+      "selectivity2": 0.6875,
+      "joint_selectivity": null,
+      "alignment": 0.0
+    }
+  }
+}

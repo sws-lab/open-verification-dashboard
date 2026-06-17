@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test21-range-compare
+OUTDIR=dashboard-artifact-regression/test22-pretty-yojson
 
 mkdir -p $OUTDIR
 

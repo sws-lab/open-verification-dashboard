@@ -1,1 +1,677 @@
-{"conflicts":{"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c":[{"kind":"NegativeAgreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":4},"end":{"line":50,"column":71}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":22},"end":{"line":50,"column":26}},"callstack":1},{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":40},"end":{"line":50,"column":55}},"callstack":1},{"kind":"warning","messages":"'((((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y)) - v) + (2 * y))' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":22},"end":{"line":50,"column":65}},"callstack":1},{"kind":"warning","messages":"'(((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y)) - v)' has value [-18446744073709551615,18446744073709551615] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":22},"end":{"line":50,"column":59}},"callstack":1},{"kind":"warning","messages":"'((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y))' has value [-9223372036854775808,9223372036854775809] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":22},"end":{"line":50,"column":55}},"callstack":1},{"kind":"warning","messages":"'(((2 * yx) - (2 * xy)) - X)' has value [-9223372036854775809,9223372036854775807] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":22},"end":{"line":50,"column":37}},"callstack":1},{"kind":"warning","messages":"'((2 * yx) - (2 * xy))' has value [-9223372036854775807,9223372036854775812] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":22},"end":{"line":50,"column":33}},"callstack":1},{"kind":"warning","messages":"'(2 * xy)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":29},"end":{"line":50,"column":33}},"callstack":1},{"kind":"warning","messages":"'(2 * y)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":62},"end":{"line":50,"column":65}},"callstack":1}],"verdict_po1":"warning","from_po2":[{"kind":"warning","messages":"Signed integer overflow and underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":4},"end":{"line":50,"column":71}},"callstack":0},{"kind":"warning","messages":"Signed integer overflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":4},"end":{"line":50,"column":71}},"callstack":0},{"kind":"warning","messages":"Signed integer underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":4},"end":{"line":50,"column":71}},"callstack":0},{"kind":"warning","messages":"Signed integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":50,"column":4},"end":{"line":50,"column":71}},"callstack":0}],"verdict_po2":"warning"},{"kind":"PositiveAgreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":49,"column":4},"end":{"line":49,"column":24}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":49,"column":9},"end":{"line":49,"column":24}},"callstack":1}],"verdict_po1":"safe","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":49,"column":4},"end":{"line":49,"column":24}},"callstack":0}],"verdict_po2":"safe"},{"kind":"PrecisionAsymmetry","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":48,"column":4},"end":{"line":48,"column":24}},"from_po1":[{"kind":"warning","messages":"'(x * y)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'\n'((signed long long) x * y)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":48,"column":9},"end":{"line":48,"column":24}},"callstack":1}],"verdict_po1":"warning","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":48,"column":4},"end":{"line":48,"column":24}},"callstack":0}],"verdict_po2":"safe"},{"kind":"PositiveAgreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":46,"column":8},"end":{"line":46,"column":11}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":46,"column":8},"end":{"line":46,"column":11}},"callstack":1}],"verdict_po1":"safe","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":46,"column":8},"end":{"line":46,"column":11}},"callstack":0}],"verdict_po2":"safe"},{"kind":"PrecisionAsymmetry","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":44,"column":12},"end":{"line":44,"column":15}},"from_po1":[{"kind":"warning","messages":"'(y + 1)' has value [-9223372036854775807,9223372036854775808] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":44,"column":12},"end":{"line":44,"column":15}},"callstack":1}],"verdict_po1":"warning","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":44,"column":12},"end":{"line":44,"column":15}},"callstack":0}],"verdict_po2":"safe"},{"kind":"PrecisionAsymmetry","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":43,"column":12},"end":{"line":43,"column":43}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":43,"column":20},"end":{"line":43,"column":43}},"callstack":1},{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":43,"column":25},"end":{"line":43,"column":42}},"callstack":1},{"kind":"warning","messages":"'(v + (2 * ((signed long long) Y - X)))' has value [-2,9223372036854775809] that is larger than the range of 'signed long long'\n'(v + (2 * ((signed long long) Y - X)))' has value [-2,9223372036854775809] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":43,"column":16},"end":{"line":43,"column":43}},"callstack":1}],"verdict_po1":"warning","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":43,"column":12},"end":{"line":43,"column":43}},"callstack":0},{"kind":"safe","messages":"No signed integer overflow or underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":43,"column":12},"end":{"line":43,"column":43}},"callstack":0},{"kind":"safe","messages":"No signed integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":43,"column":12},"end":{"line":43,"column":43}},"callstack":0}],"verdict_po2":"safe"},{"kind":"PrecisionAsymmetry","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":41,"column":12},"end":{"line":41,"column":37}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":41,"column":16},"end":{"line":41,"column":37}},"callstack":1},{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":41,"column":20},"end":{"line":41,"column":37}},"callstack":1}],"verdict_po1":"safe","from_po2":[{"kind":"warning","messages":"Signed integer underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":41,"column":12},"end":{"line":41,"column":37}},"callstack":0}],"verdict_po2":"warning"},{"kind":"NegativeAgreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":1},"end":{"line":35,"column":63}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":38},"end":{"line":35,"column":53}},"callstack":1},{"kind":"warning","messages":"'(((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y)) - v)' has value [-18446744073709551615,18446744073709551615] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":20},"end":{"line":35,"column":57}},"callstack":1},{"kind":"warning","messages":"'((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y))' has value [-9223372036854775808,9223372036854775809] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":20},"end":{"line":35,"column":53}},"callstack":1},{"kind":"warning","messages":"'(((2 * yx) - (2 * xy)) - X)' has value [-9223372036854775809,9223372036854775807] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":20},"end":{"line":35,"column":35}},"callstack":1},{"kind":"warning","messages":"'((2 * yx) - (2 * xy))' has value [-18446744073709551615,18446744073709551615] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":20},"end":{"line":35,"column":31}},"callstack":1},{"kind":"warning","messages":"'(2 * xy)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":27},"end":{"line":35,"column":31}},"callstack":1},{"kind":"warning","messages":"'(2 * yx)' has value [0,18446744073709551614] that is larger than the range of 'signed long long'","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":20},"end":{"line":35,"column":24}},"callstack":1}],"verdict_po1":"warning","from_po2":[{"kind":"warning","messages":"Signed integer overflow and underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":1},"end":{"line":35,"column":63}},"callstack":0},{"kind":"warning","messages":"Signed integer underflow in +","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":1},"end":{"line":35,"column":63}},"callstack":0},{"kind":"warning","messages":"Signed integer underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":35,"column":1},"end":{"line":35,"column":63}},"callstack":0}],"verdict_po2":"warning"},{"kind":"PositiveAgreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":34,"column":8},"end":{"line":34,"column":28}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":34,"column":13},"end":{"line":34,"column":28}},"callstack":1}],"verdict_po1":"safe","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":34,"column":8},"end":{"line":34,"column":28}},"callstack":0}],"verdict_po2":"safe"},{"kind":"PositiveAgreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":33,"column":8},"end":{"line":33,"column":28}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":33,"column":13},"end":{"line":33,"column":28}},"callstack":1}],"verdict_po1":"safe","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":33,"column":8},"end":{"line":33,"column":28}},"callstack":0}],"verdict_po2":"safe"},{"kind":"PositiveAgreement","title":"Signed integer overflow in arithmetic operator","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":28,"column":4},"end":{"line":28,"column":31}},"from_po1":[{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":28,"column":8},"end":{"line":28,"column":31}},"callstack":1},{"kind":"safe","messages":"","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":28,"column":9},"end":{"line":28,"column":26}},"callstack":1}],"verdict_po1":"safe","from_po2":[{"kind":"safe","messages":"No signed integer overflow or underflow in *","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":28,"column":4},"end":{"line":28,"column":31}},"callstack":0},{"kind":"safe","messages":"No signed integer overflow or underflow in binary -","range":{"file":"/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c","start":{"line":28,"column":4},"end":{"line":28,"column":31}},"callstack":0}],"verdict_po2":"safe"}]},"po1_name":"checks","po2_name":"checks","global_result":{"optimistic_status":"warning","pessimistic_status":"warning","joint_matrix":[[2,0,3,0],[0,0,0,0],[1,0,5,0],[0,0,0,0]],"selectivity1":0.5454545454545454,"selectivity2":0.7272727272727273,"joint_selectivity":0.8181818181818182,"alignment":0.6363636363636364},"category_results":{"Signed integer overflow in arithmetic operator":{"optimistic_status":"warning","pessimistic_status":"warning","joint_matrix":[[2,0,3,0],[0,0,0,0],[1,0,5,0],[0,0,0,0]],"selectivity1":0.5454545454545454,"selectivity2":0.7272727272727273,"joint_selectivity":0.8181818181818182,"alignment":0.6363636363636364}}}
+{
+  "conflicts": {
+    "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c": [
+      {
+        "kind": "NegativeAgreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 50, "column": 4 },
+          "end": { "line": 50, "column": 71 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 22 },
+              "end": { "line": 50, "column": 26 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 40 },
+              "end": { "line": 50, "column": 55 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'((((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y)) - v) + (2 * y))' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 22 },
+              "end": { "line": 50, "column": 65 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y)) - v)' has value [-18446744073709551615,18446744073709551615] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 22 },
+              "end": { "line": 50, "column": 59 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y))' has value [-9223372036854775808,9223372036854775809] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 22 },
+              "end": { "line": 50, "column": 55 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(((2 * yx) - (2 * xy)) - X)' has value [-9223372036854775809,9223372036854775807] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 22 },
+              "end": { "line": 50, "column": 37 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'((2 * yx) - (2 * xy))' has value [-9223372036854775807,9223372036854775812] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 22 },
+              "end": { "line": 50, "column": 33 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(2 * xy)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 29 },
+              "end": { "line": 50, "column": 33 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(2 * y)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 62 },
+              "end": { "line": 50, "column": 65 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "warning",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow and underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 4 },
+              "end": { "line": 50, "column": 71 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 4 },
+              "end": { "line": 50, "column": 71 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 4 },
+              "end": { "line": 50, "column": 71 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 50, "column": 4 },
+              "end": { "line": 50, "column": 71 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "PositiveAgreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 49, "column": 4 },
+          "end": { "line": 49, "column": 24 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 49, "column": 9 },
+              "end": { "line": 49, "column": 24 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "safe",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 49, "column": 4 },
+              "end": { "line": 49, "column": 24 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "PrecisionAsymmetry",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 48, "column": 4 },
+          "end": { "line": 48, "column": 24 }
+        },
+        "from_po1": [
+          {
+            "kind": "warning",
+            "messages": "'(x * y)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'\n'((signed long long) x * y)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 48, "column": 9 },
+              "end": { "line": 48, "column": 24 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "warning",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 48, "column": 4 },
+              "end": { "line": 48, "column": 24 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "PositiveAgreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 46, "column": 8 },
+          "end": { "line": 46, "column": 11 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 46, "column": 8 },
+              "end": { "line": 46, "column": 11 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "safe",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 46, "column": 8 },
+              "end": { "line": 46, "column": 11 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "PrecisionAsymmetry",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 44, "column": 12 },
+          "end": { "line": 44, "column": 15 }
+        },
+        "from_po1": [
+          {
+            "kind": "warning",
+            "messages": "'(y + 1)' has value [-9223372036854775807,9223372036854775808] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 44, "column": 12 },
+              "end": { "line": 44, "column": 15 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "warning",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 44, "column": 12 },
+              "end": { "line": 44, "column": 15 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "PrecisionAsymmetry",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 43, "column": 12 },
+          "end": { "line": 43, "column": 43 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 43, "column": 20 },
+              "end": { "line": 43, "column": 43 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 43, "column": 25 },
+              "end": { "line": 43, "column": 42 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(v + (2 * ((signed long long) Y - X)))' has value [-2,9223372036854775809] that is larger than the range of 'signed long long'\n'(v + (2 * ((signed long long) Y - X)))' has value [-2,9223372036854775809] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 43, "column": 16 },
+              "end": { "line": 43, "column": 43 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "warning",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 43, "column": 12 },
+              "end": { "line": 43, "column": 43 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 43, "column": 12 },
+              "end": { "line": 43, "column": 43 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 43, "column": 12 },
+              "end": { "line": 43, "column": 43 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "PrecisionAsymmetry",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 41, "column": 12 },
+          "end": { "line": 41, "column": 37 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 41, "column": 16 },
+              "end": { "line": 41, "column": 37 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 41, "column": 20 },
+              "end": { "line": 41, "column": 37 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "safe",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 41, "column": 12 },
+              "end": { "line": 41, "column": 37 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "NegativeAgreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 35, "column": 1 },
+          "end": { "line": 35, "column": 63 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 38 },
+              "end": { "line": 35, "column": 53 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y)) - v)' has value [-18446744073709551615,18446744073709551615] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 20 },
+              "end": { "line": 35, "column": 57 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'((((2 * yx) - (2 * xy)) - X) + ((signed long long) 2 * Y))' has value [-9223372036854775808,9223372036854775809] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 20 },
+              "end": { "line": 35, "column": 53 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(((2 * yx) - (2 * xy)) - X)' has value [-9223372036854775809,9223372036854775807] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 20 },
+              "end": { "line": 35, "column": 35 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'((2 * yx) - (2 * xy))' has value [-18446744073709551615,18446744073709551615] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 20 },
+              "end": { "line": 35, "column": 31 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(2 * xy)' has value [-18446744073709551616,18446744073709551614] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 27 },
+              "end": { "line": 35, "column": 31 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "warning",
+            "messages": "'(2 * yx)' has value [0,18446744073709551614] that is larger than the range of 'signed long long'",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 20 },
+              "end": { "line": 35, "column": 24 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "warning",
+        "from_po2": [
+          {
+            "kind": "warning",
+            "messages": "Signed integer overflow and underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 1 },
+              "end": { "line": 35, "column": 63 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in +",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 1 },
+              "end": { "line": 35, "column": 63 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "warning",
+            "messages": "Signed integer underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 35, "column": 1 },
+              "end": { "line": 35, "column": 63 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "warning"
+      },
+      {
+        "kind": "PositiveAgreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 34, "column": 8 },
+          "end": { "line": 34, "column": 28 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 34, "column": 13 },
+              "end": { "line": 34, "column": 28 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "safe",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 34, "column": 8 },
+              "end": { "line": 34, "column": 28 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "PositiveAgreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 33, "column": 8 },
+          "end": { "line": 33, "column": 28 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 33, "column": 13 },
+              "end": { "line": 33, "column": 28 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "safe",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 33, "column": 8 },
+              "end": { "line": 33, "column": 28 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      },
+      {
+        "kind": "PositiveAgreement",
+        "title": "Signed integer overflow in arithmetic operator",
+        "range": {
+          "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+          "start": { "line": 28, "column": 4 },
+          "end": { "line": 28, "column": 31 }
+        },
+        "from_po1": [
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 28, "column": 8 },
+              "end": { "line": 28, "column": 31 }
+            },
+            "callstack": 1
+          },
+          {
+            "kind": "safe",
+            "messages": "",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 28, "column": 9 },
+              "end": { "line": 28, "column": 26 }
+            },
+            "callstack": 1
+          }
+        ],
+        "verdict_po1": "safe",
+        "from_po2": [
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in *",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 28, "column": 4 },
+              "end": { "line": 28, "column": 31 }
+            },
+            "callstack": 0
+          },
+          {
+            "kind": "safe",
+            "messages": "No signed integer overflow or underflow in binary -",
+            "range": {
+              "file": "/home/holterka/sv-benchmarks/c/nla-digbench-scaling/bresenham-ll_valuebound1.c",
+              "start": { "line": 28, "column": 4 },
+              "end": { "line": 28, "column": 31 }
+            },
+            "callstack": 0
+          }
+        ],
+        "verdict_po2": "safe"
+      }
+    ]
+  },
+  "po1_name": "checks",
+  "po2_name": "checks",
+  "global_result": {
+    "optimistic_status": "warning",
+    "pessimistic_status": "warning",
+    "joint_matrix": [
+      [ 2, 0, 3, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 5, 0 ], [ 0, 0, 0, 0 ]
+    ],
+    "selectivity1": 0.5454545454545454,
+    "selectivity2": 0.7272727272727273,
+    "joint_selectivity": 0.8181818181818182,
+    "alignment": 0.6363636363636364
+  },
+  "category_results": {
+    "Signed integer overflow in arithmetic operator": {
+      "optimistic_status": "warning",
+      "pessimistic_status": "warning",
+      "joint_matrix": [
+        [ 2, 0, 3, 0 ], [ 0, 0, 0, 0 ], [ 1, 0, 5, 0 ], [ 0, 0, 0, 0 ]
+      ],
+      "selectivity1": 0.5454545454545454,
+      "selectivity2": 0.7272727272727273,
+      "joint_selectivity": 0.8181818181818182,
+      "alignment": 0.6363636363636364
+    }
+  }
+}

@@ -1,1 +1,37 @@
-{"global_result":{"optimistic_status":"warning","pessimistic_status":"warning","joint_matrix":[[5,0,4,9],[1,0,0,0],[1,0,14,54],[21,0,49,0]],"selectivity1":0.7840909090909091,"selectivity2":0.7052631578947368,"joint_selectivity":0.76,"alignment":0.12025316455696203},"category_results":{"Signed integer overflow in arithmetic operator":{"optimistic_status":"warning","pessimistic_status":"warning","joint_matrix":[[4,0,4,6],[1,0,0,0],[1,0,11,33],[11,0,27,0]],"selectivity1":0.75,"selectivity2":0.711864406779661,"joint_selectivity":0.7619047619047619,"alignment":0.15306122448979592},"Unsigned integer overflow in arithmetic operator":{"optimistic_status":"warning","pessimistic_status":"warning","joint_matrix":[[1,0,0,3],[0,0,0,0],[0,0,3,21],[10,0,22,0]],"selectivity1":0.8571428571428571,"selectivity2":0.6944444444444444,"joint_selectivity":0.75,"alignment":0.06666666666666667}}}
+{
+  "global_result": {
+    "optimistic_status": "warning",
+    "pessimistic_status": "warning",
+    "joint_matrix": [
+      [ 5, 0, 4, 9 ], [ 1, 0, 0, 0 ], [ 1, 0, 14, 54 ], [ 21, 0, 49, 0 ]
+    ],
+    "selectivity1": 0.7840909090909091,
+    "selectivity2": 0.7052631578947368,
+    "joint_selectivity": 0.76,
+    "alignment": 0.12025316455696203
+  },
+  "category_results": {
+    "Signed integer overflow in arithmetic operator": {
+      "optimistic_status": "warning",
+      "pessimistic_status": "warning",
+      "joint_matrix": [
+        [ 4, 0, 4, 6 ], [ 1, 0, 0, 0 ], [ 1, 0, 11, 33 ], [ 11, 0, 27, 0 ]
+      ],
+      "selectivity1": 0.75,
+      "selectivity2": 0.711864406779661,
+      "joint_selectivity": 0.7619047619047619,
+      "alignment": 0.15306122448979592
+    },
+    "Unsigned integer overflow in arithmetic operator": {
+      "optimistic_status": "warning",
+      "pessimistic_status": "warning",
+      "joint_matrix": [
+        [ 1, 0, 0, 3 ], [ 0, 0, 0, 0 ], [ 0, 0, 3, 21 ], [ 10, 0, 22, 0 ]
+      ],
+      "selectivity1": 0.8571428571428571,
+      "selectivity2": 0.6944444444444444,
+      "joint_selectivity": 0.75,
+      "alignment": 0.06666666666666667
+    }
+  }
+}

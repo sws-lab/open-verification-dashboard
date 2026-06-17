@@ -43,7 +43,8 @@ let compare ~checks_files ~filter_category ~filter_path ~format =
       | `Json ->
         let report = Report.create po1.name po2.name in
         List.iter (Report.add_conflict report) conflict;
-        Report.yojson_of_t report |> Yojson.Safe.to_channel ~suf:"\n" stdout;
+        Report.yojson_of_t report |> Yojson.Safe.pretty_to_channel stdout;
+        output_char stdout '\n';
         flush stdout
       | `Pretty ->
         List.iter

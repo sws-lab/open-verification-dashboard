@@ -1,1 +1,37 @@
-{"global_result":{"optimistic_status":"safe","pessimistic_status":"warning","joint_matrix":[[0,0,0,2],[0,0,0,0],[2,0,12,2],[0,0,0,0]],"selectivity1":0.8888888888888888,"selectivity2":0.8571428571428571,"joint_selectivity":1.0,"alignment":0.6666666666666666},"category_results":{"Signed integer overflow in arithmetic operator":{"optimistic_status":"safe","pessimistic_status":"warning","joint_matrix":[[0,0,0,0],[0,0,0,0],[2,0,12,2],[0,0,0,0]],"selectivity1":1.0,"selectivity2":0.8571428571428571,"joint_selectivity":1.0,"alignment":0.75},"Unsigned integer overflow in arithmetic operator":{"optimistic_status":"none","pessimistic_status":"warning","joint_matrix":[[0,0,0,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]],"selectivity1":0.0,"selectivity2":null,"joint_selectivity":null,"alignment":0.0}}}
+{
+  "global_result": {
+    "optimistic_status": "safe",
+    "pessimistic_status": "warning",
+    "joint_matrix": [
+      [ 0, 0, 0, 2 ], [ 0, 0, 0, 0 ], [ 2, 0, 12, 2 ], [ 0, 0, 0, 0 ]
+    ],
+    "selectivity1": 0.8888888888888888,
+    "selectivity2": 0.8571428571428571,
+    "joint_selectivity": 1.0,
+    "alignment": 0.6666666666666666
+  },
+  "category_results": {
+    "Signed integer overflow in arithmetic operator": {
+      "optimistic_status": "safe",
+      "pessimistic_status": "warning",
+      "joint_matrix": [
+        [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 2, 0, 12, 2 ], [ 0, 0, 0, 0 ]
+      ],
+      "selectivity1": 1.0,
+      "selectivity2": 0.8571428571428571,
+      "joint_selectivity": 1.0,
+      "alignment": 0.75
+    },
+    "Unsigned integer overflow in arithmetic operator": {
+      "optimistic_status": "none",
+      "pessimistic_status": "warning",
+      "joint_matrix": [
+        [ 0, 0, 0, 2 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ], [ 0, 0, 0, 0 ]
+      ],
+      "selectivity1": 0.0,
+      "selectivity2": null,
+      "joint_selectivity": null,
+      "alignment": 0.0
+    }
+  }
+}

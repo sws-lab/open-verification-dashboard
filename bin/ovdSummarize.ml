@@ -28,7 +28,8 @@ let summarize ~comparison_files ~format:_: (int, string) result =
       |> Seq.map t_of_yojson
       |> Seq.fold_left merge (create ())
     in
-    Yojson.Safe.to_channel ~suf:"\n" stdout (yojson_of_t summary);
+    Yojson.Safe.pretty_to_channel stdout (yojson_of_t summary);
+    output_char stdout '\n';
     flush stdout;
     Ok 0
   with Ppx_yojson_conv_lib.Yojson_conv.Of_yojson_error (e, j) ->

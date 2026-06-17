@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUTDIR=dashboard-artifact-regression/test23-callstack-json
+OUTDIR=dashboard-artifact-regression/test24-category-file-map
 
 mkdir -p $OUTDIR
 

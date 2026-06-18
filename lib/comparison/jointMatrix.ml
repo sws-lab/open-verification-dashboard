@@ -3,6 +3,20 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 type t = int array array [@@deriving yojson]
 
+let pp ppf m =
+  Format.pp_open_vbox ppf 0;
+  Format.fprintf ppf "|           | @{<olive>Warning@} | @{<maroon>Error@} |  @{<green>Safe@} | @{<grey>Unreached@} |@,";
+  Format.fprintf ppf "| --------- | ------: | ----: | ----: | --------: |@,";
+  let pp_row name ppf row =
+    Format.fprintf ppf "| %(%) | %7d | %5d | %5d | %9d |"
+      name row.(0) row.(1) row.(2) row.(3);
+  in
+  Format.fprintf ppf "%a@," (pp_row "@{<olive>Warning@}  ") m.(0);
+  Format.fprintf ppf "%a@," (pp_row "@{<maroon>Error@}    ") m.(1);
+  Format.fprintf ppf "%a@," (pp_row "@{<green>Safe@}     ") m.(2);
+  Format.fprintf ppf "%a" (pp_row "@{<grey>Unreached@}") m.(3);
+  Format.pp_close_box ppf ()
+
 let statuses = [|`Warning; `Error; `Safe; `Unreached|]
 
 let create () = Array.make_matrix 4 4 0

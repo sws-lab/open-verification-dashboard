@@ -101,5 +101,5 @@
  (action
   (progn
    (with-stdout-to tmp.json
-    (run ovd summarize *.comparison.json))
+    (run ovd summarize  --format json *.comparison.json))
    (diff? summary.json tmp.json))))

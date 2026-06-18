@@ -2,6 +2,8 @@ open Ovd_checks
 
 include ConflictAggregator.YojsonS
 
+val pp: Format.formatter -> t -> unit
+
 val create: unit -> t
 val add: t -> Status.t -> Status.t -> unit
 

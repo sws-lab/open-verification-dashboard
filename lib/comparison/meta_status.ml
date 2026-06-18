@@ -19,6 +19,24 @@ struct
       ("alignment", [%yojson_of: float option] (JointMatrix.alignment joint_matrix));
     ]
 
+  let pp ppf joint_matrix =
+    pp ppf joint_matrix;
+    Format.pp_print_cut ppf ();
+    let pp_print_option ppf =
+      Format.pp_print_option ~none:(fun ppf () -> Format.pp_print_char ppf '-') ppf
+    in
+    let pp_print_percentage ppf x =
+      Format.fprintf ppf "%.2f%%" (x *. 100.)
+    in
+    Format.pp_open_vbox ppf 0;
+    Format.fprintf ppf "Optimistic status: %a@," (pp_print_option Status.pp) (JointMatrix.optimistic_status joint_matrix);
+    Format.fprintf ppf "Pessimistic status: %a@," (pp_print_option Status.pp) (JointMatrix.pessimistic_status joint_matrix);
+    Format.fprintf ppf "Selectivity 1: %a@," (pp_print_option pp_print_percentage) (JointMatrix.selectivity1 joint_matrix);
+    Format.fprintf ppf "Selectivity 2: %a@," (pp_print_option pp_print_percentage) (JointMatrix.selectivity2 joint_matrix);
+    Format.fprintf ppf "Joint selectivity: %a@," (pp_print_option pp_print_percentage) (JointMatrix.joint_selectivity joint_matrix);
+    Format.fprintf ppf "Alignment: %a" (pp_print_option pp_print_percentage) (JointMatrix.alignment joint_matrix);
+    Format.pp_close_box ppf ()
+
   let t_of_yojson j =
     JointMatrix.t_of_yojson (Yojson.Safe.Util.member "joint_matrix" j)
 end

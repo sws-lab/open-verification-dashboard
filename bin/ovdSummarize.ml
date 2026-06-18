@@ -6,6 +6,9 @@ type t = {
 }
 [@@deriving yojson] [@@yojson.allow_extra_fields]
 
+let pp ppf {global_result; _} =
+  Meta_status.pp ppf global_result
+
 let create () =
   {
     global_result = Meta_status.create ();
@@ -18,7 +21,7 @@ let merge r1 r2 =
     category_results = Meta_status.CategoryMap.merge r1.category_results r2.category_results;
   }
 
-let summarize ~comparison_files ~format:_: (int, string) result =
+let summarize ~comparison_files ~(format): (int, string) result =
   try
     let summary =
       Array.of_list comparison_files
@@ -28,9 +31,16 @@ let summarize ~comparison_files ~format:_: (int, string) result =
       |> Seq.map t_of_yojson
       |> Seq.fold_left merge (create ())
     in
-    Yojson.Safe.pretty_to_channel stdout (yojson_of_t summary);
-    output_char stdout '\n';
-    flush stdout;
+    begin match format with
+    | `Json ->
+      Yojson.Safe.pretty_to_channel stdout (yojson_of_t summary);
+      output_char stdout '\n';
+      flush stdout;
+    | `Pretty ->
+      let reset_ppf = Spectrum.prepare_ppf Format.std_formatter in
+      Format.printf "%a@." pp summary;
+      reset_ppf ();
+    end;
     Ok 0
   with Ppx_yojson_conv_lib.Yojson_conv.Of_yojson_error (e, j) ->
     Error (Printexc.to_string e ^ Yojson.Safe.to_string j)
@@ -47,7 +57,7 @@ let comparison_files =
 
 let format =
   let enum =  [
-      (* ("pretty", `Pretty); *)
+      ("pretty", `Pretty);
       ("json", `Json);
     ]
   in
